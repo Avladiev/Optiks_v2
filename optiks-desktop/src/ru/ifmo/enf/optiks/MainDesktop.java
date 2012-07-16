@@ -12,6 +12,6 @@ public class MainDesktop {
         cfg.width = 480;
         cfg.height = 320;
 
-        new LwjglApplication(new Main(), cfg);
+        new LwjglApplication(new OptiksGame(), cfg);
     }
 }
