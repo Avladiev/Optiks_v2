@@ -3,7 +3,7 @@ package ru.ifmo.enf.optiks;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-public class MainDesctop {
+public class MainDesktop {
 
     public static void main(final String[] args) {
         final LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();

@@ -166,7 +166,7 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="" />
+    <mapping directory="" vcs="Git" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="libraryTable">
@@ -198,7 +198,10 @@
         <root url="jar://$PROJECT_DIR$/optiks/libs/bodyeditor-loader-sources.jar!/" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/optiks/libs/tween-engine-api-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/optiks/libs/gdx-sources.jar!/" />
+      </SOURCES>
     </library>
   </component>
 </project>
