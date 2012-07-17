@@ -7,6 +7,11 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public interface Level {
 
+    /**
+     * is called after setWorld() !!!
+     */
+    void build();
+
     void render(float delta);
 
     void resize(int width, int height);
@@ -24,6 +29,4 @@ public interface Level {
     void setWorld(final World world);
 
     void create();
-
-
 }

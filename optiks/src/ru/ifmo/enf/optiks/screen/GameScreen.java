@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.World;
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
 public class GameScreen implements Screen {
-    private static  World world;
+    private static World world;
 
     @Override
     public void render(final float v) {
