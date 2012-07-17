@@ -12,18 +12,23 @@ import com.badlogic.gdx.physics.box2d.World;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class BodyFactory {
+
     /**
      * physics world
      */
     public static final World WORLD = new World(new Vector2(0, 0), true);
+
     /**
      * string path to Fixture .json File
      */
+
     private static final String JSON_PATH = "";
+
     /**
      * Fixture loader
      */
     private static final BodyEditorLoader LOADER = new BodyEditorLoader(Gdx.files.internal(JSON_PATH));
+
     /**
      * string name of Body Fixture
      */

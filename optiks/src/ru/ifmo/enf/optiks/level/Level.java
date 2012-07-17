@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.World;
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
+
 public interface Level {
 
     /**

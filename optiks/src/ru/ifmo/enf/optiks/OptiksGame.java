@@ -5,12 +5,10 @@ import com.badlogic.gdx.Screen;
 import ru.ifmo.enf.optiks.screen.GameScreen;
 import ru.ifmo.enf.optiks.screen.MenuScreen;
 
-
 public class OptiksGame extends Game {
 
     private static final GameScreen GAME_SCREEN = new GameScreen();
     private static final Screen MENU_SCREEN = new MenuScreen();
-
 
     @Override
     public void create() {
@@ -24,6 +22,4 @@ public class OptiksGame extends Game {
     private Screen getMenuScreen() {
         return MENU_SCREEN;
     }
-
-
 }

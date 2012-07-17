@@ -1,6 +1,5 @@
 package ru.ifmo.enf.optiks;
 
-
 import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -13,6 +12,6 @@ public class MainActivity extends AndroidApplication {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = false;
 
-        initialize(new Main(), cfg);
+        initialize(new OptiksGame(), cfg);
     }
 }
