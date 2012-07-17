@@ -1,17 +1,24 @@
 package ru.ifmo.enf.optiks.screen;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import ru.ifmo.enf.optiks.phisycs.BodyFactory;
 
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
 public class GameScreen implements Screen {
+    Box2DDebugRenderer render;
 
-    private static World world;
+    public GameScreen() {
+        BodyFactory.createBody(0, 0, 10, 0, BodyFactory.CIRCLE);
+        BodyFactory.createBody(0.05f, 0.05f, 10, 0, BodyFactory.RECTANGLE);
+        render = new Box2DDebugRenderer(true, true, true, true);
+    }
 
     @Override
     public void render(final float v) {
+        render.render(BodyFactory.WORLD, null);
         //todo
     }
 

@@ -12,6 +12,7 @@ public class OptiksGame extends Game {
 
     @Override
     public void create() {
+        setScreen(GAME_SCREEN);
         //todo
     }
 

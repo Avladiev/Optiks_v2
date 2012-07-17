@@ -22,7 +22,7 @@ public class BodyFactory {
      * string path to Fixture .json File
      */
 
-    private static final String JSON_PATH = "";
+    private static final String JSON_PATH = "optiks.json";
 
     /**
      * Fixture loader
@@ -32,13 +32,15 @@ public class BodyFactory {
     /**
      * string name of Body Fixture
      */
-    private static final String LASER = "";
-    private static final String AIM = "";
-    private static final String BULLET = "";
-    private static final String MIRROR_RECTANGLE = "";
-    private static final String MIRROR_CIRCLE = "";
-    private static final String BARRIER_RECTANGLE = "";
-    private static final String BARRIER_CIRCLE = "";
+    public static final String LASER = "";
+    public static final String AIM = "";
+    public static final String BULLET = "";
+    public static final String MIRROR_RECTANGLE = "";
+    public static final String MIRROR_CIRCLE = "";
+    public static final String BARRIER_RECTANGLE = "";
+    public static final String BARRIER_CIRCLE = "";
+    public static final String CIRCLE = "circle";
+    public static final String RECTANGLE = "rectangle";
 
     /**
      * Fixture bits for each objects
