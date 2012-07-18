@@ -21,7 +21,7 @@ public class OptiksGame extends Game {
 
     @Override
     public void create() {
-        world = new World(new Vector2(0, -10), true);
+        world = new World(new Vector2(0, -90), true);
         factory = new BodyFactory(world);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gameScreen = new GameScreen(this);

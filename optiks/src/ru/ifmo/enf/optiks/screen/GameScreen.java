@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.OptiksGame;
 import ru.ifmo.enf.optiks.phisycs.BodyFactory;
+import ru.ifmo.enf.optiks.phisycs.PhysicWorldUpdater;
 
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
@@ -21,6 +23,11 @@ public class GameScreen implements Screen {
 
     private final Box2DDebugRenderer render;
 
+    static final float BOX_STEP = 1 / 80f;
+    static final int BOX_VELOCITY_ITERATIONS = 8;
+    static final int BOX_POSITION_ITERATIONS = 4;
+    float accumulator = 0;
+
 
     public GameScreen(final OptiksGame optiksGame) {
         this.optiksGame = optiksGame;
@@ -28,15 +35,16 @@ public class GameScreen implements Screen {
         this.factory = optiksGame.getFactory();
         this.camera = optiksGame.getCamera();
 
-        factory.createBody(50, 0, 100, 0, BodyFactory.CIRCLE);
-        factory.createBody(-50f, 0f, 100, 0, BodyFactory.RECTANGLE);
+        Body body = factory.createBody(50f, 100f, 100, 0, BodyFactory.CIRCLE, false);
+        factory.createBody(-150f, 100f, 100, 0, BodyFactory.RECTANGLE, false);
+        factory.createBody(-100f, -200f, 200, 0, BodyFactory.RECTANGLE, true);
         render = new Box2DDebugRenderer(true, true, true, true);
     }
 
     @Override
     public void render(final float v) {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        world.step(v, 4, 5);
+        PhysicWorldUpdater.update(v, world);
         render.render(world, camera.projection);
         //todo
     }

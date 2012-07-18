@@ -54,8 +54,12 @@ public class BodyFactory {
         this.loader = new BodyEditorLoader(Gdx.files.internal(JSON_PATH));
     }
 
-    public  Body createBody(final float x, final float y, final float width, final float angle, final String fixtureName) {
-        Body body = world.createBody(createBodyDef(x, y, angle, BodyDef.BodyType.DynamicBody));
+    public  Body createBody(final float x, final float y, final float width, final float angle, final String fixtureName, final boolean isStatic) {
+        BodyDef.BodyType bodyType = BodyDef.BodyType.DynamicBody;
+        if (isStatic) {
+            bodyType = BodyDef.BodyType.StaticBody;
+        }
+        Body body = world.createBody(createBodyDef(x, y, angle, bodyType));
         createFixture(fixtureName, body, width);
         return body;
     }
@@ -70,7 +74,7 @@ public class BodyFactory {
 
     private  void createFixture(final String name, final Body body, final float width) {
         FixtureDef fd = new FixtureDef();
-        fd.density = 0f;
+        fd.density = 10f;
         fd.restitution = 0f;
         fd.friction = 0f;
 
@@ -88,6 +92,9 @@ public class BodyFactory {
 
             fd.filter.categoryBits = AIM_MIRROR_BARRIER_BIT;
             fd.filter.groupIndex = AIM_MIRROR_BARRIER_BIT + LASER_BIT + BULLET_BIT;
+        } else if (name.equalsIgnoreCase(RECTANGLE) || name.equalsIgnoreCase(CIRCLE)) {
+            fd.filter.categoryBits = LASER_BIT;
+            fd.filter.groupIndex = LASER_BIT;
         }
         fd.filter.maskBits = 0;
 

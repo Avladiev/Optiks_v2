@@ -8,7 +8,7 @@ public class MainDesktop {
     public static void main(final String[] args) {
         final LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Optiks";
-        cfg.useGL20 = false;
+        cfg.useGL20 = true;
         cfg.width = 480;
         cfg.height = 320;
 
