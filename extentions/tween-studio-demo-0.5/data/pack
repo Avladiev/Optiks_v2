@@ -1,0 +1,40 @@
+
+data1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+logoStudio
+  rotate: false
+  xy: 2, 2
+  size: 249, 108
+  orig: 249, 108
+  offset: 0, 0
+  index: -1
+logoTweenEngine
+  rotate: false
+  xy: 2, 112
+  size: 301, 99
+  orig: 301, 99
+  offset: 0, 0
+  index: -1
+logoTween
+  rotate: false
+  xy: 253, 2
+  size: 212, 73
+  orig: 212, 73
+  offset: 0, 0
+  index: -1
+wave
+  rotate: false
+  xy: 2, 213
+  size: 440, 67
+  orig: 440, 67
+  offset: 0, 0
+  index: -1
+logoLibgdx
+  rotate: false
+  xy: 305, 112
+  size: 64, 60
+  orig: 64, 60
+  offset: 0, 0
+  index: -1

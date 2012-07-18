@@ -2,7 +2,6 @@ package ru.ifmo.enf.optiks.phisycs;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -16,7 +15,7 @@ public class BodyFactory {
     /**
      * physics world
      */
-    public static final World WORLD = new World(new Vector2(0, 0), true);
+    public  final World world;
 
     /**
      * string path to Fixture .json File
@@ -27,7 +26,7 @@ public class BodyFactory {
     /**
      * Fixture loader
      */
-    private static final BodyEditorLoader LOADER = new BodyEditorLoader(Gdx.files.internal(JSON_PATH));
+    private  final BodyEditorLoader loader ;
 
     /**
      * string name of Body Fixture
@@ -49,13 +48,19 @@ public class BodyFactory {
     private static final short AIM_MIRROR_BARRIER_BIT = 2;
     private static final short BULLET_BIT = 4;
 
-    public static Body createBody(final float x, final float y, final float width, final float angle, final String fixtureName) {
-        Body body = WORLD.createBody(createBodyDef(x, y, angle, BodyDef.BodyType.StaticBody));
+
+    public BodyFactory(final World world) {
+        this.world = world;
+        this.loader = new BodyEditorLoader(Gdx.files.internal(JSON_PATH));
+    }
+
+    public  Body createBody(final float x, final float y, final float width, final float angle, final String fixtureName) {
+        Body body = world.createBody(createBodyDef(x, y, angle, BodyDef.BodyType.DynamicBody));
         createFixture(fixtureName, body, width);
         return body;
     }
 
-    private static BodyDef createBodyDef(final float x, final float y, final float angle, final BodyDef.BodyType bodyType) {
+    private  BodyDef createBodyDef(final float x, final float y, final float angle, final BodyDef.BodyType bodyType) {
         BodyDef bd = new BodyDef();
         bd.position.set(x, y);
         bd.angle = angle;
@@ -63,7 +68,7 @@ public class BodyFactory {
         return bd;
     }
 
-    private static void createFixture(final String name, final Body body, final float width) {
+    private  void createFixture(final String name, final Body body, final float width) {
         FixtureDef fd = new FixtureDef();
         fd.density = 0f;
         fd.restitution = 0f;
@@ -86,6 +91,6 @@ public class BodyFactory {
         }
         fd.filter.maskBits = 0;
 
-        LOADER.attachFixture(body, name, fd, width);
+        loader.attachFixture(body, name, fd, width);
     }
 }
