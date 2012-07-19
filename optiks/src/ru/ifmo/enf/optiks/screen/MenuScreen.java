@@ -3,11 +3,17 @@ package ru.ifmo.enf.optiks.screen;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import ru.ifmo.enf.optiks.OptiksGame;
 
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
 public class MenuScreen implements Screen {
+    public MenuScreen(final OptiksGame optiksGame) {
+        //todo
+
+    }
+
     @Override
     public void render(final float delta) {
         //todo

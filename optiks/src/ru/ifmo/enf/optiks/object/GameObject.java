@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
-interface GameObject {
-
+public interface GameObject {
     void draw(final SpriteBatch spriteBatch);
+    boolean isClicked(final float x,final float y);
 }

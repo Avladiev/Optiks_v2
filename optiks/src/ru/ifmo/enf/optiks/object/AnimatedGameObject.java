@@ -11,4 +11,10 @@ public class AnimatedGameObject implements GameObject {
         //todo
 
     }
+
+    @Override
+    public boolean isClicked(final float x, final float y) {
+        //todo
+        return false;
+    }
 }

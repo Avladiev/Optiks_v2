@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.phisycs.BodyFactory;
 import ru.ifmo.enf.optiks.screen.GameScreen;
+import ru.ifmo.enf.optiks.screen.MenuScreen;
 
 public class OptiksGame extends Game {
 
@@ -19,14 +20,15 @@ public class OptiksGame extends Game {
 
     private OrthographicCamera camera;
 
+
+
     @Override
     public void create() {
         world = new World(new Vector2(0, -90), true);
         factory = new BodyFactory(world);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gameScreen = new GameScreen(this);
-
-      //  menuScreen =new MenuScreen(this);
+        menuScreen = new MenuScreen(this);
         setScreen(gameScreen);
         //todo
     }

@@ -4,10 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.OptiksGame;
+import ru.ifmo.enf.optiks.object.GameObject;
 import ru.ifmo.enf.optiks.phisycs.BodyFactory;
 import ru.ifmo.enf.optiks.phisycs.PhysicWorldUpdater;
 
@@ -29,15 +29,22 @@ public class GameScreen implements Screen {
     float accumulator = 0;
 
 
+
+    private GameObject[] mirrors;
+    private GameObject[] buttons;
+    private GameObject laser;
+    private GameObject[] otherObjects;
+
+
     public GameScreen(final OptiksGame optiksGame) {
         this.optiksGame = optiksGame;
         this.world = optiksGame.getWorld();
         this.factory = optiksGame.getFactory();
         this.camera = optiksGame.getCamera();
 
-        Body body = factory.createBody(50f, 100f, 100, 0, BodyFactory.CIRCLE, false);
+      /*  Body body = factory.createBody(50f, 100f, 100, 0, BodyFactory.CIRCLE, false);
         factory.createBody(-150f, 100f, 100, 0, BodyFactory.RECTANGLE, false);
-        factory.createBody(-100f, -200f, 200, 0, BodyFactory.RECTANGLE, true);
+        factory.createBody(-100f, -200f, 200, 0, BodyFactory.RECTANGLE, true);*/
         render = new Box2DDebugRenderer(true, true, true, true);
     }
 
