@@ -7,10 +7,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.phisycs.BodyFactory;
+import ru.ifmo.enf.optiks.platform.Provider;
 import ru.ifmo.enf.optiks.screen.GameScreen;
 import ru.ifmo.enf.optiks.screen.MenuScreen;
 
 public class OptiksGame extends Game {
+
+    private final Provider provider;
 
     private static Screen gameScreen;
     private static Screen menuScreen;
@@ -20,7 +23,9 @@ public class OptiksGame extends Game {
 
     private OrthographicCamera camera;
 
-
+    public OptiksGame(final Provider provider) {
+        this.provider = provider;
+    }
 
     @Override
     public void create() {
