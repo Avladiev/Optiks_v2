@@ -6,18 +6,18 @@ import java.util.List;
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
 public class LevelСontainer {
-    List<ObjectСontainer> objectСontainers;
+    List<SimpleObjectСontainer> simpleObjectСontainers;
 
 
     public LevelСontainer() {
     }
 
-    public LevelСontainer(List<ObjectСontainer> objectСontainers) {
-        this.objectСontainers = objectСontainers;
+    public LevelСontainer(List<SimpleObjectСontainer> simpleObjectСontainers) {
+        this.simpleObjectСontainers = simpleObjectСontainers;
     }
 
 
-    public List<ObjectСontainer> getObjectСontainers() {
-        return objectСontainers;
+    public List<SimpleObjectСontainer> getSimpleObjectСontainers() {
+        return simpleObjectСontainers;
     }
 }
