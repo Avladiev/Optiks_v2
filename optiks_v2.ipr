@@ -37,6 +37,22 @@
     <type id="gwt" />
   </component>
   <component name="IdProvider" IDEtalkID="6E621100A836841CE27BF5C1479758FB" />
+  <component name="InspectionProjectProfileManager">
+    <profiles>
+      <profile version="1.0" is_locked="false">
+        <option name="myName" value="Project Default" />
+        <option name="myLocal" value="false" />
+        <inspection_tool class="FieldMayBeFinal" enabled="true" level="WARNING" enabled_by_default="true" />
+        <inspection_tool class="LocalCanBeFinal" enabled="true" level="WARNING" enabled_by_default="true">
+          <option name="REPORT_VARIABLES" value="true" />
+          <option name="REPORT_PARAMETERS" value="true" />
+        </inspection_tool>
+      </profile>
+    </profiles>
+    <option name="PROJECT_PROFILE" value="Project Default" />
+    <option name="USE_PROJECT_PROFILE" value="true" />
+    <version value="1.0" />
+  </component>
   <component name="Palette2">
     <group name="Swing">
       <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
@@ -163,6 +179,7 @@
       <module fileurl="file://$PROJECT_DIR$/optiks/optiks.iml" filepath="$PROJECT_DIR$/optiks/optiks.iml" />
       <module fileurl="file://$PROJECT_DIR$/optiks-android/optiks-android.iml" filepath="$PROJECT_DIR$/optiks-android/optiks-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/optiks-desktop/optiks-desktop.iml" filepath="$PROJECT_DIR$/optiks-desktop/optiks-desktop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/optiks-editor/optiks-editor.iml" filepath="$PROJECT_DIR$/optiks-editor/optiks-editor.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
@@ -172,7 +189,7 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="Git" />
+    <mapping directory="" vcs="" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="libraryTable">
@@ -184,7 +201,7 @@
       <JAVADOC />
       <SOURCES />
     </library>
-    <library name="desctop">
+    <library name="desktop">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/optiks-desktop/libs/gdx-backend-lwjgl-natives.jar!/" />
         <root url="jar://$PROJECT_DIR$/optiks-desktop/libs/gdx-natives.jar!/" />
