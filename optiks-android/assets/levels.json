@@ -1,1 +1,1 @@
-[[{"objectСontainers":[{"class":"ru.ifmo.enf.optiks.object.container.ObjectСontainer","angle":3.0,"pos":{"x":1.0,"y":2.0},"objectType":"AIM"}]}]]
+[[{"simpleObjectСontainers":[{"pos":{"x":12.0,"y":12.0},"angle":12.0,"objectType":"AIM"}],"objectContainers":[{"attacher":{"pos":{"x":1.0,"y":2.0},"angle":12.0,"objectType":"AIM"},"lego":[{"pos":{"x":12.0,"y":12.0},"angle":12.0,"objectType":"AIM"}],"mainGameObject":{"pos":{"x":12.0,"y":12.0},"angle":43.0,"objectType":"BARRIER_CIRCLE"}}]}]]

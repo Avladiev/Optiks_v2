@@ -12,15 +12,15 @@ import java.util.List;
  */
 public class DesktopProvider implements Provider {
 
-    private final Gson gson = new Gson();
-    private List<List<LevelСontainer>> levels;
-
+    final Gson gson = new Gson();
+    final List<List<LevelСontainer>> levels;
+    final File file;
 
     // private LevelСontainer[][] levels;
 
 
     public DesktopProvider(final File file) throws FileNotFoundException {
-
+        this.file = file;
         /*   сontainers = json.fromJson(LevelСontainer[][].class,fileHandle) ;
         System.out.println(сontainers.length);*/
 
@@ -30,13 +30,26 @@ public class DesktopProvider implements Provider {
         levels[0][0] = new LevelСontainer((objectContainers));
         json.toJson(levels,fileHandle);*/
         // levels = json.fromJson(LevelСontainer[][].class,fileHandle);
+        LevelСontainer[][] levelСontainers = null;
+
 
         try {
-            levels = gson.fromJson(new InputStreamReader(new FileInputStream(file), "utf8"), List.class);
+            levelСontainers = gson.fromJson(new InputStreamReader(new FileInputStream(file), "utf8"), LevelСontainer[][].class);
         } catch (UnsupportedEncodingException e) {
-
+            throw new RuntimeException(e);
         }
+        levels = new ArrayList<List<LevelСontainer>>();
 
+        if (levelСontainers != null) {
+            for (int i = 0; i < levelСontainers.length; i++) {
+                for (int j = 0; j < levelСontainers[i].length; j++) {
+                    if (i >= levels.size()) {
+                        levels.add(new ArrayList<LevelСontainer>());
+                    }
+                    levels.get(i).add(levelСontainers[i][j]);
+                }
+            }
+        }
 
     }
 
@@ -50,23 +63,46 @@ public class DesktopProvider implements Provider {
         if (season < levels.size()) {
             List<LevelСontainer> levelСontainerList = levels.get(season);
             levelСontainerList.add(level, levelСontainer);
-        }  else{
+        } else {
             List<LevelСontainer> levelСontainerList = new ArrayList<LevelСontainer>();
-            levelСontainerList.add(level,levelСontainer);
-            levels.add(season,levelСontainerList );
+            levelСontainerList.add(level, levelСontainer);
+            levels.add(season, levelСontainerList);
         }
 
     }
 
     @Override
     public byte getLastSeason() {
-        //todo
-        return 0;
+
+        return (byte) (levels.size() - 1);
     }
 
     @Override
     public byte getLastLevel(final byte season) {
-        //todo
-        return 0;
+        return (byte) (levels.get(season).size() - 1);
+    }
+
+    @Override
+    public void save() {
+        LevelСontainer[][] levelСontainers = new LevelСontainer[levels.size()][];
+        for (int i = 0; i < levels.size(); i++) {
+            for (int j = 0; j < levels.get(i).size(); j++) {
+                if (levelСontainers[i] == null) {
+                    levelСontainers[i] = new LevelСontainer[levels.get(i).size()];
+                }
+                levelСontainers[i][j] = levels.get(i).get(j);
+            }
+        }
+
+
+        try {
+            final Writer writer = new FileWriter(file);
+            System.out.println(gson.toJson(levelСontainers));
+            writer.write(gson.toJson(levels));
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
