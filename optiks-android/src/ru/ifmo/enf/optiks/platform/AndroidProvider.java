@@ -29,4 +29,10 @@ public class AndroidProvider implements Provider {
         //todo
         return 0;
     }
+
+    @Override
+    public void save() {
+        //todo
+
+    }
 }
