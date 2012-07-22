@@ -64,19 +64,19 @@ public class DesktopProviderTest extends TestCase {
     public void test5() throws FileNotFoundException {
         DesktopProvider provider = new DesktopProvider(FILE);
         final LevelСontainer levelСontainer = createLevelContainer();
-        provider.saveLevel(levelСontainer,(byte)0,(byte)0);
+        provider.saveLevel(levelСontainer, (byte) 0, (byte) 0);
         assertEquals(provider.getLastLevel((byte) 0), 0);
         assertEquals(provider.getLastSeason(), 0);
-        assertEquals(provider.getLevel((byte)0,(byte)0),levelСontainer);
+        assertEquals(provider.getLevel((byte) 0, (byte) 0), levelСontainer);
     }
 
     public void test6() throws FileNotFoundException {
         DesktopProvider provider = new DesktopProvider(FILE);
         final LevelСontainer levelСontainer = createLevelContainer();
-        provider.saveLevel(levelСontainer,(byte)0,(byte)0);
+        provider.saveLevel(levelСontainer, (byte) 0, (byte) 0);
         provider.save();
         provider = new DesktopProvider(FILE);
-        assertEquals(provider.getLevel((byte)0,(byte)0),levelСontainer);
+        assertEquals(provider.getLevel((byte) 0, (byte) 0), levelСontainer);
 
         assertEquals(provider.getLastLevel((byte) 0), 0);
         assertEquals(provider.getLastSeason(), 0);
@@ -84,12 +84,16 @@ public class DesktopProviderTest extends TestCase {
     }
 
 
+    public void test() {
+        int a = 254;
+        a<<=8;
+        a+=7;
 
+        int a5 = a & 65280;
+        System.out.println(a5&255);
 
-
-
-
-
+        System.out.println(Integer.toBinaryString(a));
+    }
 
 
     private LevelСontainer createLevelContainer() {
