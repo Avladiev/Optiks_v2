@@ -4,8 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import ru.ifmo.enf.optiks.graphics.Assets;
 import ru.ifmo.enf.optiks.phisycs.BodyFactory;
 import ru.ifmo.enf.optiks.platform.Provider;
 import ru.ifmo.enf.optiks.screen.GameScreen;
@@ -22,6 +24,7 @@ public class OptiksGame extends Game {
     private BodyFactory factory;
 
     private OrthographicCamera camera;
+    private boolean isLoaded;
 
     public OptiksGame(final Provider provider) {
         this.provider = provider;
@@ -35,6 +38,8 @@ public class OptiksGame extends Game {
         gameScreen = new GameScreen(this);
         menuScreen = new MenuScreen(this);
         setScreen(gameScreen);
+
+        Assets.inst().load(Assets.GAME_OBJECTS_PACK, TextureAtlas.class);
         //todo
     }
 
@@ -56,5 +61,24 @@ public class OptiksGame extends Game {
 
     public OrthographicCamera getCamera() {
         return camera;
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    @Override
+    public void render() {
+        //todo
+        super.render();
+        if (isLoaded) {
+            getScreen().render(Gdx.graphics.getDeltaTime());
+        } else {
+            if (Assets.inst().getProgress() < 1) {
+                Assets.inst().update();
+            } else {
+                isLoaded = true;
+            }
+        }
     }
 }

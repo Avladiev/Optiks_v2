@@ -8,9 +8,9 @@ import ru.ifmo.enf.optiks.object.GameObject;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class LaserListener implements GestureDetector.GestureListener {
-    final GameObject laser; /// mabe type LaserObject
+    private GameObject laser; /// mabe type LaserObject
 
-    public LaserListener(final GameObject laser) {
+    public void setLaser(final GameObject laser) {
         this.laser = laser;
     }
 

@@ -5,7 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
-import ru.ifmo.enf.optiks.object.GameObject;
+import ru.ifmo.enf.optiks.object.PhysicsAnimatedGameObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Author: Dudko Alex (dududko@gmail.com)
@@ -15,15 +19,19 @@ import ru.ifmo.enf.optiks.object.GameObject;
  * Gesture Listener for active mirrors
  */
 public class MirrorListener implements GestureDetector.GestureListener {
-    private final GameObject[] mirrors;
+    private List<PhysicsAnimatedGameObject> mirrors;
     private final World world;
 
     private MouseJoint mouseJoint;
     private RevoluteJoint revoluteJoint;
 
-    public MirrorListener(final GameObject[] mirrors, final World world) {
-        this.mirrors = mirrors;
+    public MirrorListener(final World world) {
         this.world = world;
+        mirrors = new ArrayList<PhysicsAnimatedGameObject>();
+    }
+
+    public void addMirror(final PhysicsAnimatedGameObject mirror) {
+        mirrors.add(mirror);
     }
 
     @Override

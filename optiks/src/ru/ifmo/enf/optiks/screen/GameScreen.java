@@ -10,6 +10,9 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sun.istack.internal.NotNull;
 import ru.ifmo.enf.optiks.OptiksGame;
+import ru.ifmo.enf.optiks.graphics.Assets;
+import ru.ifmo.enf.optiks.listener.LaserListener;
+import ru.ifmo.enf.optiks.listener.MirrorListener;
 import ru.ifmo.enf.optiks.object.GameObject;
 import ru.ifmo.enf.optiks.object.PhysicsAnimatedGameObject;
 import ru.ifmo.enf.optiks.object.container.LevelContainer;
@@ -38,6 +41,8 @@ public class GameScreen implements Screen {
     static final int BOX_POSITION_ITERATIONS = 4;
     float accumulator = 0;
 
+    private final LaserListener laserListener;
+    private final MirrorListener mirrorListener;
 
     private GameObject[] buttons;
     private PhysicsAnimatedGameObject[] attacherObjects;
@@ -49,12 +54,17 @@ public class GameScreen implements Screen {
         this.camera = optiksGame.getCamera();
         this.batch = new SpriteBatch();
 
-        /*  Body body = factory.createBody(50f, 100f, 100, 0, BodyFactory.CIRCLE, false);
-   factory.createBody(-150f, 100f, 100, 0, BodyFactory.RECTANGLE, false);
-   factory.createBody(-100f, -200f, 200, 0, BodyFactory.RECTANGLE, true);*/
+        setLevel(optiksGame.getProvider().getLevel((byte) 0, (byte) 0));
+        laserListener = new LaserListener();
+        mirrorListener = new MirrorListener(this.world);
         render = new Box2DDebugRenderer(true, true, true, true);
     }
 
+    /**
+     * method that allows to set current level
+     * todo create Joints
+     * @param level
+     */
     public void setLevel(@NotNull final LevelContainer level) {
         attacherObjects = new PhysicsAnimatedGameObject[level.getObjectContainers().size()];
         final Iterator attacherIterator = level.getObjectContainers().iterator();
@@ -64,19 +74,27 @@ public class GameScreen implements Screen {
 
             final SimpleObjectСontainer current = objectIterator.next();
 
-            TextureRegion textureRegion = null;
+            TextureRegion textureRegion = Assets.getTextureRegion(current.getObjectType());
             currentObject = new PhysicsAnimatedGameObject(textureRegion, current.getObjectType(),
                     factory.createBody(current.getPos(), textureRegion.getRegionWidth(), current.getAngle(), current.getObjectType()));
             while (objectIterator.hasNext()) {
                 final SimpleObjectСontainer next = objectIterator.next();
-                textureRegion = null;
+                textureRegion = Assets.getTextureRegion(next.getObjectType());
                 final PhysicsAnimatedGameObject nextObject = new PhysicsAnimatedGameObject(textureRegion, next.getObjectType(),
                         factory.createBody(next.getPos(), textureRegion.getRegionWidth(), next.getAngle(), next.getObjectType()));
 
+                // fill objects field in LaserListener && MirrorListener
+                switch (next.getObjectType()) {
+                    case LASER:
+                        laserListener.setLaser(nextObject);
+                        break;
+                    case MIRROR:
+                        mirrorListener.addMirror(nextObject);
+                        break;
+                }
                 currentObject.setNext(nextObject);
                 currentObject = nextObject;
             }
-
         }
     }
 
@@ -90,9 +108,11 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
+/*
         for (final GameObject object : buttons) {
             object.draw(batch);
         }
+*/
         for (final GameObject object : attacherObjects) {
             object.draw(batch);
         }
