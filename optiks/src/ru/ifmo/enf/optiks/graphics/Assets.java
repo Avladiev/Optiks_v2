@@ -16,6 +16,10 @@ public class Assets extends AssetManager {
 
     /* TODO move it in  property file */
     public final static String GAME_OBJECTS_PACK = "gfx/game_objects/pack";
+    public final static String EDITOR_BACKGROUND_TEXTURE = "gfx/editor/background.png";
+    /* TODO create one atlas from little textures */
+    public final static String EDITOR_BUTTONS_PACK = "gfx/editor/buttons/pack";
+    public final static String EDITOR_GAME_OBJECTS_BTN = "gfx/editor/buttons/objects.png";
 
     public static Assets inst() {
         if (instance == null) instance = new Assets();
@@ -23,15 +27,10 @@ public class Assets extends AssetManager {
     }
 
     private Assets() {
-
         /* TODO create separate methods to load splash, game and other textures */
-
-        /* Loading assets */
-        Assets.inst().load(GAME_OBJECTS_PACK, TextureAtlas.class);
     }
 
     public static TextureRegion getTextureRegion(final ObjectType type) {
-        /* TODO override method ObjectType.toString() */
        return instance.get(GAME_OBJECTS_PACK, TextureAtlas.class).findRegion(type.toString());
     }
 

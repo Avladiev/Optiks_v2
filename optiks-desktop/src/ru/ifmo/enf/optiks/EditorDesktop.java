@@ -18,8 +18,8 @@ public class EditorDesktop {
         final LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Optiks-Editor";
         cfg.useGL20 = true;
-        cfg.width = 480;
-        cfg.height = 320;
+        cfg.width = 800;
+        cfg.height = 480;
 
         new LwjglApplication(new OptiksEditor(), cfg);
     }
