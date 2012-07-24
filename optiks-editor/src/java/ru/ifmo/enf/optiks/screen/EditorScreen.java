@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ru.ifmo.enf.optiks.OptiksEditor;
+import ru.ifmo.enf.optiks.graphics.Assets;
+import ru.ifmo.enf.optiks.object.ObjectType;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)
@@ -30,6 +33,13 @@ public class EditorScreen implements Screen {
     public void render(final float delta) {
         camera.update();
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+        if (editor.isLoaded) {
+            batch.begin();
+            batch.draw(Assets.inst().get(Assets.EDITOR_BACKGROUND_TEXTURE, Texture.class), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            batch.draw(Assets.getTextureRegion(ObjectType.LASER), 40, 40, 100, 100);
+            batch.draw(Assets.inst().get(Assets.EDITOR_GAME_OBJECTS_BTN, Texture.class), Gdx.graphics.getWidth()- 100, 30, 70, 70);
+            batch.end();
+        }
     }
 
     @Override
