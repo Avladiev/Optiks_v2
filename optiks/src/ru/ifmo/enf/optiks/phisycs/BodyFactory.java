@@ -2,10 +2,8 @@ package ru.ifmo.enf.optiks.phisycs;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import ru.ifmo.enf.optiks.object.ObjectType;
 
 /**
@@ -35,6 +33,10 @@ public class BodyFactory {
     public BodyFactory(final World world) {
         this.world = world;
         this.loader = new BodyEditorLoader(Gdx.files.internal(JSON_PATH));
+    }
+
+    public Body createBody(final Vector2 vector, final float width, final float angle, final ObjectType objectType) {
+        return createBody(vector.x, vector.y, width, angle, objectType);
     }
 
     public Body createBody(final float x, final float y, final float width, final float angle, final ObjectType objectType) {
@@ -85,11 +87,7 @@ public class BodyFactory {
                 break;
             case STATIC_CIRCLE_ATTACHER:
                 break;
-            case DYNAMIC_CIRCLE_ATTACHER:
-                break;
             case STATIC_RECTANGLE_ATTACHER:
-                break;
-            case DYNAMIC_RECTANGLE_ATTACHER:
                 break;
             case STATIC_LEGO:
                 break;
@@ -133,5 +131,11 @@ public class BodyFactory {
      fd.filter.maskBits = 0;
 
      loader.attachFixture(body, type, fd, width);*/
+    }
+
+    public ObjectType getObjectType(final Fixture fixture) {
+        //fixture.getFilterData().categoryBits;
+        //todo
+        return null;
     }
 }

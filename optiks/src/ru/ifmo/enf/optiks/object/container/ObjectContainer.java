@@ -2,6 +2,8 @@ package ru.ifmo.enf.optiks.object.container;
 
 import com.sun.istack.internal.NotNull;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -10,11 +12,11 @@ import java.util.List;
  * attacher + lego + .. + lego + one of game objects
  */
 public class ObjectContainer {
-    // крепление
+    // attacher to display border
     private SimpleObjectСontainer attacher;
-    // лего
+    // LEGO detail
     private List<SimpleObjectСontainer> lego;
-    // основное объект: лазер, зеркало, мишень или ничего
+    // laser || aim || mirror || null
     private SimpleObjectСontainer mainGameObject;
 
     public ObjectContainer( @NotNull final SimpleObjectСontainer attacher, @NotNull final List<SimpleObjectСontainer> lego,  @NotNull final SimpleObjectСontainer mainGameObject) {
@@ -45,6 +47,14 @@ public class ObjectContainer {
 
     public SimpleObjectСontainer getMainGameObject() {
         return mainGameObject;
+    }
+
+    public Collection<SimpleObjectСontainer> getAll() {
+        final Collection<SimpleObjectСontainer> objects = new ArrayList<SimpleObjectСontainer>();
+        objects.add(attacher);
+        objects.addAll(lego);
+        objects.add(mainGameObject);
+        return objects;
     }
 
     @Override

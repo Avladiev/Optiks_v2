@@ -3,7 +3,7 @@ package ru.ifmo.enf.optiks;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import ru.ifmo.enf.optiks.object.container.LevelСontainer;
+import ru.ifmo.enf.optiks.object.container.LevelContainer;
 import ru.ifmo.enf.optiks.object.container.ObjectContainer;
 import ru.ifmo.enf.optiks.object.container.SimpleObjectСontainer;
 import ru.ifmo.enf.optiks.platform.AndroidProvider;
@@ -21,12 +21,12 @@ public class TestActivity extends Activity {
         AndroidProvider androidProvider = new AndroidProvider(this);
         Log.d(TAG, " getlastseason =" + androidProvider.getLastSeason());
         Log.d(TAG, " getlastLevel =" + androidProvider.getLastLevel(androidProvider.getLastSeason()));
-        LevelСontainer levelСontainer = androidProvider.getLevel((byte) 0, (byte) 0);
-        for(final ObjectContainer container: levelСontainer.getObjectContainers()){
+        LevelContainer levelContainer = androidProvider.getLevel((byte) 0, (byte) 0);
+        for(final ObjectContainer container: levelContainer.getObjectContainers()){
             Log.d(TAG,"ObjectContainer "  + container + container.getMainGameObject());
             container.getMainGameObject() ;
         }
-        for(final SimpleObjectСontainer container: levelСontainer.getSimpleObjectСontainers()){
+        for(final SimpleObjectСontainer container: levelContainer.getSimpleObjectСontainers()){
             Log.d(TAG,"ObjectContainer "  + container);
         }
 

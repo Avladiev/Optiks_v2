@@ -179,6 +179,7 @@
       <words>
         <w>attacher</w>
         <w>dudko</w>
+        <w>сontainer</w>
       </words>
     </dictionary>
   </component>
@@ -196,7 +197,7 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="Git" />
+    <mapping directory="" vcs="" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="libraryTable">
@@ -226,11 +227,13 @@
         <root url="jar://$PROJECT_DIR$/optiks/libs/gdx-sources.jar!/" />
         <root url="jar://$PROJECT_DIR$/optiks/libs/tween-engine-api-sources.jar!/" />
         <root url="jar://$PROJECT_DIR$/optiks/libs/bodyeditor-loader-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/optiks/libs/gson-2.2.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
         <root url="jar://$PROJECT_DIR$/optiks/libs/tween-engine-api-sources.jar!/" />
         <root url="jar://$PROJECT_DIR$/optiks/libs/gdx-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/optiks/libs/gson-2.2.2-sources.jar!/" />
       </SOURCES>
     </library>
   </component>

@@ -1,6 +1,7 @@
 package ru.ifmo.enf.optiks.object;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
@@ -8,15 +9,26 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public class PhysicsAnimatedGameObject implements GameObject {
 
-    Body body;
+    TextureRegion texture;
     ObjectType type;
-    PhysicsAnimatedGameObject next;
+    Body body;
+    private PhysicsAnimatedGameObject next;
+
+    public PhysicsAnimatedGameObject(final TextureRegion texture, final ObjectType type, final Body body) {
+        this.texture = texture;
+        this.type = type;
+        this.body = body;
+    }
+
+    public void setNext(final PhysicsAnimatedGameObject next) {
+        this.next = next;
+    }
 
     @Override
     public void draw(final SpriteBatch spriteBatch) {
-        //todo
-        /*spriteBatch.draw(null, body.getPosition().x, body.getPosition().y, body.getWorldCenter().x, body.getWorldCenter().y,
-        0, 0, 1, 1, body.getAngle());*/
+        spriteBatch.draw(texture, body.getPosition().x, body.getPosition().y, body.getWorldCenter().x, body.getWorldCenter().y,
+                texture.getRegionWidth(), texture.getRegionHeight(), 1, 1, body.getAngle());
+        next.draw(spriteBatch);
     }
 
     @Override
@@ -24,8 +36,7 @@ public class PhysicsAnimatedGameObject implements GameObject {
         switch (type) {
             case LASER:
             case MIRROR:
-            case DYNAMIC_CIRCLE_ATTACHER:
-            case DYNAMIC_RECTANGLE_ATTACHER:
+
                 return true;
             default:
                 return false;

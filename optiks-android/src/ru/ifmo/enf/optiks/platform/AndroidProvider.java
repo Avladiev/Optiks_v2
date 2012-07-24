@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import com.google.gson.Gson;
-import ru.ifmo.enf.optiks.object.container.LevelСontainer;
+import ru.ifmo.enf.optiks.object.container.LevelContainer;
 
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
@@ -20,7 +20,7 @@ public class AndroidProvider implements Provider {
     }
 
     @Override
-    public LevelСontainer getLevel(final byte season, final byte level) {
+    public LevelContainer getLevel(final byte season, final byte level) {
         final Cursor cursor = dbHelper.getWritableDatabase().query(DBHelper.TABLE_NAME, null,
                 DBHelper._ID + " = " + DBHelper.bytesToShort(season, level), null, null, null, null);
         cursor.moveToFirst();
@@ -28,14 +28,12 @@ public class AndroidProvider implements Provider {
         final String json = cursor.getString(index);
         Log.d(TAG,json);
         
-        return gson.fromJson(json,LevelСontainer.class);
-        
+        return gson.fromJson(json,LevelContainer.class);
     }
 
     @Override
-    public void saveLevel(final LevelСontainer levelСontainer, final byte season, final byte level) {
-        //todo
-
+    public void saveLevel(final LevelContainer levelContainer, final byte season, final byte level) {
+       throw new UnsupportedOperationException();
     }
 
     @Override

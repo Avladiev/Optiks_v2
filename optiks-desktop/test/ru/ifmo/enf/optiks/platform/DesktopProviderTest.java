@@ -3,7 +3,7 @@ package ru.ifmo.enf.optiks.platform;
 import com.badlogic.gdx.math.Vector2;
 import junit.framework.TestCase;
 import ru.ifmo.enf.optiks.object.ObjectType;
-import ru.ifmo.enf.optiks.object.container.LevelСontainer;
+import ru.ifmo.enf.optiks.object.container.LevelContainer;
 import ru.ifmo.enf.optiks.object.container.ObjectContainer;
 import ru.ifmo.enf.optiks.object.container.SimpleObjectСontainer;
 
@@ -63,20 +63,20 @@ public class DesktopProviderTest extends TestCase {
 
     public void test5() throws FileNotFoundException {
         DesktopProvider provider = new DesktopProvider(FILE);
-        final LevelСontainer levelСontainer = createLevelContainer();
-        provider.saveLevel(levelСontainer, (byte) 0, (byte) 0);
+        final LevelContainer levelContainer = createLevelContainer();
+        provider.saveLevel(levelContainer, (byte) 0, (byte) 0);
         assertEquals(provider.getLastLevel((byte) 0), 0);
         assertEquals(provider.getLastSeason(), 0);
-        assertEquals(provider.getLevel((byte) 0, (byte) 0), levelСontainer);
+        assertEquals(provider.getLevel((byte) 0, (byte) 0), levelContainer);
     }
 
     public void test6() throws FileNotFoundException {
         DesktopProvider provider = new DesktopProvider(FILE);
-        final LevelСontainer levelСontainer = createLevelContainer();
-        provider.saveLevel(levelСontainer, (byte) 0, (byte) 0);
+        final LevelContainer levelContainer = createLevelContainer();
+        provider.saveLevel(levelContainer, (byte) 0, (byte) 0);
         provider.save();
         provider = new DesktopProvider(FILE);
-        assertEquals(provider.getLevel((byte) 0, (byte) 0), levelСontainer);
+        assertEquals(provider.getLevel((byte) 0, (byte) 0), levelContainer);
 
         assertEquals(provider.getLastLevel((byte) 0), 0);
         assertEquals(provider.getLastSeason(), 0);
@@ -96,14 +96,14 @@ public class DesktopProviderTest extends TestCase {
     }
 
 
-    private LevelСontainer createLevelContainer() {
+    private LevelContainer createLevelContainer() {
         final List<ObjectContainer> objectContainers = new ArrayList<ObjectContainer>();
         final List<SimpleObjectСontainer> simpleObjectСontainers = new ArrayList<SimpleObjectСontainer>();
         simpleObjectСontainers.add(new SimpleObjectСontainer(new Vector2(12, 12), 12, ObjectType.AIM));
         objectContainers.add(new ObjectContainer(new SimpleObjectСontainer(new Vector2(1, 2), 12, ObjectType.AIM), simpleObjectСontainers,
-                new SimpleObjectСontainer(new Vector2(12, 12), 43, ObjectType.BARRIER_CIRCLE)));
+                new SimpleObjectСontainer(new Vector2(12, 12), 43, ObjectType.MIRROR)));
 
-        return new LevelСontainer(simpleObjectСontainers, objectContainers);
+        return new LevelContainer(simpleObjectСontainers, objectContainers);
     }
 
 }

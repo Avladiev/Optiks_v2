@@ -16,7 +16,7 @@ public class MainDesktop {
         cfg.useGL20 = true;
         cfg.width = 480;
         cfg.height = 320;
-      final File file  = new File("levels.json");
+        final File file = new File("levels.json");
 
         final Provider provider = new DesktopProvider(file);
 

@@ -1,7 +1,7 @@
 package ru.ifmo.enf.optiks.platform;
 
 import com.google.gson.Gson;
-import ru.ifmo.enf.optiks.object.container.LevelСontainer;
+import ru.ifmo.enf.optiks.object.container.LevelContainer;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,40 +13,40 @@ import java.util.List;
 public class DesktopProvider implements Provider {
 
     final Gson gson = new Gson();
-    final List<List<LevelСontainer>> levels;
+    final List<List<LevelContainer>> levels;
     final File file;
 
-    // private LevelСontainer[][] levels;
+    // private LevelContainer[][] levels;
 
 
     public DesktopProvider(final File file) throws FileNotFoundException {
         this.file = file;
-        /*   сontainers = json.fromJson(LevelСontainer[][].class,fileHandle) ;
+        /*   сontainers = json.fromJson(LevelContainer[][].class,fileHandle) ;
         System.out.println(сontainers.length);*/
 
-        /* levels = new LevelСontainer[1][1];
+        /* levels = new LevelContainer[1][1];
         List<ObjectСontainer> objectContainers = new ArrayList<ObjectСontainer>();
         objectContainers.add(new ObjectСontainer(new Vector2(1, 2), 3, ObjectType.AIM));
-        levels[0][0] = new LevelСontainer((objectContainers));
+        levels[0][0] = new LevelContainer((objectContainers));
         json.toJson(levels,fileHandle);*/
-        // levels = json.fromJson(LevelСontainer[][].class,fileHandle);
-        LevelСontainer[][] levelСontainers = null;
+        // levels = json.fromJson(LevelContainer[][].class,fileHandle);
+        LevelContainer[][] levelContainers = null;
 
 
         try {
-            levelСontainers = gson.fromJson(new InputStreamReader(new FileInputStream(file), "utf8"), LevelСontainer[][].class);
+            levelContainers = gson.fromJson(new InputStreamReader(new FileInputStream(file), "utf8"), LevelContainer[][].class);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        levels = new ArrayList<List<LevelСontainer>>();
+        levels = new ArrayList<List<LevelContainer>>();
 
-        if (levelСontainers != null) {
-            for (int i = 0; i < levelСontainers.length; i++) {
-                for (int j = 0; j < levelСontainers[i].length; j++) {
+        if (levelContainers != null) {
+            for (int i = 0; i < levelContainers.length; i++) {
+                for (int j = 0; j < levelContainers[i].length; j++) {
                     if (i >= levels.size()) {
-                        levels.add(new ArrayList<LevelСontainer>());
+                        levels.add(new ArrayList<LevelContainer>());
                     }
-                    levels.get(i).add(levelСontainers[i][j]);
+                    levels.get(i).add(levelContainers[i][j]);
                 }
             }
         }
@@ -54,19 +54,19 @@ public class DesktopProvider implements Provider {
     }
 
     @Override
-    public LevelСontainer getLevel(final byte season, final byte level) {
+    public LevelContainer getLevel(final byte season, final byte level) {
         return levels.get(season).get(level);
     }
 
     @Override
-    public void saveLevel(final LevelСontainer levelСontainer, final byte season, final byte level) {
+    public void saveLevel(final LevelContainer levelContainer, final byte season, final byte level) {
         if (season < levels.size()) {
-            List<LevelСontainer> levelСontainerList = levels.get(season);
-            levelСontainerList.add(level, levelСontainer);
+            List<LevelContainer> levelContainerList = levels.get(season);
+            levelContainerList.add(level, levelContainer);
         } else {
-            List<LevelСontainer> levelСontainerList = new ArrayList<LevelСontainer>();
-            levelСontainerList.add(level, levelСontainer);
-            levels.add(season, levelСontainerList);
+            List<LevelContainer> levelContainerList = new ArrayList<LevelContainer>();
+            levelContainerList.add(level, levelContainer);
+            levels.add(season, levelContainerList);
         }
 
     }
@@ -84,20 +84,20 @@ public class DesktopProvider implements Provider {
 
     @Override
     public void save() {
-        LevelСontainer[][] levelСontainers = new LevelСontainer[levels.size()][];
+        LevelContainer[][] levelContainers = new LevelContainer[levels.size()][];
         for (int i = 0; i < levels.size(); i++) {
             for (int j = 0; j < levels.get(i).size(); j++) {
-                if (levelСontainers[i] == null) {
-                    levelСontainers[i] = new LevelСontainer[levels.get(i).size()];
+                if (levelContainers[i] == null) {
+                    levelContainers[i] = new LevelContainer[levels.get(i).size()];
                 }
-                levelСontainers[i][j] = levels.get(i).get(j);
+                levelContainers[i][j] = levels.get(i).get(j);
             }
         }
 
 
         try {
             final Writer writer = new FileWriter(file);
-            System.out.println(gson.toJson(levelСontainers));
+            System.out.println(gson.toJson(levelContainers));
             writer.write(gson.toJson(levels));
             writer.close();
         } catch (IOException e) {
