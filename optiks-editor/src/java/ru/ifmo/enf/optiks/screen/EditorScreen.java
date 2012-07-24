@@ -1,8 +1,11 @@
 package ru.ifmo.enf.optiks.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ru.ifmo.enf.optiks.OptiksEditor;
-import ru.ifmo.enf.optiks.OptiksGame;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)
@@ -12,12 +15,21 @@ public class EditorScreen implements Screen {
 
     private final OptiksEditor editor;
 
+    private final Camera camera;
+
+    private final SpriteBatch batch;
+
     public EditorScreen(final OptiksEditor optiksEditor) {
         this.editor = optiksEditor;
+        this.camera = optiksEditor.getCamera();
+        this.batch = new SpriteBatch();
+        batch.setProjectionMatrix(camera.combined);
     }
 
     @Override
     public void render(final float delta) {
+        camera.update();
+        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
     }
 
     @Override

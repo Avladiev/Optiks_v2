@@ -1,9 +1,13 @@
 package ru.ifmo.enf.optiks;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import ru.ifmo.enf.optiks.graphics.Assets;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
-import ru.ifmo.enf.optiks.screen.HighscoresScreen;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)
@@ -11,18 +15,34 @@ import ru.ifmo.enf.optiks.screen.HighscoresScreen;
  */
 public class OptiksEditor extends Game {
 
-    private final OrthographicCamera camera;
+    private OrthographicCamera camera;
 
-    public OptiksEditor(final OrthographicCamera camera) {
-        this.camera = camera;
-    }
+    public boolean isLoaded = false;
 
     @Override
     public void create() {
-        this.setScreen(new EditorScreen(this));
+
+        /* Camera settings */
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        setScreen(new EditorScreen(this));
     }
 
-    public OrthographicCamera getCamera() {
+    @Override
+    public void render() {
+        if (isLoaded) {
+            getScreen().render(Gdx.graphics.getDeltaTime());
+        } else {
+            if (Assets.inst().getProgress() < 1) {
+                Assets.inst().update();
+            } else {
+                isLoaded = true;
+            }
+        }
+    }
+
+    public Camera getCamera() {
         return camera;
     }
 }
