@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.graphics.Assets;
-import ru.ifmo.enf.optiks.phisycs.BodyFactory;
+import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
 import ru.ifmo.enf.optiks.platform.Provider;
 import ru.ifmo.enf.optiks.screen.GameScreen;
 import ru.ifmo.enf.optiks.screen.MenuScreen;
@@ -16,30 +16,37 @@ import ru.ifmo.enf.optiks.screen.MenuScreen;
 public class OptiksGame extends Game {
 
     private final Provider provider;
+    public static float width;
+    public static float height;
 
-    private static Screen gameScreen;
+    private static GameScreen gameScreen;
     private static Screen menuScreen;
 
     private World world;
-    private BodyFactory factory;
+    private GameObjectFactory factory;
 
     private OrthographicCamera camera;
     private boolean isLoaded;
+    private boolean flag;
 
     public OptiksGame(final Provider provider) {
         this.provider = provider;
+        width = provider.getResolution().x;
+        height = provider.getResolution().y;
     }
 
     @Override
     public void create() {
-        world = new World(new Vector2(0, -90), true);
-        factory = new BodyFactory(world);
+
+        Assets.inst().load(Assets.GAME_OBJECTS_PACK, TextureAtlas.class);
+        world = new World(new Vector2(0, -10), true);
+        factory = new GameObjectFactory(world);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gameScreen = new GameScreen(this);
         menuScreen = new MenuScreen(this);
         setScreen(gameScreen);
 
-        Assets.inst().load(Assets.GAME_OBJECTS_PACK, TextureAtlas.class);
+
         //todo
     }
 
@@ -55,7 +62,7 @@ public class OptiksGame extends Game {
         return world;
     }
 
-    public BodyFactory getFactory() {
+    public GameObjectFactory getFactory() {
         return factory;
     }
 
@@ -70,8 +77,12 @@ public class OptiksGame extends Game {
     @Override
     public void render() {
         //todo
-        super.render();
+        //super.render();
         if (isLoaded) {
+            if (!flag) {
+                gameScreen.setLevel(this.getProvider().getLevel((byte) 0, (byte) 0));
+                flag = !flag;
+            }
             getScreen().render(Gdx.graphics.getDeltaTime());
         } else {
             if (Assets.inst().getProgress() < 1) {

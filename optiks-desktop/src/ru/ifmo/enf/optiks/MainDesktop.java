@@ -14,8 +14,8 @@ public class MainDesktop {
         final LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Optiks";
         cfg.useGL20 = true;
-        cfg.width = 480;
-        cfg.height = 320;
+        cfg.width = 800;
+        cfg.height = 480;
         final File file = new File("levels.json");
 
         final Provider provider = new DesktopProvider(file);
