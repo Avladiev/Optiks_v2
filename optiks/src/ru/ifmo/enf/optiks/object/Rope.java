@@ -5,14 +5,15 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Author: Dudko Alex (dududko@gmail.com)
  */
-public class Mirror extends GameObject {
-
-    protected Mirror(final Vector2 anchorA, final Vector2 anchorB) {
-        super(anchorA, anchorB, 1);
+public class Rope extends GameObject {
+    protected Rope() {
+        super(new Vector2(1, 1), new Vector2(1, 1), 0.7f);
     }
 
     @Override
     public void bulletHitReaction(final Bullet bullet) {
+        getBody().getWorld().destroyBody(getBody());
+        gravityOn();
         bullet.continueShoot();
     }
 }

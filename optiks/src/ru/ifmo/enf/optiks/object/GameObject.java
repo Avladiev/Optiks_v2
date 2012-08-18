@@ -14,15 +14,17 @@ public abstract class GameObject {
 
     private final Vector2 anchorA;
     private final Vector2 anchorB;
+    private final float gravityScale;
 
     private Body body;
 
     private GameObject previous;
     private GameObject next;
 
-    protected GameObject(final Vector2 anchorA, final Vector2 anchorB) {
+    protected GameObject(final Vector2 anchorA, final Vector2 anchorB, final float gravityScale) {
         this.anchorA = anchorA;
         this.anchorB = anchorB;
+        this.gravityScale = gravityScale;
     }
 
     public Body getBody() {
@@ -70,6 +72,11 @@ public abstract class GameObject {
      * reaction on the bullet hit
      * @param bullet
      */
-    public abstract void bulletHitReaction(final Body bullet);
+    public abstract void bulletHitReaction(final Bullet bullet);
+
+    public void gravityOn() {
+        getBody().setGravityScale(gravityScale);
+        next.gravityOn();
+    }
 }
 
