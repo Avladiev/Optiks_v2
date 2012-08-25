@@ -5,16 +5,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sun.istack.internal.NotNull;
 import ru.ifmo.enf.optiks.OptiksGame;
-import ru.ifmo.enf.optiks.listener.LaserListener;
-import ru.ifmo.enf.optiks.listener.MirrorListener;
-import ru.ifmo.enf.optiks.object.GameObject;
-import ru.ifmo.enf.optiks.object.container.LevelContainer;
+import ru.ifmo.enf.optiks.listener.RotationDragListener;
 import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
 import ru.ifmo.enf.optiks.phisycs.PhysicWorldUpdater;
+import ru.ifmo.enf.optiks.phisycs.object.GameObject;
+import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
 
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
@@ -29,13 +29,9 @@ public class GameScreen implements Screen {
     private final Box2DDebugRenderer render;
     private final SpriteBatch batch;
 
-    static final float BOX_STEP = 1 / 80f;
-    static final int BOX_VELOCITY_ITERATIONS = 8;
-    static final int BOX_POSITION_ITERATIONS = 4;
-    float accumulator = 0;
-
-    private final LaserListener laserListener;
-    private final MirrorListener mirrorListener;
+//    private final LaserListener laserListener;
+//    private final MirrorListener mirrorListener;
+    private final RotationDragListener rotationDragListener;
 
     private GameObject[] buttons;
 //    private PhysicsAnimatedGameObject[] attacherObjects;
@@ -47,9 +43,11 @@ public class GameScreen implements Screen {
         this.camera = optiksGame.getCamera();
         this.batch = new SpriteBatch();
 
-        laserListener = new LaserListener();
-        mirrorListener = new MirrorListener(this.world);
-        render = new Box2DDebugRenderer(true, true, true, true);
+        rotationDragListener = new RotationDragListener(world);
+        Gdx.input.setInputProcessor(new GestureDetector(rotationDragListener));
+//        laserListener = new LaserListener();
+//        mirrorListener = new MirrorListener(this.world);
+        render = new Box2DDebugRenderer(true, true, false, true);
     }
 
     /**
@@ -60,14 +58,16 @@ public class GameScreen implements Screen {
      */
 
     public void setLevel(@NotNull final LevelContainer level) {
-        factory.setLevel(level);
+//        factory.setLevel(level, OptiksGame.width / 2, OptiksGame.height / 2);
+        factory.setLevel(level, 800 / 10 + 2, 480 / 10 + 2);
     }
 
     @Override
     public void render(final float v) {
 
         PhysicWorldUpdater.update(v, world);
-
+//        world.step(1/60, 8, 2);
+        world.clearForces();
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         camera.update();
 
@@ -84,8 +84,7 @@ public class GameScreen implements Screen {
         }*/
         batch.end();
 
-        render.render(world, camera.projection.scale(3, 3, 3));
-        world.getBodies().next().applyLinearImpulse(10, 10, 10, 10);
+        render.render(world, camera.projection.scale(5, 5, 5));
         //todo
     }
 

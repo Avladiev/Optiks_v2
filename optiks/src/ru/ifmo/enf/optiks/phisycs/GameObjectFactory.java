@@ -2,20 +2,15 @@ package ru.ifmo.enf.optiks.phisycs;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.sun.istack.internal.NotNull;
-import ru.ifmo.enf.optiks.object.Aim;
-import ru.ifmo.enf.optiks.object.GameObject;
-import ru.ifmo.enf.optiks.object.Laser;
-import ru.ifmo.enf.optiks.object.ObjectType;
-import ru.ifmo.enf.optiks.object.container.LevelContainer;
-import ru.ifmo.enf.optiks.object.container.ObjectContainer;
-import ru.ifmo.enf.optiks.object.container.SimpleObjectСontainer;
 import ru.ifmo.enf.optiks.phisycs.joints.RevoluteJointBehavior;
+import ru.ifmo.enf.optiks.phisycs.object.*;
+import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
+import ru.ifmo.enf.optiks.phisycs.object.container.ObjectContainer;
+import ru.ifmo.enf.optiks.phisycs.object.container.SimpleObjectСontainer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,15 +38,14 @@ public final class GameObjectFactory {
 //    private static final short BULLET_BIT = 2;
 //    private static final short GAME_OBJECT_BIT = 4;
 //    private static final short MENU_OBJECT_BIT = 8;
-
-
     public GameObjectFactory(final World world) {
         this.world = world;
         this.loader = new BodyEditorLoader(Gdx.files.internal(JSON_PATH));
     }
 
-    public void setLevel(@NotNull final LevelContainer level) {
+    public void setLevel(@NotNull final LevelContainer level, final float width, final float height) {
         final List<GameObject> list = new ArrayList<GameObject>();
+        list.add(createWall(width, height));
         for (final ObjectContainer objectContainer : level.getObjectContainers()) {
             list.add(createMultiplexGameObject(objectContainer));
         }
@@ -69,7 +63,12 @@ public final class GameObjectFactory {
             next = createGameObject(iterator.next());
             current.setNext(next);
             next.setPrevious(current);
-            world.createJoint(RevoluteJointBehavior.createRevoluteJoint(next, current, true));
+            // todo collide connection
+            if (next instanceof Laser) {
+                world.createJoint(RevoluteJointBehavior.createRevoluteJoint(next, current, false));
+            } else {
+                world.createJoint(RevoluteJointBehavior.createRevoluteJoint(next, current, true));
+            }
             current = next;
         }
         attacher.getBody().setType(BodyDef.BodyType.StaticBody);
@@ -78,15 +77,15 @@ public final class GameObjectFactory {
 
     private GameObject createGameObject(final SimpleObjectСontainer objectContainer) {
         GameObject object = null;
-        final BodyDef.BodyType bodyType = BodyDef.BodyType.DynamicBody;
         switch (objectContainer.getObjectType()) {
             case STATIC_CIRCLE_ATTACHER:
-            case STATIC_RECTANGLE_ATTACHER:
-            case STATIC_LEGO:
-            case RECTANGLE_BARRIER:
+            case ATTACHER:
+                object = new Attacher();
                 break;
-            default:
-                object = new Laser();
+            case LEGO:
+                object = new Lego();
+                break;
+            case RECTANGLE_BARRIER:
                 break;
             case LASER:
                 object = new Laser();
@@ -97,42 +96,73 @@ public final class GameObjectFactory {
             case BULLET:
                 break;
             case MIRROR:
+                object = new Mirror();
                 break;
             case DYNAMIC_LEGO:
-                break;
-            case PLAY:
-                break;
-            case OPTIONS:
-                break;
-            case ABOUT:
-                break;
-            case SEASON:
-                break;
-            case LEVEL:
                 break;
             case CIRCLE:
                 break;
             case RECTANGLE:
                 break;
+            case ROPE:
+                object = new Rope();
+                break;
+            case ROCKET:
+                object = new Rocket();
+                break;
+            default:
+                object = new Laser();
+                break;
         }
         final Body body = world.createBody(createBodyDef(objectContainer.getPos(), objectContainer.getAngle(), BodyDef.BodyType.DynamicBody));
         object.setBody(body);
 //        body.setGravityScale(0);
-        createFixture(body, objectContainer.getObjectType());
+        createFixture(body, objectContainer.getObjectType(), object.getSizeScale());
+        object.setFixtureProperties();
         return object;
     }
 
     private BodyDef createBodyDef(final Vector2 vec, final float angle, final BodyDef.BodyType bodyType) {
         final BodyDef bd = new BodyDef();
-        bd.type = BodyDef.BodyType.DynamicBody;
+        bd.type = bodyType;
         bd.position.set(vec.x, vec.y);
-        bd.angle = angle;
+        bd.angle = angle * MathUtils.degreesToRadians;
         bd.type = bodyType;
         return bd;
     }
 
-    private void createFixture(final Body body, final ObjectType objectType) {
+    private void createFixture(final Body body, final ObjectType objectType, final float sizeScale) {
         //todo collision filter
-        loader.attachFixture(body, objectType.toString(), new FixtureDef(), 10);
+        loader.attachFixture(body, objectType.toString(), new FixtureDef(), sizeScale);
+    }
+
+    private GameObject createWall(final float width, final float height) {
+        final Body body = world.createBody(createBodyDef(new Vector2(0, 0), 0, BodyDef.BodyType.StaticBody));
+        final GameObject wall = new Wall();
+        wall.setBody(body);
+        body.setUserData(wall);
+
+        final PolygonShape topShape = new PolygonShape();
+        topShape.setAsBox(width, 1, new Vector2(0, height), 0);
+        topShape.setRadius(2);
+
+        final PolygonShape groundShape = new PolygonShape();
+        groundShape.setAsBox(width, 1, new Vector2(0, -height), 0);
+//        groundShape.setRadius(2);
+
+        final PolygonShape leftShape = new PolygonShape();
+        leftShape.setAsBox(1, height, new Vector2(-width, 0), 0);
+        leftShape.setRadius(2);
+
+        final PolygonShape rightShape = new PolygonShape();
+        rightShape.setAsBox(1, height, new Vector2(width, 0), 0);
+        rightShape.setRadius(2);
+
+        body.createFixture(topShape, 0);
+        body.createFixture(leftShape, 0);
+        body.createFixture(groundShape, 0);
+        body.createFixture(rightShape, 0);
+
+        return wall;
     }
 }

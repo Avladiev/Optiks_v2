@@ -3,8 +3,9 @@ package ru.ifmo.enf.optiks.platform;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import com.badlogic.gdx.math.Vector2;
 import com.google.gson.Gson;
-import ru.ifmo.enf.optiks.object.container.LevelContainer;
+import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
 
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
@@ -50,5 +51,10 @@ public class AndroidProvider implements Provider {
     public void save() {
         dbHelper.close();
 
+    }
+
+    @Override
+    public Vector2 getResolution() {
+        return new Vector2(10, 10);
     }
 }

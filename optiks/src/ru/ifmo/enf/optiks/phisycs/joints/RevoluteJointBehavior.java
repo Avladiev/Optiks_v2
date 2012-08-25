@@ -3,7 +3,7 @@ package ru.ifmo.enf.optiks.phisycs.joints;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
-import ru.ifmo.enf.optiks.object.GameObject;
+import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 
 /**
  * Author: Dudko Alex (dududko@gmail.com)

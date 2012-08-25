@@ -12,7 +12,6 @@ public class PhysicWorldUpdater {
     private static float accumulator = 0;
 
     public static void update(final float dt, final World world) {
-        System.out.println("hui");
         accumulator += dt;
         while (accumulator > BOX_STEP) {
             world.step(BOX_STEP, BOX_VELOCITY_ITERATIONS, BOX_POSITION_ITERATIONS);

@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import ru.ifmo.enf.optiks.object.ObjectType;
+import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)

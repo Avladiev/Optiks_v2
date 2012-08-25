@@ -1,7 +1,8 @@
 package ru.ifmo.enf.optiks.platform;
 
+import com.badlogic.gdx.math.Vector2;
 import com.google.gson.Gson;
-import ru.ifmo.enf.optiks.object.container.LevelContainer;
+import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -104,5 +105,10 @@ public class DesktopProvider implements Provider {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public Vector2 getResolution() {
+        return new Vector2(0, 0);
     }
 }
