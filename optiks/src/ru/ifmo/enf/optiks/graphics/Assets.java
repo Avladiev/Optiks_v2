@@ -12,14 +12,16 @@ import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
  */
 public class Assets extends AssetManager {
 
-    private static Assets instance;
+    private static Assets instance = new Assets();
 
     /* TODO move it in  property file */
     public final static String GAME_OBJECTS_PACK = "gfx/game_objects/pack";
     public final static String EDITOR_BACKGROUND_TEXTURE = "gfx/editor/background.png";
     /* TODO create one atlas from little textures */
     public final static String EDITOR_BUTTONS_PACK = "gfx/editor/buttons/pack";
-    public final static String EDITOR_GAME_OBJECTS_BTN = "gfx/editor/buttons/objects.png";
+    public final static String EDITOR_GAME_OBJECTS_BTN = "gfx/editor/buttons/game_objects.png";
+    public final static String EDITOR_GAME_OBJECTS_BG = "gfx/editor/buttons/background.png";
+
 
     public static Assets inst() {
         if (instance == null) instance = new Assets();

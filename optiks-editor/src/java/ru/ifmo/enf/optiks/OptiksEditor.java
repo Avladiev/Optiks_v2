@@ -30,13 +30,15 @@ public class OptiksEditor extends Game {
         Assets.inst().load(Assets.GAME_OBJECTS_PACK, TextureAtlas.class);
         Assets.inst().load(Assets.EDITOR_BACKGROUND_TEXTURE, Texture.class);
         Assets.inst().load(Assets.EDITOR_GAME_OBJECTS_BTN, Texture.class);
-
-        setScreen(new EditorScreen(this));
+        Assets.inst().load(Assets.EDITOR_GAME_OBJECTS_BG, Texture.class);
     }
 
     @Override
     public void render() {
         if (isLoaded) {
+            if (getScreen() == null) {
+                setScreen(new EditorScreen(this));
+            }
             getScreen().render(Gdx.graphics.getDeltaTime());
         } else {
             if (Assets.inst().getProgress() < 1) {

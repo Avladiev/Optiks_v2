@@ -5,10 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import ru.ifmo.enf.optiks.OptiksEditor;
 import ru.ifmo.enf.optiks.graphics.Assets;
 import ru.ifmo.enf.optiks.object.ObjectType;
+import ru.ifmo.enf.optiks.panel.ObjectsPanel;
+import ru.ifmo.enf.optiks.util.OverlapTester;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)
@@ -22,24 +26,55 @@ public class EditorScreen implements Screen {
 
     private final SpriteBatch batch;
 
+    private final ObjectsPanel objectsPanel;
+
+    private final Sprite gameObjectsBtn;
+
+    private final Vector3 touchPoint;
+
     public EditorScreen(final OptiksEditor optiksEditor) {
         this.editor = optiksEditor;
         this.camera = optiksEditor.getCamera();
         this.batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
+        touchPoint = new Vector3();
+
+        /* Buttons */
+        gameObjectsBtn = new Sprite(Assets.inst().get(Assets.EDITOR_GAME_OBJECTS_BTN, Texture.class));
+        gameObjectsBtn.setBounds(Gdx.graphics.getWidth() - 70, 6, 64, 64);
+
+        /* Game objects panel*/
+        objectsPanel = new ObjectsPanel();
+        objectsPanel.addItem(ObjectType.LASER, 1);
+        objectsPanel.addItem(ObjectType.AIM, 1);
+        objectsPanel.addItem(ObjectType.MIRROR, 10);
+        objectsPanel.addItem(ObjectType.STATIC_LEGO, -1);
+        objectsPanel.addItem(ObjectType.DYNAMIC_LEGO, 0);
+    }
+
+    public void update() {
+        if (Gdx.input.justTouched()) {
+            camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+            if (OverlapTester.pointInRectangle(gameObjectsBtn.getBoundingRectangle(), touchPoint.x, touchPoint.y)) {
+                if (objectsPanel.isVisible()) {
+                    objectsPanel.hide(batch);
+                } else {
+                    objectsPanel.show(batch);
+                }
+            }
+        }
     }
 
     @Override
     public void render(final float delta) {
         camera.update();
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        if (editor.isLoaded) {
-            batch.begin();
-            batch.draw(Assets.inst().get(Assets.EDITOR_BACKGROUND_TEXTURE, Texture.class), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            batch.draw(Assets.getTextureRegion(ObjectType.LASER), 40, 40, 100, 100);
-            batch.draw(Assets.inst().get(Assets.EDITOR_GAME_OBJECTS_BTN, Texture.class), Gdx.graphics.getWidth()- 100, 30, 70, 70);
-            batch.end();
-        }
+        batch.begin();
+        batch.draw(Assets.inst().get(Assets.EDITOR_BACKGROUND_TEXTURE, Texture.class), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        gameObjectsBtn.draw(batch);
+        objectsPanel.render(batch, delta);
+        batch.end();
+        update();
     }
 
     @Override
@@ -64,5 +99,6 @@ public class EditorScreen implements Screen {
 
     @Override
     public void dispose() {
+        batch.dispose();
     }
 }
