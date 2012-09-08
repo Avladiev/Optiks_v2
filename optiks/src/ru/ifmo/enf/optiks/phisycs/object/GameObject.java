@@ -1,9 +1,8 @@
 package ru.ifmo.enf.optiks.phisycs.object;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
@@ -12,6 +11,8 @@ public abstract class GameObject {
     public static float density;
     public static float friction;
     public static float restitution;
+
+    protected boolean isMovable;
 
     // anchors for Joints
     private final Vector2 anchorA;
@@ -24,6 +25,8 @@ public abstract class GameObject {
 
     private GameObject previous;
     private GameObject next;
+
+    private RevoluteJoint joint;
 
     protected GameObject(final Vector2 anchorA, final Vector2 anchorB, final float gravityScale, final float sizeScale) {
         this.anchorA = anchorA;
@@ -55,7 +58,10 @@ public abstract class GameObject {
             fixture.setDensity(density);
             fixture.setFriction(friction);
             fixture.setRestitution(restitution);
-            Filter filter = new Filter();
+
+            fixture.getShape().setRadius(0.1f);
+
+            final Filter filter = new Filter();
             filter.categoryBits = 1;
             filter.groupIndex = 1;
 //            fixture.setFilterData(filter);
@@ -96,6 +102,44 @@ public abstract class GameObject {
 
     public boolean isCanTouch() {
         return canTouch;
+    }
+
+    public void setBodyType(final BodyDef.BodyType type) {
+        body.setType(type);
+    }
+
+    public Vector2 getWorldCenter() {
+        return body.getWorldCenter();
+    }
+
+    public boolean isMovable() {
+        return isMovable;
+    }
+
+    public void setMovable(final boolean movable) {
+        isMovable = movable;
+    }
+
+    public void stopBody() {
+        body.setAngularVelocity(0);
+        body.setLinearVelocity(0, 0);
+        body.setLinearDamping(0);
+
+        if (hasPrevious()) {
+            getPrevious().stopBody();
+        }
+    }
+
+    public boolean hasPrevious() {
+        return previous != null;
+    }
+
+    public void setJoint(final Joint joint) {
+        this.joint = (RevoluteJoint) joint;
+    }
+
+    public RevoluteJoint getJoint() {
+        return joint;
     }
 }
 

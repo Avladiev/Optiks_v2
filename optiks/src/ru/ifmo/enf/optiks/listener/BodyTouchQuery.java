@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
+import ru.ifmo.enf.optiks.phisycs.utils.Calculate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +14,12 @@ import java.util.List;
  */
 public class BodyTouchQuery {
     private final World world;
-    private BodyQueryCallback bodyQueryCallback;
+    private BodyQueryAABBCallback bodyQueryCallback;
     private final List<GameObject> query;
 
     public BodyTouchQuery(final World world) {
         this.world = world;
-        bodyQueryCallback = new BodyQueryCallback(this);
+        bodyQueryCallback = new BodyQueryAABBCallback(this);
         query = new ArrayList<GameObject>();
     }
 
@@ -27,8 +28,11 @@ public class BodyTouchQuery {
         GameObject queryObject = null;
         double distance = Integer.MAX_VALUE;
         for (final GameObject object : query) {
-            final double tempDistance = calculateDistance(object.getBody().getWorldCenter(), x, y);
-            if (tempDistance <= distance) {
+            if (!object.isMovable()) {
+                continue;
+            }
+            final double tempDistance = Calculate.calculateDistance(object.getBody().getWorldCenter(), x, y);
+            if (tempDistance <= distance && tempDistance < 12) {
                 distance = tempDistance;
                 queryObject = object;
             }
@@ -48,15 +52,7 @@ public class BodyTouchQuery {
         }
     }
 
-    private double calculateDistance(final Vector2 pointA, final Vector2 pointB) {
-        return calculateDistance(pointA, pointB.x, pointB.y);
-    }
-
-    private double calculateDistance(final Vector2 point, final float x2, final float y2) {
-        return Math.sqrt(Math.pow((point.x - x2), 2) + Math.pow((point.y - y2), 2));
-    }
-
     public boolean isRotate(final Vector2 pointA, final Vector2 pointB) {
-        return calculateDistance(pointA, pointB) > 5;
+        return Calculate.calculateDistance(pointA, pointB) > 5;
     }
 }

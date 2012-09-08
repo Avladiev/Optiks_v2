@@ -12,6 +12,8 @@ public class Mirror extends GameObject {
         density = 1;
         friction = 1;
         restitution = 0;
+
+        setMovable(true);
     }
 
     @Override

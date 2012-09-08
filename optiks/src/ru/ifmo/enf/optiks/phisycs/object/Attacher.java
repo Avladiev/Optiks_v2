@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Attacher extends GameObject {
 
     public Attacher() {
-        super(new Vector2(0, 0), new Vector2(0, 16), 1, 20);
+        super(new Vector2(0, 0), new Vector2(0, 18), 1, 20);
         density = 1;
         friction = 1;
         restitution = 0;

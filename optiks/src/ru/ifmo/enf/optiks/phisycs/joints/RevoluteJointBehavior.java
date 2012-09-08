@@ -15,6 +15,13 @@ public class RevoluteJointBehavior {
         jointDef.localAnchorA.set(objectA.getAnchorA());
         jointDef.localAnchorB.set(objectB.getAnchorB());
         jointDef.collideConnected = collideConnected;
+
+        jointDef.enableLimit = true;
+        jointDef.lowerAngle = (float) Math.toRadians(-90);
+        jointDef.upperAngle = (float) Math.toRadians(90);
+
+        jointDef.enableMotor = true;
+        jointDef.maxMotorTorque = 0.01f;
         return jointDef;
     }
 }

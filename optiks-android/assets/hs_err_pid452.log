@@ -1,0 +1,191 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00000000, pid=452, tid=4912
+#
+# JRE version: 6.0_33-b03
+# Java VM: Java HotSpot(TM) Client VM (20.8-b03 mixed mode, sharing windows-x86 )
+# Problematic frame:
+# C  0x00000000
+#
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x03b81c00):  JavaThread "LWJGL Application" [_thread_in_native, id=4912, stack(0x04500000,0x04550000)]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x00000000
+
+Registers:
+EAX=0x08732248, EBX=0x08732188, ECX=0x00000000, EDX=0x00000000
+ESP=0x0454f88c, EBP=0x0454f8a8, ESI=0x08720048, EDI=0x08721308
+EIP=0x00000000, EFLAGS=0x00010202
+
+Top of Stack: (sp=0x0454f88c)
+0x0454f88c:   690921c0 08732188 00000008 03b81c00
+0x0454f89c:   338ca9fb 000000b6 08732188 0454f8d8
+0x0454f8ac:   6909eacf 08732188 03f4df20 087321a8
+0x0454f8bc:   087321a8 016a12b0 016a12b4 016a12c4
+0x0454f8cc:   33a12578 33a12578 03b81c00 0454f8f8
+0x0454f8dc:   690a64f3 03f4df20 08732188 0454f920
+0x0454f8ec:   338cbf00 00000000 338cabc0 0454f93c
+0x0454f8fc:   01709fc7 03b81d28 0454f95c 03f4df20 
+
+Instructions: (pc=0x00000000)
+0xffffffe0:   
+
+
+Register to memory mapping:
+
+EAX=0x08732248 is an unknown value
+EBX=0x08732188 is an unknown value
+ECX=0x00000000 is an unknown value
+EDX=0x00000000 is an unknown value
+ESP=0x0454f88c is pointing into the stack for thread: 0x03b81c00
+EBP=0x0454f8a8 is pointing into the stack for thread: 0x03b81c00
+ESI=0x08720048 is an unknown value
+EDI=0x08721308 is an unknown value
+
+
+Stack: [0x04500000,0x04550000],  sp=0x0454f88c,  free space=318k
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  com.badlogic.gdx.physics.box2d.World.jniDestroyJoint(JJ)V+0
+j  com.badlogic.gdx.physics.box2d.World.destroyJoint(Lcom/badlogic/gdx/physics/box2d/Joint;)V+57
+J  com.badlogic.gdx.backends.lwjgl.LwjglInput.processEvents()V
+j  com.badlogic.gdx.backends.lwjgl.LwjglApplication.mainLoop()V+444
+j  com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run()V+27
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x03c8f800 JavaThread "AssetManager-Loader-Thread" daemon [_thread_blocked, id=4896, stack(0x045e0000,0x04630000)]
+  0x005e9c00 JavaThread "DestroyJavaVM" [_thread_blocked, id=5408, stack(0x00270000,0x002c0000)]
+=>0x03b81c00 JavaThread "LWJGL Application" [_thread_in_native, id=4912, stack(0x04500000,0x04550000)]
+  0x03b1a800 JavaThread "Monitor Ctrl-Break" daemon [_thread_in_native, id=5444, stack(0x03d90000,0x03de0000)]
+  0x0169f000 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=4588, stack(0x039f0000,0x03a40000)]
+  0x0168b400 JavaThread "C1 CompilerThread0" daemon [_thread_blocked, id=4604, stack(0x039a0000,0x039f0000)]
+  0x0168a400 JavaThread "Attach Listener" daemon [_thread_blocked, id=2144, stack(0x03950000,0x039a0000)]
+  0x01685400 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=5460, stack(0x03900000,0x03950000)]
+  0x0167c800 JavaThread "Finalizer" daemon [_thread_blocked, id=5532, stack(0x038b0000,0x03900000)]
+  0x0167b000 JavaThread "Reference Handler" daemon [_thread_blocked, id=5420, stack(0x03860000,0x038b0000)]
+
+Other Threads:
+  0x0163e800 VMThread [stack: 0x03810000,0x03860000] [id=4948]
+  0x016bac00 WatcherThread [stack: 0x03a40000,0x03a90000] [id=3436]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ def new generation   total 4928K, used 3255K [0x237a0000, 0x23cf0000, 0x28cf0000)
+  eden space 4416K,  66% used [0x237a0000, 0x23a80d40, 0x23bf0000)
+  from space 512K,  60% used [0x23bf0000, 0x23c3d068, 0x23c70000)
+  to   space 512K,   0% used [0x23c70000, 0x23c70000, 0x23cf0000)
+ tenured generation   total 10944K, used 270K [0x28cf0000, 0x297a0000, 0x337a0000)
+   the space 10944K,   2% used [0x28cf0000, 0x28d33880, 0x28d33a00, 0x297a0000)
+ compacting perm gen  total 12288K, used 3243K [0x337a0000, 0x343a0000, 0x377a0000)
+   the space 12288K,  26% used [0x337a0000, 0x33acad80, 0x33acae00, 0x343a0000)
+    ro space 10240K,  54% used [0x377a0000, 0x37d1f260, 0x37d1f400, 0x381a0000)
+    rw space 12288K,  55% used [0x381a0000, 0x38843000, 0x38843000, 0x38da0000)
+
+Code Cache  [0x01700000, 0x01820000, 0x03700000)
+ total_blobs=651 nmethods=403 adapters=184 free_code_cache=32379904 largest_free_block=0
+
+Dynamic libraries:
+0x00400000 - 0x00425000 	C:\Program Files\Java\jdk1.6.0_33\bin\java.exe
+0x77790000 - 0x778cc000 	C:\Windows\SYSTEM32\ntdll.dll
+0x76170000 - 0x76244000 	C:\Windows\system32\kernel32.dll
+0x759a0000 - 0x759ea000 	C:\Windows\system32\KERNELBASE.dll
+0x767e0000 - 0x76880000 	C:\Windows\system32\ADVAPI32.dll
+0x76030000 - 0x760dc000 	C:\Windows\system32\msvcrt.dll
+0x75ea0000 - 0x75eb9000 	C:\Windows\SYSTEM32\sechost.dll
+0x75c20000 - 0x75cc1000 	C:\Windows\system32\RPCRT4.dll
+0x7c340000 - 0x7c396000 	C:\Program Files\Java\jdk1.6.0_33\jre\bin\msvcr71.dll
+0x6d8c0000 - 0x6db6f000 	C:\Program Files\Java\jdk1.6.0_33\jre\bin\client\jvm.dll
+0x76880000 - 0x76949000 	C:\Windows\system32\USER32.dll
+0x75fe0000 - 0x7602e000 	C:\Windows\system32\GDI32.dll
+0x77900000 - 0x7790a000 	C:\Windows\system32\LPK.dll
+0x75ec0000 - 0x75f5d000 	C:\Windows\system32\USP10.dll
+0x73e20000 - 0x73e52000 	C:\Windows\system32\WINMM.dll
+0x778d0000 - 0x778ef000 	C:\Windows\system32\IMM32.DLL
+0x76950000 - 0x76a1c000 	C:\Windows\system32\MSCTF.dll
+0x75820000 - 0x7586c000 	C:\Windows\system32\apphelp.dll
+0x6d870000 - 0x6d87c000 	C:\Program Files\Java\jdk1.6.0_33\jre\bin\verify.dll
+0x6d3d0000 - 0x6d3ef000 	C:\Program Files\Java\jdk1.6.0_33\jre\bin\java.dll
+0x6d8b0000 - 0x6d8bf000 	C:\Program Files\Java\jdk1.6.0_33\jre\bin\zip.dll
+0x10000000 - 0x10007000 	C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 11.1.2\bin\breakgen.dll
+0x6d6b0000 - 0x6d6c3000 	C:\Program Files\Java\jdk1.6.0_33\jre\bin\net.dll
+0x77980000 - 0x779b5000 	C:\Windows\system32\WS2_32.dll
+0x75e90000 - 0x75e96000 	C:\Windows\system32\NSI.dll
+0x753f0000 - 0x7542c000 	C:\Windows\system32\mswsock.dll
+0x753e0000 - 0x753e6000 	C:\Windows\System32\wship6.dll
+0x74eb0000 - 0x74eb5000 	C:\Windows\System32\wshtcpip.dll
+0x69080000 - 0x690e3000 	C:\Users\Dududko\AppData\Local\Temp\libgdxDududko\553733341\gdx.dll
+0x03e30000 - 0x03ea3000 	C:\Users\Dududko\AppData\Local\Temp\libgdxDududko\553733341\lwjgl.dll
+0x74610000 - 0x747ae000 	C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.17514_none_41e6975e2bd6f2b2\COMCTL32.dll
+0x77920000 - 0x77977000 	C:\Windows\system32\SHLWAPI.dll
+0x72f80000 - 0x73048000 	C:\Windows\system32\OPENGL32.dll
+0x731f0000 - 0x73212000 	C:\Windows\system32\GLU32.dll
+0x60870000 - 0x60957000 	C:\Windows\system32\DDRAW.dll
+0x73250000 - 0x73256000 	C:\Windows\system32\DCIMAN32.dll
+0x76250000 - 0x763ed000 	C:\Windows\system32\SETUPAPI.dll
+0x75b40000 - 0x75b67000 	C:\Windows\system32\CFGMGR32.dll
+0x765f0000 - 0x7667f000 	C:\Windows\system32\OLEAUT32.dll
+0x76680000 - 0x767dc000 	C:\Windows\system32\ole32.dll
+0x75c00000 - 0x75c12000 	C:\Windows\system32\DEVOBJ.dll
+0x74320000 - 0x74333000 	C:\Windows\system32\dwmapi.dll
+0x74e20000 - 0x74e29000 	C:\Windows\system32\VERSION.dll
+0x04030000 - 0x04091000 	C:\Users\Dududko\AppData\Local\Temp\libgdxDududko\553733341\OpenAL32.dll
+0x76b40000 - 0x7778a000 	C:\Windows\system32\SHELL32.dll
+0x75870000 - 0x7587c000 	C:\Windows\system32\CRYPTBASE.dll
+0x745d0000 - 0x74610000 	C:\Windows\system32\uxtheme.dll
+0x760e0000 - 0x76163000 	C:\Windows\system32\CLBCatQ.DLL
+0x747b0000 - 0x748a5000 	C:\Windows\System32\PROPSYS.dll
+0x759f0000 - 0x75a1d000 	C:\Windows\system32\WINTRUST.dll
+0x75a20000 - 0x75b3e000 	C:\Windows\system32\CRYPT32.dll
+0x75990000 - 0x7599c000 	C:\Windows\system32\MSASN1.dll
+0x5fc70000 - 0x5fce2000 	C:\Windows\system32\dsound.dll
+0x74980000 - 0x749a5000 	C:\Windows\system32\POWRPROF.dll
+0x03eb0000 - 0x03ee7000 	C:\Program Files\Acer\Acer ePower Management\SysHook.dll
+0x72250000 - 0x722a1000 	C:\Windows\system32\WINSPOOL.DRV
+0x74940000 - 0x74979000 	C:\Windows\System32\MMDevApi.dll
+0x73b10000 - 0x73b46000 	C:\Windows\system32\AUDIOSES.DLL
+0x04b00000 - 0x057b3000 	C:\Windows\system32\ig4icd32.dll
+0x6a660000 - 0x6a6d9000 	C:\Windows\system32\mscms.dll
+0x74f80000 - 0x74f97000 	C:\Windows\system32\USERENV.dll
+0x75920000 - 0x7592b000 	C:\Windows\system32\profapi.dll
+0x72ef0000 - 0x72f28000 	C:\Windows\system32\icm32.dll
+0x77910000 - 0x77915000 	C:\Windows\system32\PSAPI.DLL
+
+VM Arguments:
+jvm_args: -Didea.launcher.port=7532 -Didea.launcher.bin.path=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 11.1.2\bin -Dfile.encoding=UTF-8 
+java_command: com.intellij.rt.execution.application.AppMain ru.ifmo.enf.optiks.MainDesktop
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 11.1.2\bin\..\.\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;c:\program files\jetbrains\intellij idea community edition 11.1.2\jre\jre\bin
+USERNAME=Dududko
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=x86 Family 6 Model 42 Stepping 7, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 Build 7601 Service Pack 1
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 42 stepping 7, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, ht
+
+Memory: 4k page, physical 2733936k(1467904k free), swap 5466116k(3716360k free)
+
+vm_info: Java HotSpot(TM) Client VM (20.8-b03) for windows-x86 JRE (1.6.0_33-b03), built on May  9 2012 09:39:57 by "java_re" with MS VC++ 7.1 (VS2003)
+
+time: Sat Aug 25 23:45:02 2012
+elapsed time: 37 seconds
+

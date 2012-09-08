@@ -39,7 +39,7 @@ public class OptiksGame extends Game {
     public void create() {
 
         Assets.inst().load(Assets.GAME_OBJECTS_PACK, TextureAtlas.class);
-        world = new World(new Vector2(0, -10), true);
+        world = new World(new Vector2(0, 0), true);
         factory = new GameObjectFactory(world);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gameScreen = new GameScreen(this);

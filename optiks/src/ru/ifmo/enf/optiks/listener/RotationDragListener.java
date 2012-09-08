@@ -1,50 +1,83 @@
 package ru.ifmo.enf.optiks.listener;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
-import com.sun.istack.internal.NotNull;
+import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 import ru.ifmo.enf.optiks.phisycs.object.Wall;
+import ru.ifmo.enf.optiks.phisycs.object.state.State;
+import ru.ifmo.enf.optiks.phisycs.object.state.StateFactory;
 
 import java.util.Iterator;
 
 /**
  * Author: Dudko Alex (dududko@gmail.com)
  */
-public class RotationDragListener implements GestureDetector.GestureListener {
+public abstract class RotationDragListener implements InputProcessor {
     final World world;
     BodyTouchQuery bodyTouchQuery;
     private MouseJoint mouseJoint;
+    private GameObject activeObject;
+    private State activeObjectState;
+    private boolean isRotate;
 
     public RotationDragListener(final World world) {
         bodyTouchQuery = new BodyTouchQuery(world);
         this.world = world;
     }
 
+    private Vector2 toPhysicsVector(final float x, final float y) {
+        final float pointX = (x - Gdx.graphics.getWidth() / 2) / GameObjectFactory.physicsScale;
+        final float pointY = -(y - Gdx.graphics.getHeight() / 2) / GameObjectFactory.physicsScale;
+        return new Vector2(pointX, pointY);
+    }
+
+    public MouseJoint getMouseJoint() {
+        return mouseJoint;
+    }
+
     @Override
-    public boolean touchDown(final int x, final int y, final int pointer) {
+    public boolean keyDown(final int keycode) {
+        //todo
+        return false;
+    }
 
+    @Override
+    public boolean keyUp(final int keycode) {
+        //todo
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(final char character) {
+        //todo
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(final int x, final int y, final int pointer, final int button) {
         final Vector2 vector = toPhysicsVector(x, y);
-        @NotNull final GameObject object = bodyTouchQuery.getQueryBody(vector.x, vector.y);
+        activeObject = bodyTouchQuery.getQueryBody(vector.x, vector.y);
 
-        if (object == null) {
+        if (activeObject == null) {
             return true;
         }
 
-        final boolean isRotate = bodyTouchQuery.isRotate(object.getBody().getWorldCenter(), vector);
+        isRotate = bodyTouchQuery.isRotate(activeObject.getBody().getWorldCenter(), vector);
+        isRotate = true;
+        activeObjectState = StateFactory.createActiveObjectState(activeObject, isRotate);
+        activeObjectState.setPreState();
 
-        //todo
-        object.getBody().setGravityScale(0);
-//        object.getBody().setLinearVelocity(0, 0);
         final MouseJointDef mouseJointDef = new MouseJointDef();
 
         Body body = null;
         Iterator<Body> bodies = world.getBodies();
+        // todo Ground Body !!!!!!!
         while (bodies.hasNext()) {
             body = bodies.next();
             System.out.println(body.getUserData().toString());
@@ -56,60 +89,53 @@ public class RotationDragListener implements GestureDetector.GestureListener {
 
         System.out.println(((GameObject) body.getUserData()).toString());
         mouseJointDef.bodyA = body;
-        mouseJointDef.bodyB = object.getBody();
-        mouseJointDef.dampingRatio = 90f;
-        mouseJointDef.frequencyHz = 300;
+        mouseJointDef.bodyB = activeObject.getBody();
+        mouseJointDef.dampingRatio = 7;
+        mouseJointDef.frequencyHz = 10;
         mouseJointDef.maxForce = 100000f;
         mouseJointDef.collideConnected = true;
         mouseJointDef.target.set(vector);
         mouseJoint = (MouseJoint) world.createJoint(mouseJointDef);
-        return false;
-    }
-
-    @Override
-    public boolean tap(final int x, final int y, final int count) {
         //todo
         return false;
     }
 
     @Override
-    public boolean longPress(final int x, final int y) {
+    public boolean touchUp(final int x, final int y, final int pointer, final int button) {
+        if (mouseJoint != null) {
+            world.destroyJoint(mouseJoint);
+            activeObject.stopBody();
+
+            activeObjectState.setPostState();
+
+            activeObjectState = null;
+            activeObject = null;
+            mouseJoint = null;
+        }
         //todo
         return false;
     }
 
     @Override
-    public boolean fling(final float velocityX, final float velocityY) {
-        //todo
-        return false;
-    }
-
-    @Override
-    public boolean pan(final int x, final int y, final int deltaX, final int deltaY) {
+    public boolean touchDragged(final int x, final int y, final int pointer) {
+        if (mouseJoint == null) {
+            return true;
+        }
         mouseJoint.setTarget(toPhysicsVector(x, y));
         //todo
         return false;
     }
 
     @Override
-    public boolean zoom(final float originalDistance, final float currentDistance) {
+    public boolean touchMoved(final int x, final int y) {
         //todo
         return false;
     }
 
     @Override
-    public boolean pinch(final Vector2 initialFirstPointer, final Vector2 initialSecondPointer, final Vector2 firstPointer, final Vector2 secondPointer) {
+    public boolean scrolled(final int amount) {
         //todo
         return false;
     }
-
-    private Vector2 toPhysicsVector(final float x, final float y) {
-        final float pointX = (x - Gdx.graphics.getWidth() / 2) / 5;
-        final float pointY = -(y - Gdx.graphics.getHeight() / 2) / 5;
-        return new Vector2(pointX, pointY);
-    }
-
-    public MouseJoint getMouseJoint() {
-        return mouseJoint;
-    }
 }
+

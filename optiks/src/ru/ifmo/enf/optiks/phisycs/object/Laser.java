@@ -12,6 +12,8 @@ public class Laser extends GameObject {
         density = 0;
         friction = 0;
         restitution = 0;
+
+        setMovable(true);
     }
 
     @Override

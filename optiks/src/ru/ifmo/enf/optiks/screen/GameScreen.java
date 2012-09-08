@@ -5,12 +5,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sun.istack.internal.NotNull;
 import ru.ifmo.enf.optiks.OptiksGame;
-import ru.ifmo.enf.optiks.listener.RotationDragListener;
+import ru.ifmo.enf.optiks.listener.RotationDragListenerPlay;
 import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
 import ru.ifmo.enf.optiks.phisycs.PhysicWorldUpdater;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
@@ -29,9 +28,7 @@ public class GameScreen implements Screen {
     private final Box2DDebugRenderer render;
     private final SpriteBatch batch;
 
-//    private final LaserListener laserListener;
-//    private final MirrorListener mirrorListener;
-    private final RotationDragListener rotationDragListener;
+//    private final RotationDragListenerSpider rotationDragListener;
 
     private GameObject[] buttons;
 //    private PhysicsAnimatedGameObject[] attacherObjects;
@@ -43,8 +40,8 @@ public class GameScreen implements Screen {
         this.camera = optiksGame.getCamera();
         this.batch = new SpriteBatch();
 
-        rotationDragListener = new RotationDragListener(world);
-        Gdx.input.setInputProcessor(new GestureDetector(rotationDragListener));
+//        Gdx.input.setInputProcessor(new GestureDetector(new RotationDragListenerSpider(world)));
+        Gdx.input.setInputProcessor(new RotationDragListenerPlay(world));
 //        laserListener = new LaserListener();
 //        mirrorListener = new MirrorListener(this.world);
         render = new Box2DDebugRenderer(true, true, false, true);
@@ -84,7 +81,7 @@ public class GameScreen implements Screen {
         }*/
         batch.end();
 
-        render.render(world, camera.projection.scale(5, 5, 5));
+        render.render(world, camera.projection.scale(GameObjectFactory.physicsScale, GameObjectFactory.physicsScale, GameObjectFactory.physicsScale));
         //todo
     }
 

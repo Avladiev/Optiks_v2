@@ -21,6 +21,8 @@ import java.util.List;
  */
 public final class GameObjectFactory {
 
+    public static float physicsScale = 5;
+
     //  physics world
     private final World world;
 
@@ -64,11 +66,9 @@ public final class GameObjectFactory {
             current.setNext(next);
             next.setPrevious(current);
             // todo collide connection
-            if (next instanceof Laser) {
-                world.createJoint(RevoluteJointBehavior.createRevoluteJoint(next, current, false));
-            } else {
-                world.createJoint(RevoluteJointBehavior.createRevoluteJoint(next, current, true));
-            }
+
+            next.setJoint(world.createJoint(RevoluteJointBehavior.createRevoluteJoint(next, current, true)));
+
             current = next;
         }
         attacher.getBody().setType(BodyDef.BodyType.StaticBody);
@@ -116,7 +116,7 @@ public final class GameObjectFactory {
         }
         final Body body = world.createBody(createBodyDef(objectContainer.getPos(), objectContainer.getAngle(), BodyDef.BodyType.DynamicBody));
         object.setBody(body);
-//        body.setGravityScale(0);
+        body.setGravityScale(0);
         createFixture(body, objectContainer.getObjectType(), object.getSizeScale());
         object.setFixtureProperties();
         return object;

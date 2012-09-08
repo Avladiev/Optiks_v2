@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ru.ifmo.enf.optiks.OptiksEditor;
 import ru.ifmo.enf.optiks.graphics.Assets;
-import ru.ifmo.enf.optiks.object.ObjectType;
+import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)
@@ -36,7 +36,7 @@ public class EditorScreen implements Screen {
         if (editor.isLoaded) {
             batch.begin();
             batch.draw(Assets.inst().get(Assets.EDITOR_BACKGROUND_TEXTURE, Texture.class), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            batch.draw(Assets.getTextureRegion(ObjectType.LASER), 40, 40, 100, 100);
+            batch.draw(Assets.getTextureRegion(ObjectType.AIM), 40, 40, 100, 100);
             batch.draw(Assets.inst().get(Assets.EDITOR_GAME_OBJECTS_BTN, Texture.class), Gdx.graphics.getWidth()- 100, 30, 70, 70);
             batch.end();
         }

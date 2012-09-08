@@ -208,7 +208,9 @@
         <root url="jar://$PROJECT_DIR$/optiks-android/libs/gdx-backend-android-sources.jar!/" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/optiks-android/libs/gdx-backend-android-sources.jar!/" />
+      </SOURCES>
     </library>
     <library name="desktop">
       <CLASSES>
@@ -235,6 +237,7 @@
         <root url="jar://$PROJECT_DIR$/optiks/libs/tween-engine-api-sources.jar!/" />
         <root url="jar://$PROJECT_DIR$/optiks/libs/gdx-sources.jar!/" />
         <root url="jar://$PROJECT_DIR$/optiks/libs/gson-2.2.2-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/optiks/libs/bodyeditor-loader-sources.jar!/" />
       </SOURCES>
     </library>
   </component>
