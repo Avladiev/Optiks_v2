@@ -1,6 +1,7 @@
 package ru.ifmo.enf.optiks.phisycs.object;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
 
 /**
  * Author: Dudko Alex (dududko@gmail.com)
@@ -8,8 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 public class Laser extends GameObject {
 
     public Laser() {
-        super(new Vector2(0, 0), new Vector2(0, 0), 1, 20);
-        density = 0;
+        super(new Vector2(0, 0), new Vector2(0, 0), 1, 20, 60);
+        density = 1;
         friction = 0;
         restitution = 0;
 
@@ -17,7 +18,7 @@ public class Laser extends GameObject {
     }
 
     @Override
-    public void bulletHitReaction(final Bullet bullet) {
+    public void bulletHitReaction(final Bullet bullet, final Fixture fixtureA) {
         bullet.stop();
     }
 }

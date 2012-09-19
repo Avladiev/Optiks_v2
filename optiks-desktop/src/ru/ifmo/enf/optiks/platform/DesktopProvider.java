@@ -109,6 +109,6 @@ public class DesktopProvider implements Provider {
 
     @Override
     public Vector2 getResolution() {
-        return new Vector2(0, 0);
+        return new Vector2(800, 470);
     }
 }

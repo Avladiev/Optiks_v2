@@ -7,6 +7,7 @@ import ru.ifmo.enf.optiks.phisycs.object.GameObject;
  */
 public abstract class State {
     State previous;
+    State next;
     GameObject gameObject;
 
     protected State(final GameObject gameObject) {
@@ -16,7 +17,10 @@ public abstract class State {
     public void setPreState() {
         setPreProperties();
         if (previous != null) {
-            previous.setPreProperties();
+            previous.setPreState();
+        }
+        if (next != null) {
+            next.setPreState();
         }
     }
 
@@ -24,8 +28,12 @@ public abstract class State {
 
     public void setPostState() {
         setPostProperties();
+        gameObject.stopBody();
         if (previous != null) {
-            previous.setPostProperties();
+            previous.setPostState();
+        }
+        if (next != null) {
+            next.setPostState();
         }
     }
 

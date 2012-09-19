@@ -1,27 +1,28 @@
 package ru.ifmo.enf.optiks.phisycs.object.state;
 
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 
 /**
  * Author: Dudko Alex (dududko@gmail.com)
  */
-public class RotationState extends State {
-    public RotationState(final GameObject gameObject) {
+public class StaticState extends State {
+    BodyDef.BodyType type;
+
+    public StaticState(final GameObject gameObject) {
         super(gameObject);
-        if (gameObject.hasPrevious()) {
-            previous = new StaticState(gameObject.getPrevious());
-        }
+        type = gameObject.getBody().getType();
     }
 
     @Override
     protected void setPreProperties() {
         //todo
-
+        gameObject.getBody().setType(BodyDef.BodyType.StaticBody);
     }
 
     @Override
     protected void setPostProperties() {
         //todo
-
+        gameObject.getBody().setType(type);
     }
 }

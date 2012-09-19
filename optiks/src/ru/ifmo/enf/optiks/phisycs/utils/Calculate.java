@@ -15,6 +15,16 @@ public class Calculate {
         return new Vector2(pointX, pointY);
     }
 
+    public static  Vector2 toGraphicsVector(final float x, final float y) {
+        final float pointX = x * GameObjectFactory.physicsScale + Gdx.graphics.getWidth() / 2;
+        final float pointY = - y * GameObjectFactory.physicsScale + Gdx.graphics.getHeight() / 2;
+        return new Vector2(pointX, pointY);
+    }
+
+    public static Vector2 toGraphicsVector(final Vector2 vector2) {
+        return toPhysicsVector(vector2.x, vector2.y);
+    }
+
     public static double calculateDistance(final Vector2 point, final float x2, final float y2) {
         return Math.sqrt(Math.pow((point.x - x2), 2) + Math.pow((point.y - y2), 2));
     }

@@ -2,6 +2,8 @@ package ru.ifmo.enf.optiks.listener;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 import ru.ifmo.enf.optiks.phisycs.utils.Calculate;
@@ -17,6 +19,20 @@ public class BodyTouchQuery {
     private BodyQueryAABBCallback bodyQueryCallback;
     private final List<GameObject> query;
 
+    private class BodyQueryAABBCallback implements QueryCallback {
+        private final BodyTouchQuery bodyTouchQuery;
+
+        public BodyQueryAABBCallback(final BodyTouchQuery bodyTouchQuery) {
+            this.bodyTouchQuery = bodyTouchQuery;
+        }
+
+        @Override
+        public boolean reportFixture(final Fixture fixture) {
+            bodyTouchQuery.addQueryBody(fixture.getBody());
+            return true;
+        }
+    }
+
     public BodyTouchQuery(final World world) {
         this.world = world;
         bodyQueryCallback = new BodyQueryAABBCallback(this);
@@ -24,7 +40,7 @@ public class BodyTouchQuery {
     }
 
     public GameObject getQueryBody(final float x, final float y) {
-        world.QueryAABB(bodyQueryCallback, x, y, x, y);
+        world.QueryAABB(bodyQueryCallback, x - 0.5f, y - 0.5f, x + 0.5f, y + 0.5f);
         GameObject queryObject = null;
         double distance = Integer.MAX_VALUE;
         for (final GameObject object : query) {

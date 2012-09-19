@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.sun.istack.internal.NotNull;
-import ru.ifmo.enf.optiks.phisycs.joints.RevoluteJointBehavior;
+import ru.ifmo.enf.optiks.phisycs.joint.RevoluteJointBehavior;
 import ru.ifmo.enf.optiks.phisycs.object.*;
 import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
 import ru.ifmo.enf.optiks.phisycs.object.container.ObjectContainer;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public final class GameObjectFactory {
 
-    public static float physicsScale = 5;
+    public static float physicsScale = 3f;
 
     //  physics world
     private final World world;
@@ -54,6 +54,9 @@ public final class GameObjectFactory {
         for (final SimpleObjectСontainer simpleObjectСontainer : level.getSimpleObjectСontainers()) {
             list.add(createGameObject(simpleObjectСontainer));
         }
+        for (final GameObject object : list) {
+            object.setActive(true);
+        }
     }
 
     private GameObject createMultiplexGameObject(final ObjectContainer objectContainer) {
@@ -67,7 +70,11 @@ public final class GameObjectFactory {
             next.setPrevious(current);
             // todo collide connection
 
-            next.setJoint(world.createJoint(RevoluteJointBehavior.createRevoluteJoint(next, current, true)));
+            boolean collide = true;
+            if (next instanceof Laser) {
+                collide = false;
+            }
+            next.setJoint(world.createJoint(RevoluteJointBehavior.createRevoluteJoint(next, current, collide)));
 
             current = next;
         }
@@ -119,6 +126,7 @@ public final class GameObjectFactory {
         body.setGravityScale(0);
         createFixture(body, objectContainer.getObjectType(), object.getSizeScale());
         object.setFixtureProperties();
+        object.getBody().setActive(false);
         return object;
     }
 
@@ -134,6 +142,13 @@ public final class GameObjectFactory {
     private void createFixture(final Body body, final ObjectType objectType, final float sizeScale) {
         //todo collision filter
         loader.attachFixture(body, objectType.toString(), new FixtureDef(), sizeScale);
+        for (Fixture fixture : body.getFixtureList()) {
+            if (fixture.getShape() instanceof CircleShape) {
+
+            } else {
+                fixture.getShape().setRadius(0.1f);
+            }
+        }
     }
 
     private GameObject createWall(final float width, final float height) {
@@ -148,7 +163,7 @@ public final class GameObjectFactory {
 
         final PolygonShape groundShape = new PolygonShape();
         groundShape.setAsBox(width, 1, new Vector2(0, -height), 0);
-//        groundShape.setRadius(2);
+        groundShape.setRadius(2);
 
         final PolygonShape leftShape = new PolygonShape();
         leftShape.setAsBox(1, height, new Vector2(-width, 0), 0);

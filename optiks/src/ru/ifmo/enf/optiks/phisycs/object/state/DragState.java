@@ -9,17 +9,20 @@ public class DragState extends State {
 
     public DragState(final GameObject gameObject) {
         super(gameObject);
+        if (gameObject.hasNext()) {
+            next = new FixedAngleState(gameObject.getNext());
+        }
+        if (gameObject.hasPrevious()) {
+            previous = new StaticState(gameObject.getPrevious());
+        }
     }
 
     @Override
     protected void setPreProperties() {
-        //todo
-        gameObject.getBody().setFixedRotation(true);
+
     }
 
     @Override
     protected void setPostProperties() {
-        //todo
-        gameObject.getBody().setFixedRotation(false);
     }
 }

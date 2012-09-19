@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sun.istack.internal.NotNull;
@@ -12,6 +13,7 @@ import ru.ifmo.enf.optiks.OptiksGame;
 import ru.ifmo.enf.optiks.listener.RotationDragListenerPlay;
 import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
 import ru.ifmo.enf.optiks.phisycs.PhysicWorldUpdater;
+import ru.ifmo.enf.optiks.phisycs.contact.CollisionListener;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
 
@@ -21,12 +23,14 @@ import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
 public class GameScreen implements Screen {
 
     private final OptiksGame optiksGame;
-    private final GameObjectFactory factory;
+
     private final World world;
+    private final GameObjectFactory factory;
     private final OrthographicCamera camera;
 
     private final Box2DDebugRenderer render;
     private final SpriteBatch batch;
+    private final ShapeRenderer shapeRenderer;
 
 //    private final RotationDragListenerSpider rotationDragListener;
 
@@ -40,11 +44,14 @@ public class GameScreen implements Screen {
         this.camera = optiksGame.getCamera();
         this.batch = new SpriteBatch();
 
+        world.setContactListener(new CollisionListener());
+
 //        Gdx.input.setInputProcessor(new GestureDetector(new RotationDragListenerSpider(world)));
         Gdx.input.setInputProcessor(new RotationDragListenerPlay(world));
 //        laserListener = new LaserListener();
 //        mirrorListener = new MirrorListener(this.world);
         render = new Box2DDebugRenderer(true, true, false, true);
+        shapeRenderer = new ShapeRenderer(10);
     }
 
     /**
@@ -55,8 +62,7 @@ public class GameScreen implements Screen {
      */
 
     public void setLevel(@NotNull final LevelContainer level) {
-//        factory.setLevel(level, OptiksGame.width / 2, OptiksGame.height / 2);
-        factory.setLevel(level, 800 / 10 + 2, 480 / 10 + 2);
+        factory.setLevel(level, OptiksGame.width / 10 + 2, OptiksGame.height / 10 + 2);
     }
 
     @Override
@@ -69,6 +75,12 @@ public class GameScreen implements Screen {
         camera.update();
 
         batch.setProjectionMatrix(camera.combined);
+
+        shapeRenderer.setProjectionMatrix(camera.combined);
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.line(100, 10, 0, 0);
+        shapeRenderer.end();
 
         batch.begin();
 /*

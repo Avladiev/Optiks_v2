@@ -55,6 +55,6 @@ public class AndroidProvider implements Provider {
 
     @Override
     public Vector2 getResolution() {
-        return new Vector2(10, 10);
+        return new Vector2(800, 470);
     }
 }

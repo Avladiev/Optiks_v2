@@ -15,7 +15,7 @@ public class MainDesktop {
         cfg.title = "Optiks";
         cfg.useGL20 = true;
         cfg.width = 800;
-        cfg.height = 480;
+        cfg.height = 470;
         final File file = new File("levels.json");
 
         final Provider provider = new DesktopProvider(file);

@@ -26,14 +26,17 @@ public abstract class GameObject {
     private GameObject previous;
     private GameObject next;
 
+    private float jointAngle;
+
     private RevoluteJoint joint;
 
-    protected GameObject(final Vector2 anchorA, final Vector2 anchorB, final float gravityScale, final float sizeScale) {
+    protected GameObject(final Vector2 anchorA, final Vector2 anchorB, final float gravityScale, final float sizeScale, final float jointAngle) {
         this.anchorA = anchorA;
         this.anchorB = anchorB;
         this.gravityScale = gravityScale;
         this.sizeScale = sizeScale;
         this.canTouch = true;
+        this.jointAngle = jointAngle;
     }
 
     public Body getBody() {
@@ -59,7 +62,7 @@ public abstract class GameObject {
             fixture.setFriction(friction);
             fixture.setRestitution(restitution);
 
-            fixture.getShape().setRadius(0.1f);
+//            fixture.getShape().setRadius(0.1f);
 
             final Filter filter = new Filter();
             filter.categoryBits = 1;
@@ -91,9 +94,11 @@ public abstract class GameObject {
 
     /**
      * reaction on the bullet hit
+     *
      * @param bullet
+     * @param fixtureA
      */
-    public abstract void bulletHitReaction(final Bullet bullet);
+    public abstract void bulletHitReaction(final Bullet bullet, final Fixture fixtureA);
 
     public void gravityOn() {
         getBody().setGravityScale(gravityScale);
@@ -124,14 +129,14 @@ public abstract class GameObject {
         body.setAngularVelocity(0);
         body.setLinearVelocity(0, 0);
         body.setLinearDamping(0);
-
-        if (hasPrevious()) {
-            getPrevious().stopBody();
-        }
     }
 
     public boolean hasPrevious() {
         return previous != null;
+    }
+
+    public boolean hasNext() {
+        return next != null;
     }
 
     public void setJoint(final Joint joint) {
@@ -140,6 +145,17 @@ public abstract class GameObject {
 
     public RevoluteJoint getJoint() {
         return joint;
+    }
+
+    public float getJointAngle() {
+        return jointAngle;
+    }
+
+    public void setActive(final boolean isActive) {
+        body.setActive(isActive);
+        if (hasNext()) {
+            getNext().setActive(isActive);
+        }
     }
 }
 

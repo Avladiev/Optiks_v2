@@ -16,6 +16,7 @@ import ru.ifmo.enf.optiks.screen.MenuScreen;
 public class OptiksGame extends Game {
 
     private final Provider provider;
+
     public static float width;
     public static float height;
 
@@ -76,6 +77,7 @@ public class OptiksGame extends Game {
 
     @Override
     public void render() {
+        Gdx.graphics.getGL20().glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //todo
         //super.render();
         if (isLoaded) {

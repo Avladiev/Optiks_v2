@@ -25,6 +25,7 @@ public class MainActivity extends AndroidApplication {
 
 
 
+
         final Display display = getWindowManager().getDefaultDisplay();
         Log.d("xxxxxxxxxxxxxxx", "h = " + display.getHeight() + " w =" + display.getWidth());
 
