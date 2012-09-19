@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.graphics.Assets;
+import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
 
 /**
@@ -15,10 +18,10 @@ import ru.ifmo.enf.optiks.screen.EditorScreen;
  */
 public class OptiksEditor extends Game {
 
+    private World world;
+    private GameObjectFactory factory;
     private OrthographicCamera camera;
-
     public boolean isLoaded = false;
-
     @Override
     public void create() {
 
@@ -31,6 +34,10 @@ public class OptiksEditor extends Game {
         Assets.inst().load(Assets.EDITOR_BACKGROUND_TEXTURE, Texture.class);
         Assets.inst().load(Assets.EDITOR_GAME_OBJECTS_BTN, Texture.class);
         Assets.inst().load(Assets.EDITOR_GAME_OBJECTS_BG, Texture.class);
+
+        /* Physics world */
+        world = new World(new Vector2(0, -10), true);
+        factory = new GameObjectFactory(world);
     }
 
     @Override
@@ -47,6 +54,14 @@ public class OptiksEditor extends Game {
                 isLoaded = true;
             }
         }
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public GameObjectFactory getFactory() {
+        return factory;
     }
 
     public Camera getCamera() {
