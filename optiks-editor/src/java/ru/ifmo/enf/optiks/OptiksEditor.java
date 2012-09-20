@@ -22,6 +22,7 @@ public class OptiksEditor extends Game {
     private GameObjectFactory factory;
     private OrthographicCamera camera;
     public boolean isLoaded = false;
+
     @Override
     public void create() {
 

@@ -21,7 +21,6 @@ public class ObjPanelItemAccessor implements TweenAccessor<ObjPanelItem> {
             default:
                 assert false;
                 return -1;
-
         }
     }
 
