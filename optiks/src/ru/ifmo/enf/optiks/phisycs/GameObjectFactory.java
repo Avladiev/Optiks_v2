@@ -82,7 +82,7 @@ public final class GameObjectFactory {
         return attacher;
     }
 
-    private GameObject createGameObject(final SimpleObjectСontainer objectContainer) {
+    public GameObject createGameObject(final SimpleObjectСontainer objectContainer) {
         GameObject object = null;
         switch (objectContainer.getObjectType()) {
             case STATIC_CIRCLE_ATTACHER:
@@ -151,7 +151,7 @@ public final class GameObjectFactory {
         }
     }
 
-    private GameObject createWall(final float width, final float height) {
+    public GameObject createWall(final float width, final float height) {
         final Body body = world.createBody(createBodyDef(new Vector2(0, 0), 0, BodyDef.BodyType.StaticBody));
         final GameObject wall = new Wall();
         wall.setBody(body);
