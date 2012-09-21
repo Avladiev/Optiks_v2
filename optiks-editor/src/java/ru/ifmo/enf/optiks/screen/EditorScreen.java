@@ -1,6 +1,8 @@
 package ru.ifmo.enf.optiks.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
@@ -8,16 +10,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import ru.ifmo.enf.optiks.OptiksEditor;
 import ru.ifmo.enf.optiks.graphics.Assets;
+import ru.ifmo.enf.optiks.listeners.GameObjectListener;
 import ru.ifmo.enf.optiks.listeners.ObjPanelScrollListener;
 import ru.ifmo.enf.optiks.panel.ObjectsPanel;
 import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
+import ru.ifmo.enf.optiks.phisycs.PhysicWorldUpdater;
+import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
+import ru.ifmo.enf.optiks.phisycs.object.container.SimpleObjectСontainer;
 import ru.ifmo.enf.optiks.util.OverlapTester;
 
 /**
@@ -33,9 +40,10 @@ public class EditorScreen implements Screen {
     private final SpriteBatch batch;
     private final Sprite gameObjectsBtn;
     private final Vector3 touchPoint;
-    private MouseJoint mouseJoint;
     private final Box2DDebugRenderer render;
-    //private GameObject wall;
+    private final GameObject wall;
+
+    private MouseJoint mouseJoint = null;
 
     public EditorScreen(final OptiksEditor optiksEditor) {
 
@@ -51,7 +59,11 @@ public class EditorScreen implements Screen {
         touchPoint = new Vector3();
 
         /* Screen border */
-        //wall = factory.createWall(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        wall = factory.createWall(135, 80);
+        final GameObject laser = factory.createGameObject(new SimpleObjectСontainer(new Vector2(0, 0), 90, ObjectType.LASER));
+        laser.setActive(true);
+        laser.getBody().resetMassData();
+        laser.getBody().setGravityScale(1);
 
         /* Buttons */
         gameObjectsBtn = new Sprite(Assets.inst().get(Assets.EDITOR_GAME_OBJECTS_BTN, Texture.class));
@@ -67,13 +79,23 @@ public class EditorScreen implements Screen {
 
         // Gesture Listener for objectsPanel
         final GestureDetector.GestureListener gestureListener = new ObjPanelScrollListener(this);
-        Gdx.input.setInputProcessor(new GestureDetector(gestureListener));
+
+        /* Input Processor for game objects */
+        final InputProcessor gameObjectListener = new GameObjectListener(this);
+
+        /* Multi input processor, contains all processors */
+        final InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(new GestureDetector(gestureListener));
+        inputMultiplexer.addProcessor(gameObjectListener);
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
     public void render(final float delta) {
         camera.update();
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+        world.step(1 / 60f, 3, 8);
+        world.clearForces();
         batch.begin();
         batch.draw(Assets.inst().get(Assets.EDITOR_BACKGROUND_TEXTURE, Texture.class), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gameObjectsBtn.draw(batch);
@@ -128,9 +150,9 @@ public class EditorScreen implements Screen {
         return camera;
     }
 
-    /*public GameObject getWall() {
+    public GameObject getWall() {
         return wall;
-    }*/
+    }
 
     private void update() {
         if (Gdx.input.justTouched()) {
