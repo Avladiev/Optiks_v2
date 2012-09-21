@@ -32,6 +32,8 @@ public final class GameObjectFactory {
     //  Fixture loader
     private final BodyEditorLoader loader;
 
+    private Bullet bullet;
+
     /**
      * Fixture bits for each objects
      * need to set collision groups
@@ -72,9 +74,12 @@ public final class GameObjectFactory {
 
             boolean collide = true;
             if (next instanceof Laser) {
+                this.bullet = createBullet(next);
                 collide = false;
             }
             next.setJoint(world.createJoint(RevoluteJointBehavior.createRevoluteJoint(next, current, collide)));
+//            RevoluteJoint joint = next.getJoint();
+//            joint.setLimits(joint.getJointAngle(), joint.getJointAngle());
 
             current = next;
         }
@@ -99,8 +104,6 @@ public final class GameObjectFactory {
                 break;
             case AIM:
                 object = new Aim();
-                break;
-            case BULLET:
                 break;
             case MIRROR:
                 object = new Mirror();
@@ -128,6 +131,15 @@ public final class GameObjectFactory {
         object.setFixtureProperties();
         object.getBody().setActive(false);
         return object;
+    }
+
+    private Bullet createBullet(final GameObject laser) {
+        Body body = world.createBody(createBodyDef(new Vector2(0, 0), 0, BodyDef.BodyType.DynamicBody));
+        CircleShape shape = new CircleShape();
+        shape.setRadius(1);
+        shape.setPosition(new Vector2(0, 0));
+        body.createFixture(shape, 0);
+        return new Bullet(laser, body);
     }
 
     private BodyDef createBodyDef(final Vector2 vec, final float angle, final BodyDef.BodyType bodyType) {
@@ -179,5 +191,9 @@ public final class GameObjectFactory {
         body.createFixture(rightShape, 0);
 
         return wall;
+    }
+
+    public Bullet getBullet() {
+        return bullet;
     }
 }

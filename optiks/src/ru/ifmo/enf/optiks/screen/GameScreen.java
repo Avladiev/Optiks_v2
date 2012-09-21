@@ -1,21 +1,29 @@
 package ru.ifmo.enf.optiks.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sun.istack.internal.NotNull;
 import ru.ifmo.enf.optiks.OptiksGame;
+import ru.ifmo.enf.optiks.listener.ButtonTapListener;
 import ru.ifmo.enf.optiks.listener.RotationDragListenerPlay;
 import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
 import ru.ifmo.enf.optiks.phisycs.PhysicWorldUpdater;
 import ru.ifmo.enf.optiks.phisycs.contact.CollisionListener;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
+import ru.ifmo.enf.optiks.phisycs.util.Calculate;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
@@ -32,6 +40,10 @@ public class GameScreen implements Screen {
     private final SpriteBatch batch;
     private final ShapeRenderer shapeRenderer;
 
+    private final RotationDragListenerPlay rotationDragListenerPlay;
+    private final ButtonTapListener buttonTapListener;
+
+
 //    private final RotationDragListenerSpider rotationDragListener;
 
     private GameObject[] buttons;
@@ -43,13 +55,17 @@ public class GameScreen implements Screen {
         this.factory = optiksGame.getFactory();
         this.camera = optiksGame.getCamera();
         this.batch = new SpriteBatch();
+        this.rotationDragListenerPlay = new RotationDragListenerPlay(world);
+        this.buttonTapListener = new ButtonTapListener(this);
 
         world.setContactListener(new CollisionListener());
 
-//        Gdx.input.setInputProcessor(new GestureDetector(new RotationDragListenerSpider(world)));
-        Gdx.input.setInputProcessor(new RotationDragListenerPlay(world));
-//        laserListener = new LaserListener();
-//        mirrorListener = new MirrorListener(this.world);
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(new GestureDetector(buttonTapListener));
+        inputMultiplexer.addProcessor(rotationDragListenerPlay);
+
+        Gdx.input.setInputProcessor(inputMultiplexer);
+
         render = new Box2DDebugRenderer(true, true, false, true);
         shapeRenderer = new ShapeRenderer(10);
     }
@@ -63,6 +79,7 @@ public class GameScreen implements Screen {
 
     public void setLevel(@NotNull final LevelContainer level) {
         factory.setLevel(level, OptiksGame.width / 10 + 2, OptiksGame.height / 10 + 2);
+        buttonTapListener.setBullet(factory.getBullet());
     }
 
     @Override
@@ -78,10 +95,33 @@ public class GameScreen implements Screen {
 
         shapeRenderer.setProjectionMatrix(camera.combined);
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.line(100, 10, 0, 0);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Rectangle);
+        shapeRenderer.rect(-230, 90, 40, 40);
         shapeRenderer.end();
 
+        if (factory.getBullet() != null) {
+            ArrayList<Vector2> list = factory.getBullet().getCollisionPoints();
+            if (list != null) {
+                Iterator<Vector2> iterator = list.iterator();
+
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                Vector2 vec1;
+                if (iterator.hasNext()) {
+                    vec1 = new Vector2(iterator.next());
+                    if (vec1 != null) {
+                        vec1 = Calculate.physicsToCameraVector(vec1.x, vec1.y);
+                        while (iterator.hasNext()) {
+                            Vector2 vec2 = new Vector2(iterator.next());
+                            vec2 = Calculate.physicsToCameraVector(vec2.x, vec2.y);
+
+                            shapeRenderer.line(vec1.x, vec1.y, vec2.x, vec2.y);
+                            vec1 = vec2;
+                        }
+                    }
+                }
+                shapeRenderer.end();
+            }
+        }
         batch.begin();
 /*
         for (final GameObject object : buttons) {
@@ -125,5 +165,9 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         //todo
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
     }
 }

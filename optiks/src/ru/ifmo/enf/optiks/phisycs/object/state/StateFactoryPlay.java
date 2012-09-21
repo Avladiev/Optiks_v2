@@ -7,14 +7,12 @@ import ru.ifmo.enf.optiks.phisycs.object.GameObject;
  */
 public class StateFactoryPlay implements StateFactory{
     public State createActiveObjectState(final GameObject gameObject, final boolean isRotate) {
-        if (gameObject.hasNext()) {
-            return new DragState(gameObject);
-        } else {
-            if (isRotate) {
-                return new RotationState(gameObject);
-            } else {
-                return new DragWithoutNextState(gameObject);
-            }
+        if (!gameObject.hasNext() && !gameObject.hasPrevious()) {
+            return new DragSingleObjectState(gameObject);
         }
+        if (!gameObject.hasNext() && !isRotate) {
+            return new DragWithoutNextState(gameObject);
+        }
+        return new DragState(gameObject);
     }
 }

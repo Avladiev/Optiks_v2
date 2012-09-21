@@ -1,9 +1,9 @@
 package ru.ifmo.enf.optiks.phisycs.object;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import ru.ifmo.enf.optiks.phisycs.utils.Calculate;
 
 import java.util.ArrayList;
 
@@ -11,20 +11,27 @@ import java.util.ArrayList;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class Bullet extends GameObject{
-    private final Body body;
+
+    private GameObject laser;
     private final ArrayList<Vector2> collisionPoints;
 
-    public Bullet(final Body body) {
-        super(null, null, 0, 0, 0);
-        this.body = body;
+    public Bullet(final GameObject laser, final Body body) {
+        super(new Vector2(0, 0), new Vector2(0, 0), 0, 0, 0);
+        density = 1;
+        friction = 0;
+        restitution = 1;
+
+        this.isMovable = false;
+        this.laser = laser;
+
         body.setBullet(true);
         body.setActive(false);
 
-        collisionPoints = new ArrayList<Vector2>();
-    }
+        setBody(body);
+        getBody().setTransform(calculateShootPosition(0.6f), 0);
 
-    public Body getBody() {
-        return body;
+        collisionPoints = new ArrayList<Vector2>();
+        setFixtureProperties();
     }
 
     @Override
@@ -32,28 +39,51 @@ public class Bullet extends GameObject{
     }
 
     public void stop() {
-        body.setLinearVelocity(0, 0);
-        body.setActive(false);
 
-        addPoint(body.getWorldCenter());
+        stopBody();
+//        getBody().setActive(false);
+
+        addPoint(getWorldCenter());
+        System.out.println("collision points");
+        for (final Vector2 point : collisionPoints) {
+            System.out.println(point.toString());
+        }
     }
 
-    public void shoot(final Vector2 position, final Vector2 vector) {
+    public void shoot() {
         collisionPoints.clear();
-        addPoint(body.getWorldCenter());
+        addPoint(laser.getWorldCenter());
 
-        body.setTransform(position, 0);
-        body.setActive(true);
+        getBody().setTransform(calculateShootPosition(0.6f), 0);
+        getBody().setActive(true);
 
-        final float multiply = 10000 / (vector.x * vector.x + vector.y * vector.y);
-        body.setLinearVelocity(vector.mul(multiply));
+        getBody().setLinearVelocity(calculateShootVector());
     }
 
     public void continueShoot() {
-        addPoint(body.getWorldCenter());
+        addPoint(getWorldCenter());
     }
 
     public void addPoint(final Vector2 vector2) {
-        collisionPoints.add(Calculate.toGraphicsVector(vector2));
+        collisionPoints.add(new Vector2(vector2));
+    }
+
+    public Vector2 calculateShootPosition(final float velocity) {
+        final float rotateAngle = MathUtils.radiansToDegrees * laser.getBody().getAngle() - 90;
+        Vector2 point1 = new Vector2(laser.getWorldCenter());
+        Vector2 point2 = new Vector2(laser.getAnchorB());
+
+        return point1.add(point2.rotate(rotateAngle).mul(velocity));
+    }
+
+    public Vector2 calculateShootVector() {
+        final float rotateAngle = MathUtils.radiansToDegrees * laser.getBody().getAngle() - 90;
+        Vector2 point2 = new Vector2(laser.getAnchorB());
+
+        return point2.rotate(rotateAngle);
+    }
+
+    public ArrayList<Vector2> getCollisionPoints() {
+        return collisionPoints;
     }
 }

@@ -1,5 +1,6 @@
 package ru.ifmo.enf.optiks.phisycs.joint;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
@@ -17,13 +18,21 @@ public class RevoluteJointBehavior {
         jointDef.collideConnected = collideConnected;
 
         jointDef.enableLimit = true;
-        final float angle = objectA.getJointAngle() + objectB.getJointAngle();
+//        final float angle = objectA.getJointAngle() + objectB.getJointAngle();
 
-        jointDef.lowerAngle = (float) Math.toRadians(-angle);
-        jointDef.upperAngle = (float) Math.toRadians(angle);
+//        jointDef.lowerAngle = (float) Math.toRadians(-angle);
+//        jointDef.upperAngle = (float) Math.toRadians(angle);
+
+        jointDef.lowerAngle = (float) 0;
+        jointDef.upperAngle = (float) 0;
 
         jointDef.enableMotor = true;
         jointDef.maxMotorTorque = 0.01f;
         return jointDef;
+    }
+
+    public static float countJointAngle(final GameObject objectA, final GameObject objectB) {
+        final float angle = objectA.getJointAngle() + objectB.getJointAngle();
+        return MathUtils.degreesToRadians * angle;
     }
 }

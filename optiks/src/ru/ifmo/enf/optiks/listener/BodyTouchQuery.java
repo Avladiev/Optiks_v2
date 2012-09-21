@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
-import ru.ifmo.enf.optiks.phisycs.utils.Calculate;
+import ru.ifmo.enf.optiks.phisycs.util.Calculate;
 
 import java.util.ArrayList;
 import java.util.List;
