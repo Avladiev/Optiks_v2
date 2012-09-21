@@ -44,10 +44,6 @@ public class Bullet extends GameObject{
 //        getBody().setActive(false);
 
         addPoint(getWorldCenter());
-        System.out.println("collision points");
-        for (final Vector2 point : collisionPoints) {
-            System.out.println(point.toString());
-        }
     }
 
     public void shoot() {

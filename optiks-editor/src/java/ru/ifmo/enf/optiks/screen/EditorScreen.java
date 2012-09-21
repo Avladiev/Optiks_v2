@@ -9,13 +9,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import ru.ifmo.enf.optiks.OptiksEditor;
 import ru.ifmo.enf.optiks.graphics.Assets;
+import ru.ifmo.enf.optiks.listeners.ObjPanelScrollListener;
 import ru.ifmo.enf.optiks.panel.ObjectsPanel;
 import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
 import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
-import ru.ifmo.enf.optiks.listeners.ObjPanelGestureListener;
 import ru.ifmo.enf.optiks.util.OverlapTester;
 
 /**
@@ -31,8 +33,14 @@ public class EditorScreen implements Screen {
     private final SpriteBatch batch;
     private final Sprite gameObjectsBtn;
     private final Vector3 touchPoint;
+    private MouseJoint mouseJoint;
+    private final Box2DDebugRenderer render;
+    //private GameObject wall;
 
     public EditorScreen(final OptiksEditor optiksEditor) {
+
+        /* Box2D debug */
+        render = new Box2DDebugRenderer(true, true, false, true);
 
         /* Physics world & graphics */
         this.world = optiksEditor.getWorld();
@@ -41,6 +49,9 @@ public class EditorScreen implements Screen {
         this.batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         touchPoint = new Vector3();
+
+        /* Screen border */
+        //wall = factory.createWall(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         /* Buttons */
         gameObjectsBtn = new Sprite(Assets.inst().get(Assets.EDITOR_GAME_OBJECTS_BTN, Texture.class));
@@ -55,7 +66,7 @@ public class EditorScreen implements Screen {
         //objectsPanel.addItem(ObjectType.DYNAMIC_LEGO, 0);
 
         // Gesture Listener for objectsPanel
-        final GestureDetector.GestureListener gestureListener = new ObjPanelGestureListener(objectsPanel, camera);
+        final GestureDetector.GestureListener gestureListener = new ObjPanelScrollListener(this);
         Gdx.input.setInputProcessor(new GestureDetector(gestureListener));
     }
 
@@ -69,6 +80,7 @@ public class EditorScreen implements Screen {
         objectsPanel.render(batch, delta);
         batch.end();
         update();
+        render.render(world, camera.projection.scale(GameObjectFactory.physicsScale, GameObjectFactory.physicsScale, GameObjectFactory.physicsScale));
     }
 
     @Override
@@ -95,6 +107,30 @@ public class EditorScreen implements Screen {
     public void dispose() {
         batch.dispose();
     }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public MouseJoint getMouseJoint() {
+        return mouseJoint;
+    }
+
+    public void setMouseJoint(final MouseJoint mouseJoint) {
+        this.mouseJoint = mouseJoint;
+    }
+
+    public ObjectsPanel getObjectsPanel() {
+        return objectsPanel;
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    /*public GameObject getWall() {
+        return wall;
+    }*/
 
     private void update() {
         if (Gdx.input.justTouched()) {

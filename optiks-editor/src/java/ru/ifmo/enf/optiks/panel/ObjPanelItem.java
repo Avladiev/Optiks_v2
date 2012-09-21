@@ -3,6 +3,7 @@ package ru.ifmo.enf.optiks.panel;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import ru.ifmo.enf.optiks.graphics.Assets;
 import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
 
@@ -23,6 +24,10 @@ public class ObjPanelItem {
     public ObjPanelItem(final ObjectType type, final int countAvailable) {
         this.type = type;
         this.countAvailable = countAvailable;
+    }
+
+    public ObjectType getType() {
+        return type;
     }
 
     public float getX() {
@@ -60,6 +65,10 @@ public class ObjPanelItem {
 
     public void setHeight(final float height) {
         this.height = height;
+    }
+
+    public Rectangle getBoundingRectangle() {
+        return new Rectangle(x, y, width, height);
     }
 
     public void draw(final SpriteBatch batch) {

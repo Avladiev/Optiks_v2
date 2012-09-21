@@ -54,7 +54,6 @@ public class BodyTouchQuery {
             }
         }
 
-        System.out.println("distance" + distance);
         query.clear();
         return queryObject;
     }

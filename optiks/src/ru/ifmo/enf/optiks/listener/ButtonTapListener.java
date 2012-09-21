@@ -25,15 +25,11 @@ public class ButtonTapListener extends GestureDetector.GestureAdapter {
 
     @Override
     public boolean touchDown(final int x, final int y, final int pointer) {
-        System.out.println(x + "   " + y);
         camera.unproject(touchPoint.set(x, y, 0));
-        System.out.println((touchPoint.x + camera.viewportWidth / 2) + "   " + (-touchPoint.y + camera.viewportHeight / 2));
         if (OverlapTester.pointInRectangle(new Rectangle(170, 100, 40, 40), touchPoint.x + camera.viewportWidth / 2, (-touchPoint.y + camera.viewportHeight / 2))) {
-            System.out.println("ok");
             bullet.shoot();
             return true;
         } else {
-            System.out.println("no");
         }
         return false;
     }

@@ -64,7 +64,6 @@ public abstract class RotationDragListener extends InputAdapter {
                     }
                 }
 
-                System.out.println(((GameObject) body.getUserData()).toString());
                 mouseJointDef.bodyA = body;
                 mouseJointDef.bodyB = activeObject.getBody();
                 mouseJointDef.dampingRatio = 7;
