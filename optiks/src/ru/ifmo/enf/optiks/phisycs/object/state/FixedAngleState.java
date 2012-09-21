@@ -5,6 +5,8 @@ import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 /**
  * Author: Dudko Alex (dududko@gmail.com)
  */
+@Deprecated
+
 public class FixedAngleState extends State {
     private float lowerAngle;
     private float upperAngle;

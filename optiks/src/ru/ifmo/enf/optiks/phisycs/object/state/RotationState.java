@@ -5,6 +5,7 @@ import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 /**
  * Author: Dudko Alex (dududko@gmail.com)
  */
+@Deprecated
 public class RotationState extends State {
     public RotationState(final GameObject gameObject) {
         super(gameObject);

@@ -16,7 +16,7 @@ import ru.ifmo.enf.optiks.OptiksGame;
 import ru.ifmo.enf.optiks.listener.ButtonTapListener;
 import ru.ifmo.enf.optiks.listener.RotationDragListenerPlay;
 import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
-import ru.ifmo.enf.optiks.phisycs.PhysicWorldUpdater;
+import ru.ifmo.enf.optiks.phisycs.util.PhysicWorldUpdater;
 import ru.ifmo.enf.optiks.phisycs.contact.CollisionListener;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
@@ -68,6 +68,7 @@ public class GameScreen implements Screen {
 
         render = new Box2DDebugRenderer(true, true, false, true);
         shapeRenderer = new ShapeRenderer(10);
+        PhysicWorldUpdater.setWorld(world);
     }
 
     /**
@@ -85,7 +86,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(final float v) {
 
-        PhysicWorldUpdater.update(v, world);
+        PhysicWorldUpdater.update(v);
 //        world.step(1/60, 8, 2);
         world.clearForces();
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
