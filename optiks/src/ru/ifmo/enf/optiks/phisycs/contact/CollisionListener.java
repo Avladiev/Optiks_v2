@@ -10,7 +10,7 @@ import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 /**
  * Author: Dudko Alex (dududko@gmail.com)
  */
-public class CollisionListener implements ContactListener{
+public class CollisionListener implements ContactListener {
     @Override
     public void beginContact(final Contact contact) {
         GameObject gameObjectA = (GameObject) contact.getFixtureA().getBody().getUserData();

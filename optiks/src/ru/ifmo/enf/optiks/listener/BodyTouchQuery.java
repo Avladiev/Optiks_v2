@@ -39,15 +39,15 @@ public class BodyTouchQuery {
         query = new ArrayList<GameObject>();
     }
 
-    public GameObject getQueryBody(final float x, final float y) {
+    public GameObject getQueryBody(final float x, final float y, final boolean ignoreMovable) {
         world.QueryAABB(bodyQueryCallback, x - 0.5f, y - 0.5f, x + 0.5f, y + 0.5f);
         GameObject queryObject = null;
         double distance = Integer.MAX_VALUE;
         for (final GameObject object : query) {
-            if (!object.isMovable()) {
-                continue;
+            if (!ignoreMovable && !object.isMovable()) {
+                    continue;
             }
-            final double tempDistance = Calculate.calculateDistance(object.getBody().getWorldCenter(), x, y);
+            final double tempDistance = Calculate.calculateDistance(object.getBody().getWorldPoint(object.getRotationCenter()), x, y);
             if (tempDistance <= distance && tempDistance < 12) {
                 distance = tempDistance;
                 queryObject = object;

@@ -15,9 +15,9 @@ public class Calculate {
         return new Vector2(pointX, pointY);
     }
 
-    public static  Vector2 toGraphicsVector(final float x, final float y) {
+    public static Vector2 toGraphicsVector(final float x, final float y) {
         final float pointX = x * GameObjectFactory.physicsScale + Gdx.graphics.getWidth() / 2;
-        final float pointY = - y * GameObjectFactory.physicsScale + Gdx.graphics.getHeight() / 2;
+        final float pointY = -y * GameObjectFactory.physicsScale + Gdx.graphics.getHeight() / 2;
         return new Vector2(pointX, pointY);
     }
 

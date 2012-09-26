@@ -19,7 +19,7 @@ public class ObjectContainer {
     // laser || aim || mirror || null
     private SimpleObjectСontainer mainGameObject;
 
-    public ObjectContainer( @NotNull final SimpleObjectСontainer attacher, @NotNull final List<SimpleObjectСontainer> lego,  @NotNull final SimpleObjectСontainer mainGameObject) {
+    public ObjectContainer(@NotNull final SimpleObjectСontainer attacher, @NotNull final List<SimpleObjectСontainer> lego, @NotNull final SimpleObjectСontainer mainGameObject) {
         this.attacher = attacher;
         this.lego = lego;
         this.mainGameObject = mainGameObject;

@@ -73,7 +73,7 @@ public class ObjPanelItem {
 
     public void draw(final SpriteBatch batch) {
         // TODO draw items count available
-        batch.draw(Assets.getTextureRegion(type), x, y, width, height);
+        batch.draw(Assets.getTextureRegion(ObjectType.AIM), x, y, width, height);
     }
 
     public void draw(final SpriteBatch batch, final float alpha) {

@@ -11,13 +11,13 @@ import java.util.ArrayList;
 /**
  * Author: Dudko Alex (dududko@gmail.com)
  */
-public class Bullet extends GameObject{
+public class Bullet extends GameObject {
 
     private GameObject laser;
     private final ArrayList<Vector2> collisionPoints;
 
     public Bullet(final GameObject laser, final Body body) {
-        super(new Vector2(0, 0), new Vector2(0, 0), 0, 0, 0);
+        super(new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), 0, 0, 0);
         density = 1;
         friction = 0;
         restitution = 1;

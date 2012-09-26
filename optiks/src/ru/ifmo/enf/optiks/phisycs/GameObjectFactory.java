@@ -120,6 +120,9 @@ public final class GameObjectFactory {
             case ROCKET:
                 object = new Rocket();
                 break;
+            case ATTACH_ZONE:
+                object = new AttachZone();
+                break;
             default:
                 object = new Laser();
                 break;

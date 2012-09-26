@@ -17,6 +17,7 @@ public abstract class GameObject {
     // anchors for Joints
     private final Vector2 anchorA;
     private final Vector2 anchorB;
+    private final Vector2 rotationCenter;
     private final float gravityScale;
     private final float sizeScale;
     private boolean canTouch;
@@ -30,13 +31,18 @@ public abstract class GameObject {
 
     private RevoluteJoint joint;
 
-    protected GameObject(final Vector2 anchorA, final Vector2 anchorB, final float gravityScale, final float sizeScale, final float jointAngle) {
+    protected GameObject(final Vector2 anchorA, final Vector2 anchorB, final Vector2 rotationCenter, final float gravityScale, final float sizeScale, final float jointAngle) {
         this.anchorA = anchorA;
         this.anchorB = anchorB;
+        this.rotationCenter = rotationCenter;
         this.gravityScale = gravityScale;
         this.sizeScale = sizeScale;
         this.canTouch = true;
         this.jointAngle = jointAngle;
+    }
+
+    protected GameObject(final Vector2 anchorA, final Vector2 anchorB, final float gravityScale, final float sizeScale, final float jointAngle) {
+        this(anchorA, anchorB, new Vector2(0, 0), gravityScale, sizeScale, jointAngle);
     }
 
     public Body getBody() {
@@ -156,6 +162,10 @@ public abstract class GameObject {
         if (hasNext()) {
             getNext().setActive(isActive);
         }
+    }
+
+    public Vector2 getRotationCenter() {
+        return rotationCenter;
     }
 }
 

@@ -3,20 +3,22 @@ package ru.ifmo.enf.optiks.phisycs.object.state;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 
 /**
- * Author: Dudko Alex (dududko@gmail.com)
+ * Author: Sergey Fedorov (serezhka@xakep.ru)
+ * Date: 26.09.12
  */
-public class DragSingleObjectState extends State {
-    public DragSingleObjectState(final GameObject gameObject) {
+public class RotateWithoutNextState extends State {
+
+    public RotateWithoutNextState(final GameObject gameObject) {
         super(gameObject);
     }
 
     @Override
     protected void setPreProperties() {
-        gameObject.getBody().setFixedRotation(true);
+
     }
 
     @Override
     protected void setPostProperties() {
-        gameObject.getBody().setFixedRotation(false);
+
     }
 }

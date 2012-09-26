@@ -20,7 +20,7 @@ public class PhysicWorldUpdater {
         return myInstance;
     }
 
-    private PhysicWorldUpdater(){
+    private PhysicWorldUpdater() {
     }
 
     public static void setWorld(final World world) {

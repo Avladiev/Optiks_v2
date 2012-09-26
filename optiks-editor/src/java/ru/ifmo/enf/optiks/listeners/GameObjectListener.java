@@ -4,12 +4,18 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import ru.ifmo.enf.optiks.joint.EditorMouseJointDef;
 import ru.ifmo.enf.optiks.listener.BodyTouchQuery;
+import ru.ifmo.enf.optiks.phisycs.joint.RevoluteJointBehavior;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
+import ru.ifmo.enf.optiks.phisycs.object.state.State;
+import ru.ifmo.enf.optiks.phisycs.object.state.StateFactoryPlay;
 import ru.ifmo.enf.optiks.phisycs.utils.Calculate;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
 
@@ -27,6 +33,8 @@ public class GameObjectListener extends InputAdapter {
     private final GestureDetector.GestureListener gestureListener;
 
     private GameObject activeObject;
+    private State activeObjectState;
+    private RevoluteJoint revoluteJoint;
 
     public GameObjectListener(final EditorScreen editorScreen) {
         this.editorScreen = editorScreen;
@@ -56,13 +64,32 @@ public class GameObjectListener extends InputAdapter {
         switch (pointer) {
             case 0:
                 final Vector2 vector = Calculate.toPhysicsVector(x, y);
-                activeObject = bodyTouchQuery.getQueryBody(vector.x, vector.y);
+                activeObject = bodyTouchQuery.getQueryBody(vector.x, vector.y, true);
+
 
                 if (activeObject == null) {
                     return false;
                 }
+
+                final boolean isRotate = bodyTouchQuery.isRotate(vector, activeObject.getBody().getWorldPoint(activeObject.getRotationCenter()));
+
                 activeObject.getBody().setType(BodyDef.BodyType.DynamicBody);
-                final MouseJointDef mouseJoint = new EditorMouseJointDef(wall, activeObject);
+                activeObjectState = new StateFactoryPlay().createActiveObjectState(activeObject, isRotate);
+                activeObjectState.setPreState();
+
+                if (isRotate) {
+                    RevoluteJointDef jointDef = new RevoluteJointDef();
+                    jointDef.initialize(wall.getBody(), activeObject.getBody(), new Vector2());
+
+                    Vector2 globalRotationPoint = activeObject.getBody().getWorldPoint(activeObject.getRotationCenter());
+
+                    jointDef.localAnchorA.set(globalRotationPoint);
+                    jointDef.localAnchorB.set(activeObject.getRotationCenter());
+
+                    revoluteJoint = (RevoluteJoint) world.createJoint(jointDef);
+                }
+
+                final MouseJointDef mouseJoint = new EditorMouseJointDef(wall, activeObject, vector);
                 editorScreen.setMouseJoint((MouseJoint) world.createJoint(mouseJoint));
 
                 /* Hide objects panel */
@@ -91,6 +118,14 @@ public class GameObjectListener extends InputAdapter {
 
             /* Show objects panel */
             editorScreen.getObjectsPanel().show();
+
+            if (activeObjectState != null) {
+                activeObjectState.setPostState();
+            }
+        }
+        if (revoluteJoint != null) {
+            world.destroyJoint(revoluteJoint);
+            revoluteJoint = null;
         }
         return false;
     }

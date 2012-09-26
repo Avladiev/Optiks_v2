@@ -28,7 +28,7 @@ public class SimpleObjectСontainer {
         this.objectType = objectType;
     }
 
-    public SimpleObjectСontainer( @NotNull final Vector2 pos, float angle,@NotNull ObjectType objectType) {
+    public SimpleObjectСontainer(@NotNull final Vector2 pos, float angle, @NotNull ObjectType objectType) {
         this.pos = pos;
         this.angle = angle;
         this.objectType = objectType;
@@ -68,8 +68,6 @@ public class SimpleObjectСontainer {
         result = 31 * result + (objectType != null ? objectType.hashCode() : 0);
         return result;
     }
-
-
 
 
 }

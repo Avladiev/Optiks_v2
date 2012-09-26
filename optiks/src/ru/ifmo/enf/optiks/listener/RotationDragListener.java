@@ -40,13 +40,13 @@ public abstract class RotationDragListener extends InputAdapter {
         switch (pointer) {
             case 0:
                 final Vector2 vector = toPhysicsVector(x, y);
-                activeObject = bodyTouchQuery.getQueryBody(vector.x, vector.y);
+                activeObject = bodyTouchQuery.getQueryBody(vector.x, vector.y, false);
 
                 if (activeObject == null) {
                     return false;
                 }
 
-                isRotate = bodyTouchQuery.isRotate(activeObject.getBody().getWorldCenter(), vector);
+                isRotate = bodyTouchQuery.isRotate(activeObject.getBody().getWorldPoint(activeObject.getRotationCenter()), vector);
 
                 activeObjectState = stateFactory.createActiveObjectState(activeObject, isRotate);
                 activeObjectState.setPreState();

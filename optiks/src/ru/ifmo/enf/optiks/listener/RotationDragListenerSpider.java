@@ -30,7 +30,7 @@ public class RotationDragListenerSpider implements GestureDetector.GestureListen
     public boolean touchDown(final int x, final int y, final int pointer) {
 
         final Vector2 vector = toPhysicsVector(x, y);
-        @NotNull final GameObject object = bodyTouchQuery.getQueryBody(vector.x, vector.y);
+        @NotNull final GameObject object = bodyTouchQuery.getQueryBody(vector.x, vector.y, false);
 
         if (object == null) {
             return true;

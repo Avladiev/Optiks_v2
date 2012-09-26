@@ -1,5 +1,6 @@
 package ru.ifmo.enf.optiks.listeners;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
@@ -102,11 +103,12 @@ public class ObjPanelScrollListener extends GestureDetector.GestureAdapter {
                     currentObject.getBody().setType(BodyDef.BodyType.DynamicBody);
                     currentObject.setFixtureProperties();
 
-                    final MouseJointDef mouseJoint = new EditorMouseJointDef(wall, currentObject);
-                    editorScreen.setMouseJoint((MouseJoint) world.createJoint(mouseJoint));
+                    /*final MouseJointDef mouseJoint = new EditorMouseJointDef(wall, currentObject, Calculate.toPhysicsVector(x, y));
+                    editorScreen.setMouseJoint((MouseJoint) world.createJoint(mouseJoint));*/
 
                     /* Hide objects panel*/
                     objectsPanel.hide();
+                    Gdx.input.getInputProcessor().touchDown(x, y, 0, 0);
 
                     return true;
                 }

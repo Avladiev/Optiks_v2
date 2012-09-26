@@ -8,8 +8,8 @@ import java.util.List;
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
 public class LevelContainer {
-   private List<SimpleObjectСontainer> simpleObjectСontainers;
-   private List<ObjectContainer> objectContainers;
+    private List<SimpleObjectСontainer> simpleObjectСontainers;
+    private List<ObjectContainer> objectContainers;
 
     public LevelContainer() {
     }
@@ -26,7 +26,6 @@ public class LevelContainer {
     public List<ObjectContainer> getObjectContainers() {
         return objectContainers;
     }
-
 
 
     @Override
@@ -59,7 +58,6 @@ public class LevelContainer {
     public void setObjectContainers(final List<ObjectContainer> objectContainers) {
         this.objectContainers = objectContainers;
     }
-
 
 
 }

@@ -17,7 +17,8 @@ public enum ObjectType {
     CIRCLE("CIRCLE"),
     RECTANGLE("RECTANGLE"),
     ROPE("ROPE"),
-    ROCKET("ROCKET");
+    ROCKET("ROCKET"),
+    ATTACH_ZONE("ATTACH_ZONE");
 
     private final String name;
 

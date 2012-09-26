@@ -46,7 +46,7 @@ public class EditorScreen implements Screen {
     public EditorScreen(final OptiksEditor optiksEditor) {
 
         /* Box2D debug */
-        render = new Box2DDebugRenderer(true, true, false, true);
+        render = new Box2DDebugRenderer(true, true, !false, true);
 
         /* Physics world & graphics */
         this.world = optiksEditor.getWorld();
@@ -73,7 +73,7 @@ public class EditorScreen implements Screen {
         objectsPanel.addItem(ObjectType.AIM, 1);
         objectsPanel.addItem(ObjectType.MIRROR, 10);
         //objectsPanel.addItem(ObjectType.LEGO, 1);
-        //objectsPanel.addItem(ObjectType.ATTACHER, 3);
+        objectsPanel.addItem(ObjectType.ATTACHER, 10);
 
         /* Gesture Listeners */
         final GestureDetector.GestureListener gestureListener = new ObjPanelScrollListener(this);
