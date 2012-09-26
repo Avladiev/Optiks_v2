@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 public class Rocket extends GameObject {
 
     public Rocket() {
-        super(new Vector2(0, 0), new Vector2(0, 0), 0.5f, 20, 90);
+        super(new Vector2(0, 0), new Vector2(0, 0),new Vector2(10, 0), 0.5f, 20, 90);
         density = 1;
         friction = 1;
         restitution = 0;

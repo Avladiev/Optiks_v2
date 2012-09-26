@@ -8,16 +8,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
-import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
-import ru.ifmo.enf.optiks.joint.EditorMouseJointDef;
 import ru.ifmo.enf.optiks.panel.ObjPanelItem;
 import ru.ifmo.enf.optiks.panel.ObjectsPanel;
 import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
 import ru.ifmo.enf.optiks.phisycs.object.container.SimpleObjectСontainer;
-import ru.ifmo.enf.optiks.phisycs.utils.Calculate;
+import ru.ifmo.enf.optiks.phisycs.util.Calculate;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
 import ru.ifmo.enf.optiks.util.OverlapTester;
 

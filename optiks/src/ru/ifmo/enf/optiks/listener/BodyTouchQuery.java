@@ -48,7 +48,7 @@ public class BodyTouchQuery {
                     continue;
             }
             final double tempDistance = Calculate.calculateDistance(object.getBody().getWorldPoint(object.getRotationCenter()), x, y);
-            if (tempDistance <= distance && tempDistance < 12) {
+            if (tempDistance <= distance && tempDistance < 15) {
                 distance = tempDistance;
                 queryObject = object;
             }

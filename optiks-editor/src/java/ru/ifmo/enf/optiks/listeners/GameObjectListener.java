@@ -4,7 +4,6 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
@@ -12,11 +11,10 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import ru.ifmo.enf.optiks.joint.EditorMouseJointDef;
 import ru.ifmo.enf.optiks.listener.BodyTouchQuery;
-import ru.ifmo.enf.optiks.phisycs.joint.RevoluteJointBehavior;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 import ru.ifmo.enf.optiks.phisycs.object.state.State;
 import ru.ifmo.enf.optiks.phisycs.object.state.StateFactoryPlay;
-import ru.ifmo.enf.optiks.phisycs.utils.Calculate;
+import ru.ifmo.enf.optiks.phisycs.util.Calculate;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
 
 /**

@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 public class Mirror extends GameObject {
 
     public Mirror() {
-        super(new Vector2(), new Vector2(), new Vector2(-20, 0), 1, 20, 0);
+        super(new Vector2(), new Vector2(), 1, 20, 0);
         density = 1;
         friction = 0;
         restitution = 1;

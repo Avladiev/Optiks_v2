@@ -66,7 +66,7 @@ public class GameScreen implements Screen {
 
         Gdx.input.setInputProcessor(inputMultiplexer);
 
-        render = new Box2DDebugRenderer(true, true, false, true);
+        render = new Box2DDebugRenderer(true, true, !false, true);
         shapeRenderer = new ShapeRenderer(10);
         PhysicWorldUpdater.setWorld(world);
     }
