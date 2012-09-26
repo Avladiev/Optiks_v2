@@ -2,6 +2,7 @@ package ru.ifmo.enf.optiks.listeners;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,12 +16,11 @@ import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
 import ru.ifmo.enf.optiks.phisycs.object.container.SimpleObjectСontainer;
-import ru.ifmo.enf.optiks.phisycs.object.state.State;
-import ru.ifmo.enf.optiks.phisycs.object.state.StateFactory;
-import ru.ifmo.enf.optiks.phisycs.object.state.StateFactoryPlay;
 import ru.ifmo.enf.optiks.phisycs.utils.Calculate;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
 import ru.ifmo.enf.optiks.util.OverlapTester;
+
+import java.util.List;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)
@@ -56,14 +56,37 @@ public class ObjPanelScrollListener extends GestureDetector.GestureAdapter {
         camera.unproject(touchPoint);
         if (OverlapTester.pointInRectangle(objectsPanel.getBoundingRectangle(), touchPoint.x, touchPoint.y)) {
             /* Panel scroll */
-            if (Math.abs(deltaX) > 1.5 * Math.abs(deltaY)) {
-                for (final ObjPanelItem item : objectsPanel.getItems()) {
+            if (Math.abs(deltaX) > 2.5 * Math.abs(deltaY)) {
+                /* Obj panel elements */
+                final List<ObjPanelItem> items = objectsPanel.getItems();
+                if (items.size() == 0) {
+                    return true;
+                }
+                /* First element *//*
+                final ObjPanelItem firstItem = items.get(0);
+                *//* Last element *//*
+                final ObjPanelItem lastItem = items.get(items.size() - 1);
+
+                if (!OverlapTester.pointInRectangle(objectsPanel.getBoundingRectangle(),firstItem.getX() + deltaX, firstItem.getY())) {
+                    return true;
+                }*/
+                for (final ObjPanelItem item : items) {
                     item.setX(item.getX() + deltaX);
                 }
                 return true;
             }
             /* Game Object drag */
             else {
+                /* Check if we dragging out of object panel */
+                Rectangle smallBoundingRectangle = objectsPanel.getBoundingRectangle();
+                smallBoundingRectangle = new Rectangle(
+                        smallBoundingRectangle.x - 8,
+                        smallBoundingRectangle.y - 8,
+                        smallBoundingRectangle.width - 8,
+                        smallBoundingRectangle.height - 8);
+                if (OverlapTester.pointInRectangle(smallBoundingRectangle, touchPoint.x, touchPoint.y)) {
+                    return false;
+                }
                 ObjectType objectType = null;
                 /* Check if we caught game object */
                 for (final ObjPanelItem item : objectsPanel.getItems()) {
@@ -81,6 +104,10 @@ public class ObjPanelScrollListener extends GestureDetector.GestureAdapter {
 
                     final MouseJointDef mouseJoint = new EditorMouseJointDef(wall, currentObject);
                     editorScreen.setMouseJoint((MouseJoint) world.createJoint(mouseJoint));
+
+                    /* Hide objects panel*/
+                    objectsPanel.hide();
+
                     return true;
                 }
             }

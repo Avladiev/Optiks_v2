@@ -57,7 +57,7 @@ public class ObjectsPanel {
         panelY = 5;
         panelSizeX = Gdx.graphics.getWidth() - panelX - 75 /* Obj Button sizeX */;
         panelSizeY = itemSizeY;
-        posX = panelX + itemBorderSpace;
+        posX = panelX;
 
         background = new Sprite(Assets.inst().get(Assets.EDITOR_GAME_OBJECTS_BG, Texture.class));
         background.setBounds(panelX, -panelSizeY /* Hide it*/, panelSizeX, panelSizeY);
@@ -70,7 +70,7 @@ public class ObjectsPanel {
      */
     public void addItem(final ObjectType type, final int countAvailable) {
         final ObjPanelItem item = new ObjPanelItem(type, countAvailable);
-        item.setX(posX + (itemBorderSpace + itemSizeX) * items.size() + itemBorderSpace);
+        item.setX(itemBorderSpace + posX + (itemBorderSpace + itemSizeX) * items.size());
         item.setY(background.getY());
         items.add(item);
     }

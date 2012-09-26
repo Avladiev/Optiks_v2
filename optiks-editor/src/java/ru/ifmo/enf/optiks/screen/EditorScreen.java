@@ -2,7 +2,6 @@ package ru.ifmo.enf.optiks.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
@@ -21,7 +20,6 @@ import ru.ifmo.enf.optiks.listeners.GameObjectListener;
 import ru.ifmo.enf.optiks.listeners.ObjPanelScrollListener;
 import ru.ifmo.enf.optiks.panel.ObjectsPanel;
 import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
-import ru.ifmo.enf.optiks.phisycs.PhysicWorldUpdater;
 import ru.ifmo.enf.optiks.phisycs.object.GameObject;
 import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
 import ru.ifmo.enf.optiks.phisycs.object.container.SimpleObjectСontainer;
@@ -74,19 +72,20 @@ public class EditorScreen implements Screen {
         objectsPanel.addItem(ObjectType.LASER, 1);
         objectsPanel.addItem(ObjectType.AIM, 1);
         objectsPanel.addItem(ObjectType.MIRROR, 10);
-        //objectsPanel.addItem(ObjectType.LEGO, -1);
-        //objectsPanel.addItem(ObjectType.DYNAMIC_LEGO, 0);
+        //objectsPanel.addItem(ObjectType.LEGO, 1);
+        //objectsPanel.addItem(ObjectType.ATTACHER, 3);
 
-        // Gesture Listener for objectsPanel
+        /* Gesture Listeners */
         final GestureDetector.GestureListener gestureListener = new ObjPanelScrollListener(this);
 
         /* Input Processor for game objects */
-        final InputProcessor gameObjectListener = new GameObjectListener(this);
+        final GameObjectListener gameObjectListener = new GameObjectListener(this);
 
         /* Multi input processor, contains all processors */
         final InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new GestureDetector(gestureListener));
         inputMultiplexer.addProcessor(gameObjectListener);
+        inputMultiplexer.addProcessor(new GestureDetector(gameObjectListener.getGestureListener()));
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
