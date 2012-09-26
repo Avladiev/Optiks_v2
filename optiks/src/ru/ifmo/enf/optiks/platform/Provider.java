@@ -2,7 +2,7 @@ package ru.ifmo.enf.optiks.platform;
 
 import com.badlogic.gdx.math.Vector2;
 import com.sun.istack.internal.NotNull;
-import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
+import ru.ifmo.enf.optiks.physics.object.container.LevelContainer;
 
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)

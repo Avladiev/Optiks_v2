@@ -15,12 +15,12 @@ import com.sun.istack.internal.NotNull;
 import ru.ifmo.enf.optiks.OptiksGame;
 import ru.ifmo.enf.optiks.listener.ButtonTapListener;
 import ru.ifmo.enf.optiks.listener.RotationDragListenerPlay;
-import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
-import ru.ifmo.enf.optiks.phisycs.contact.CollisionListener;
-import ru.ifmo.enf.optiks.phisycs.object.GameObject;
-import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
-import ru.ifmo.enf.optiks.phisycs.util.Calculate;
-import ru.ifmo.enf.optiks.phisycs.util.PhysicWorldUpdater;
+import ru.ifmo.enf.optiks.physics.GameObjectFactory;
+import ru.ifmo.enf.optiks.physics.contact.CollisionListener;
+import ru.ifmo.enf.optiks.physics.object.GameObject;
+import ru.ifmo.enf.optiks.physics.object.container.LevelContainer;
+import ru.ifmo.enf.optiks.physics.util.Calculate;
+import ru.ifmo.enf.optiks.physics.util.PhysicWorldUpdater;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -66,7 +66,7 @@ public class GameScreen implements Screen {
 
         Gdx.input.setInputProcessor(inputMultiplexer);
 
-        render = new Box2DDebugRenderer(true, true, !false, true);
+        render = new Box2DDebugRenderer(true, true, false, true);
         shapeRenderer = new ShapeRenderer(10);
         PhysicWorldUpdater.setWorld(world);
     }

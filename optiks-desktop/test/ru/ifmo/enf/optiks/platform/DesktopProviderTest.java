@@ -2,10 +2,10 @@ package ru.ifmo.enf.optiks.platform;
 
 import com.badlogic.gdx.math.Vector2;
 import junit.framework.TestCase;
-import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
-import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
-import ru.ifmo.enf.optiks.phisycs.object.container.ObjectContainer;
-import ru.ifmo.enf.optiks.phisycs.object.container.SimpleObjectСontainer;
+import ru.ifmo.enf.optiks.physics.object.ObjectType;
+import ru.ifmo.enf.optiks.physics.object.container.LevelContainer;
+import ru.ifmo.enf.optiks.physics.object.container.ObjectContainer;
+import ru.ifmo.enf.optiks.physics.object.container.SimpleObjectСontainer;
 
 import java.io.File;
 import java.io.FileNotFoundException;

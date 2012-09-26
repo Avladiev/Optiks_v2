@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import ru.ifmo.enf.optiks.accessors.ObjPanelItemAccessor;
 import ru.ifmo.enf.optiks.accessors.SpriteAccessor;
 import ru.ifmo.enf.optiks.graphics.Assets;
-import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
+import ru.ifmo.enf.optiks.physics.object.ObjectType;
 
 import java.util.ArrayList;
 import java.util.List;

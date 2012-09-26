@@ -3,9 +3,9 @@ package ru.ifmo.enf.optiks;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
-import ru.ifmo.enf.optiks.phisycs.object.container.ObjectContainer;
-import ru.ifmo.enf.optiks.phisycs.object.container.SimpleObjectСontainer;
+import ru.ifmo.enf.optiks.physics.object.container.LevelContainer;
+import ru.ifmo.enf.optiks.physics.object.container.ObjectContainer;
+import ru.ifmo.enf.optiks.physics.object.container.SimpleObjectСontainer;
 import ru.ifmo.enf.optiks.platform.AndroidProvider;
 
 /**

@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
 import com.google.gson.Gson;
-import ru.ifmo.enf.optiks.phisycs.object.container.LevelContainer;
+import ru.ifmo.enf.optiks.physics.object.container.LevelContainer;
 
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)

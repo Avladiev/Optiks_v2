@@ -1,7 +1,7 @@
 package ru.ifmo.enf.optiks.listener;
 
 import com.badlogic.gdx.physics.box2d.World;
-import ru.ifmo.enf.optiks.phisycs.object.state.StateFactoryPlay;
+import ru.ifmo.enf.optiks.physics.object.state.StateFactoryPlay;
 
 /**
  * Author: Dudko Alex (dududko@gmail.com)

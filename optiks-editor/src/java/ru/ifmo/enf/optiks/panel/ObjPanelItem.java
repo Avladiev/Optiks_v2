@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import ru.ifmo.enf.optiks.graphics.Assets;
-import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
+import ru.ifmo.enf.optiks.physics.object.ObjectType;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)

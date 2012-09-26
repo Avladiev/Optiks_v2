@@ -2,7 +2,7 @@ package ru.ifmo.enf.optiks.joint;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
-import ru.ifmo.enf.optiks.phisycs.object.GameObject;
+import ru.ifmo.enf.optiks.physics.object.GameObject;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)

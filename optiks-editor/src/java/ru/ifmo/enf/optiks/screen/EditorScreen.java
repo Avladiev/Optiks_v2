@@ -18,11 +18,13 @@ import ru.ifmo.enf.optiks.OptiksEditor;
 import ru.ifmo.enf.optiks.graphics.Assets;
 import ru.ifmo.enf.optiks.listeners.GameObjectListener;
 import ru.ifmo.enf.optiks.listeners.ObjPanelScrollListener;
+import ru.ifmo.enf.optiks.listeners.collision.EditCollisionListener;
 import ru.ifmo.enf.optiks.panel.ObjectsPanel;
-import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
-import ru.ifmo.enf.optiks.phisycs.object.GameObject;
-import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
-import ru.ifmo.enf.optiks.phisycs.object.container.SimpleObjectСontainer;
+import ru.ifmo.enf.optiks.physics.GameObjectFactory;
+import ru.ifmo.enf.optiks.physics.PhysicsStackCommand;
+import ru.ifmo.enf.optiks.physics.object.GameObject;
+import ru.ifmo.enf.optiks.physics.object.ObjectType;
+import ru.ifmo.enf.optiks.physics.object.container.SimpleObjectСontainer;
 import ru.ifmo.enf.optiks.util.OverlapTester;
 
 /**
@@ -46,7 +48,7 @@ public class EditorScreen implements Screen {
     public EditorScreen(final OptiksEditor optiksEditor) {
 
         /* Box2D debug */
-        render = new Box2DDebugRenderer(true, true, !false, true);
+        render = new Box2DDebugRenderer(true, true, true, true);
 
         /* Physics world & graphics */
         this.world = optiksEditor.getWorld();
@@ -70,9 +72,9 @@ public class EditorScreen implements Screen {
         /* Game objects panel*/
         objectsPanel = new ObjectsPanel();
         objectsPanel.addItem(ObjectType.LASER, 1);
-        objectsPanel.addItem(ObjectType.AIM, 1);
+        //objectsPanel.addItem(ObjectType.AIM, 1);
         objectsPanel.addItem(ObjectType.MIRROR, 10);
-        //objectsPanel.addItem(ObjectType.LEGO, 1);
+        objectsPanel.addItem(ObjectType.LEGO, 1);
         objectsPanel.addItem(ObjectType.ATTACHER, 10);
 
         /* Gesture Listeners */
@@ -87,6 +89,9 @@ public class EditorScreen implements Screen {
         inputMultiplexer.addProcessor(gameObjectListener);
         inputMultiplexer.addProcessor(new GestureDetector(gameObjectListener.getGestureListener()));
         Gdx.input.setInputProcessor(inputMultiplexer);
+
+        /* Collision listener */
+        world.setContactListener(new EditCollisionListener());
     }
 
     @Override
@@ -102,6 +107,7 @@ public class EditorScreen implements Screen {
         batch.end();
         update();
         render.render(world, camera.projection.scale(GameObjectFactory.physicsScale, GameObjectFactory.physicsScale, GameObjectFactory.physicsScale));
+        PhysicsStackCommand.doCommand();
     }
 
     @Override
@@ -131,6 +137,10 @@ public class EditorScreen implements Screen {
 
     public World getWorld() {
         return world;
+    }
+
+    public GameObjectFactory getFactory() {
+        return factory;
     }
 
     public MouseJoint getMouseJoint() {

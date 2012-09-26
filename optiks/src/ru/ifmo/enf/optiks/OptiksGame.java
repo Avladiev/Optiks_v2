@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.graphics.Assets;
-import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
+import ru.ifmo.enf.optiks.physics.GameObjectFactory;
 import ru.ifmo.enf.optiks.platform.Provider;
 import ru.ifmo.enf.optiks.screen.GameScreen;
 import ru.ifmo.enf.optiks.screen.MenuScreen;

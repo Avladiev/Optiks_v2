@@ -2,7 +2,7 @@ package ru.ifmo.enf.optiks.graphics;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import ru.ifmo.enf.optiks.phisycs.util.Calculate;
+import ru.ifmo.enf.optiks.physics.util.Calculate;
 
 import java.util.ArrayList;
 import java.util.Iterator;

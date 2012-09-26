@@ -8,8 +8,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.sun.istack.internal.NotNull;
-import ru.ifmo.enf.optiks.phisycs.object.GameObject;
-import ru.ifmo.enf.optiks.phisycs.object.Wall;
+import ru.ifmo.enf.optiks.physics.object.GameObject;
+import ru.ifmo.enf.optiks.physics.object.Wall;
 
 import java.util.Iterator;
 

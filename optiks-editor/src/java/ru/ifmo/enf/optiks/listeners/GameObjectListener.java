@@ -11,10 +11,10 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import ru.ifmo.enf.optiks.joint.EditorMouseJointDef;
 import ru.ifmo.enf.optiks.listener.BodyTouchQuery;
-import ru.ifmo.enf.optiks.phisycs.object.GameObject;
-import ru.ifmo.enf.optiks.phisycs.object.state.State;
-import ru.ifmo.enf.optiks.phisycs.object.state.StateFactoryPlay;
-import ru.ifmo.enf.optiks.phisycs.util.Calculate;
+import ru.ifmo.enf.optiks.physics.object.GameObject;
+import ru.ifmo.enf.optiks.physics.object.state.State;
+import ru.ifmo.enf.optiks.physics.object.state.StateFactoryPlay;
+import ru.ifmo.enf.optiks.physics.util.Calculate;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
 
 /**
@@ -43,7 +43,7 @@ public class GameObjectListener extends InputAdapter {
         /* Gesture listener */
         gestureListener = new GestureDetector.GestureAdapter() {
             @Override
-            public boolean longPress(int x, int y) {
+            public boolean longPress(final int x, final int y) {
                 if (activeObject != null) {
                     if (activeObject.hasPrevious()) {
                         activeObject.setPrevious(null);
@@ -64,7 +64,6 @@ public class GameObjectListener extends InputAdapter {
                 final Vector2 vector = Calculate.toPhysicsVector(x, y);
                 activeObject = bodyTouchQuery.getQueryBody(vector.x, vector.y, true);
 
-
                 if (activeObject == null) {
                     return false;
                 }
@@ -76,13 +75,14 @@ public class GameObjectListener extends InputAdapter {
                 activeObjectState.setPreState();
 
                 if (isRotate) {
-                    RevoluteJointDef jointDef = new RevoluteJointDef();
+                    final RevoluteJointDef jointDef = new RevoluteJointDef();
                     jointDef.initialize(wall.getBody(), activeObject.getBody(), new Vector2());
 
-                    Vector2 globalRotationPoint = activeObject.getBody().getWorldPoint(activeObject.getRotationCenter());
+                    final Vector2 globalRotationPoint = activeObject.getBody().getWorldPoint(activeObject.getRotationCenter());
 
                     jointDef.localAnchorA.set(globalRotationPoint);
                     jointDef.localAnchorB.set(activeObject.getRotationCenter());
+                    jointDef.collideConnected = true;
 
                     revoluteJoint = (RevoluteJoint) world.createJoint(jointDef);
                 }
@@ -107,6 +107,17 @@ public class GameObjectListener extends InputAdapter {
 
     @Override
     public boolean touchUp(final int x, final int y, final int pointer, final int button) {
+        /*if (activeObject != null) {
+            if (activeObject instanceof Attacher && !activeObject.hasNext()) {
+                final Vector2 point = activeObject.getBody().getWorldPoint(activeObject.getAnchorB());
+                final SimpleObjectСontainer container = new SimpleObjectСontainer(point, 0, ObjectType.ATTACH_ZONE);
+                final GameObject circle = editorScreen.getFactory().createGameObject(container);
+                activeObject.setNext(circle);
+                circle.setPrevious(activeObject);
+
+                world.createJoint(RevoluteJointBehavior.createRevoluteJoint(activeObject, circle, false));
+            }
+        }*/
         if (editorScreen.getMouseJoint() != null) {
             editorScreen.getMouseJoint().getBodyB().setType(BodyDef.BodyType.StaticBody);
 

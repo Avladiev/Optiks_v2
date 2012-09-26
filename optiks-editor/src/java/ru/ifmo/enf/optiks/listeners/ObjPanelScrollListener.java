@@ -10,11 +10,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.panel.ObjPanelItem;
 import ru.ifmo.enf.optiks.panel.ObjectsPanel;
-import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
-import ru.ifmo.enf.optiks.phisycs.object.GameObject;
-import ru.ifmo.enf.optiks.phisycs.object.ObjectType;
-import ru.ifmo.enf.optiks.phisycs.object.container.SimpleObjectСontainer;
-import ru.ifmo.enf.optiks.phisycs.util.Calculate;
+import ru.ifmo.enf.optiks.physics.GameObjectFactory;
+import ru.ifmo.enf.optiks.physics.object.GameObject;
+import ru.ifmo.enf.optiks.physics.object.ObjectType;
+import ru.ifmo.enf.optiks.physics.object.container.SimpleObjectСontainer;
+import ru.ifmo.enf.optiks.physics.util.Calculate;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
 import ru.ifmo.enf.optiks.util.OverlapTester;
 
@@ -27,13 +27,14 @@ import java.util.List;
 public class ObjPanelScrollListener extends GestureDetector.GestureAdapter {
 
     private final EditorScreen editorScreen;
+    @SuppressWarnings("FieldCanBeLocal")
     private final World world;
     private final ObjectsPanel objectsPanel;
     private final Camera camera;
     private final GameObjectFactory factory;
-    private final GameObject wall;
     @SuppressWarnings("FieldCanBeLocal")
     private Vector3 touchPoint;
+    @SuppressWarnings("FieldCanBeLocal")
     private GameObject currentObject;
 
     public ObjPanelScrollListener(final EditorScreen editorScreen) {
@@ -41,8 +42,7 @@ public class ObjPanelScrollListener extends GestureDetector.GestureAdapter {
         this.objectsPanel = editorScreen.getObjectsPanel();
         this.world = editorScreen.getWorld();
         this.camera = editorScreen.getCamera();
-        factory = new GameObjectFactory(world);
-        wall = editorScreen.getWall();
+        this.factory = editorScreen.getFactory();
     }
 
     @Override

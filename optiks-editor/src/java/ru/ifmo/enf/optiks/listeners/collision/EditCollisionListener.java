@@ -1,33 +1,16 @@
 package ru.ifmo.enf.optiks.listeners.collision;
 
 import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
+import ru.ifmo.enf.optiks.physics.contact.CollisionAdapter;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)
  * Date: 25.09.12
  */
-public class EditCollisionListener implements ContactListener {
+public class EditCollisionListener extends CollisionAdapter {
 
     @Override
-    public void beginContact(Contact contact) {
-        CollisionResolver.resolveCollision(contact.getFixtureA().getBody(), contact.getFixtureB().getBody());
-    }
-
-    @Override
-    public void endContact(Contact contact) {
-
-    }
-
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-
+    public void beginContact(final Contact contact) {
+        CollisionResolver.resolveCollision(contact);
     }
 }

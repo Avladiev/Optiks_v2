@@ -6,11 +6,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
-import ru.ifmo.enf.optiks.phisycs.object.GameObject;
-import ru.ifmo.enf.optiks.phisycs.object.Wall;
-import ru.ifmo.enf.optiks.phisycs.object.state.State;
-import ru.ifmo.enf.optiks.phisycs.object.state.StateFactory;
-import ru.ifmo.enf.optiks.phisycs.util.Calculate;
+import ru.ifmo.enf.optiks.physics.object.GameObject;
+import ru.ifmo.enf.optiks.physics.object.Wall;
+import ru.ifmo.enf.optiks.physics.object.state.State;
+import ru.ifmo.enf.optiks.physics.object.state.StateFactory;
+import ru.ifmo.enf.optiks.physics.util.Calculate;
 
 import java.util.Iterator;
 

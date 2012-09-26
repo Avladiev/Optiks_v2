@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.graphics.Assets;
-import ru.ifmo.enf.optiks.phisycs.GameObjectFactory;
+import ru.ifmo.enf.optiks.physics.GameObjectFactory;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
 
 /**
@@ -25,7 +25,6 @@ public class OptiksEditor extends Game {
 
     @Override
     public void create() {
-
         /* Camera settings */
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
