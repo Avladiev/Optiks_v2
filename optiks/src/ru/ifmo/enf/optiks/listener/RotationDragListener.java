@@ -10,7 +10,7 @@ import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.Wall;
 import ru.ifmo.enf.optiks.physics.object.state.State;
 import ru.ifmo.enf.optiks.physics.object.state.StateFactory;
-import ru.ifmo.enf.optiks.physics.util.Calculate;
+import ru.ifmo.enf.optiks.util.Converter;
 
 import java.util.Iterator;
 
@@ -38,7 +38,7 @@ public abstract class RotationDragListener extends InputAdapter {
     public boolean touchDown(final int x, final int y, final int pointer, final int button) {
         switch (pointer) {
             case 0:
-                final Vector2 vector = Calculate.toPhysicsVector(x, y);
+                final Vector2 vector = Converter.toPhysicsVector(x, y);
                 activeObject = bodyTouchQuery.getQueryBody(vector.x, vector.y, false);
 
                 if (activeObject == null) {
@@ -106,7 +106,7 @@ public abstract class RotationDragListener extends InputAdapter {
                 if (mouseJoint == null) {
                     return true;
                 }
-                mouseJoint.setTarget(Calculate.toPhysicsVector(x, y));
+                mouseJoint.setTarget(Converter.toPhysicsVector(x, y));
                 //todo
                 return false;
             default:

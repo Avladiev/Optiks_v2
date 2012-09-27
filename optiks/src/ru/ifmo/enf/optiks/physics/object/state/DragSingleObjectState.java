@@ -6,6 +6,7 @@ import ru.ifmo.enf.optiks.physics.object.GameObject;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class DragSingleObjectState extends State {
+
     public DragSingleObjectState(final GameObject gameObject) {
         super(gameObject);
     }

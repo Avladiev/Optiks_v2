@@ -14,7 +14,7 @@ import ru.ifmo.enf.optiks.physics.GameObjectFactory;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.ObjectType;
 import ru.ifmo.enf.optiks.physics.object.container.SimpleObjectСontainer;
-import ru.ifmo.enf.optiks.physics.util.Calculate;
+import ru.ifmo.enf.optiks.util.Converter;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
 import ru.ifmo.enf.optiks.util.OverlapTester;
 
@@ -95,12 +95,12 @@ public class ObjPanelScrollListener extends GestureDetector.GestureAdapter {
                 }
                 /* Create mouse joint for it */
                 if (objectType != null) {
-                    currentObject = factory.createGameObject(new SimpleObjectСontainer(new Vector2(Calculate.toPhysicsVector(x, y)), 0, objectType));
+                    currentObject = factory.createGameObject(new SimpleObjectСontainer(new Vector2(Converter.toPhysicsVector(x, y)), 0, objectType));
                     currentObject.setActive(true);
                     currentObject.getBody().setType(BodyDef.BodyType.DynamicBody);
                     currentObject.setFixtureProperties();
 
-                    /*final MouseJointDef mouseJoint = new EditorMouseJointDef(wall, currentObject, Calculate.toPhysicsVector(x, y));
+                    /*final MouseJointDef mouseJoint = new EditorMouseJointDef(wall, currentObject, Converter.toPhysicsVector(x, y));
                     editorScreen.setMouseJoint((MouseJoint) world.createJoint(mouseJoint));*/
 
                     /* Hide objects panel*/

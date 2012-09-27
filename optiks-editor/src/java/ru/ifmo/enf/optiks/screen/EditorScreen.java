@@ -20,8 +20,8 @@ import ru.ifmo.enf.optiks.listeners.GameObjectListener;
 import ru.ifmo.enf.optiks.listeners.ObjPanelScrollListener;
 import ru.ifmo.enf.optiks.listeners.collision.EditCollisionListener;
 import ru.ifmo.enf.optiks.panel.ObjectsPanel;
+import ru.ifmo.enf.optiks.util.CommandList;
 import ru.ifmo.enf.optiks.physics.GameObjectFactory;
-import ru.ifmo.enf.optiks.physics.PhysicsStackCommand;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.ObjectType;
 import ru.ifmo.enf.optiks.physics.object.container.SimpleObjectСontainer;
@@ -107,7 +107,7 @@ public class EditorScreen implements Screen {
         batch.end();
         update();
         render.render(world, camera.projection.scale(GameObjectFactory.physicsScale, GameObjectFactory.physicsScale, GameObjectFactory.physicsScale));
-        PhysicsStackCommand.doCommand();
+        CommandList.doCommand();
     }
 
     @Override

@@ -97,8 +97,6 @@ public final class GameObjectFactory {
             case LEGO:
                 object = new Lego();
                 break;
-            case RECTANGLE_BARRIER:
-                break;
             case LASER:
                 object = new Laser();
                 break;
@@ -107,12 +105,6 @@ public final class GameObjectFactory {
                 break;
             case MIRROR:
                 object = new Mirror();
-                break;
-            case DYNAMIC_LEGO:
-                break;
-            case CIRCLE:
-                break;
-            case RECTANGLE:
                 break;
             case ROPE:
                 object = new Rope();
@@ -137,8 +129,8 @@ public final class GameObjectFactory {
     }
 
     private Bullet createBullet(final GameObject laser) {
-        Body body = world.createBody(createBodyDef(new Vector2(0, 0), 0, BodyDef.BodyType.DynamicBody));
-        CircleShape shape = new CircleShape();
+        final Body body = world.createBody(createBodyDef(new Vector2(0, 0), 0, BodyDef.BodyType.DynamicBody));
+        final CircleShape shape = new CircleShape();
         shape.setRadius(1);
         shape.setPosition(new Vector2(0, 0));
         body.createFixture(shape, 0);
@@ -157,7 +149,7 @@ public final class GameObjectFactory {
     private void createFixture(final Body body, final ObjectType objectType, final float sizeScale) {
         //todo collision filter
         loader.attachFixture(body, objectType.toString(), new FixtureDef(), sizeScale);
-        for (Fixture fixture : body.getFixtureList()) {
+        for (final Fixture fixture : body.getFixtureList()) {
             if (fixture.getShape() instanceof CircleShape) {
 
             } else {

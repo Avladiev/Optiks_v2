@@ -6,9 +6,9 @@ import ru.ifmo.enf.optiks.physics.object.GameObject;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public abstract class State {
-    State previous;
-    State next;
-    GameObject gameObject;
+    protected State previous;
+    protected State next;
+    protected final GameObject gameObject;
 
     protected State(final GameObject gameObject) {
         this.gameObject = gameObject;
@@ -24,8 +24,6 @@ public abstract class State {
         }
     }
 
-    protected abstract void setPreProperties();
-
     public void setPostState() {
         setPostProperties();
         gameObject.stopBody();
@@ -37,9 +35,7 @@ public abstract class State {
         }
     }
 
-    protected abstract void setPostProperties();
+    protected abstract void setPreProperties();
 
-    public void setPrevious(final State previous) {
-        this.previous = previous;
-    }
+    protected abstract void setPostProperties();
 }

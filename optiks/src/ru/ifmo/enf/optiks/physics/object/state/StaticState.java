@@ -16,13 +16,11 @@ public class StaticState extends State {
 
     @Override
     protected void setPreProperties() {
-        //todo
         gameObject.getBody().setType(BodyDef.BodyType.StaticBody);
     }
 
     @Override
     protected void setPostProperties() {
-        //todo
         gameObject.getBody().setType(type);
     }
 }

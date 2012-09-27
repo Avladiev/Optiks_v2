@@ -5,7 +5,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import ru.ifmo.enf.optiks.physics.object.Bullet;
-import ru.ifmo.enf.optiks.physics.util.OverlapTester;
+import ru.ifmo.enf.optiks.util.OverlapTester;
 import ru.ifmo.enf.optiks.screen.GameScreen;
 
 /**

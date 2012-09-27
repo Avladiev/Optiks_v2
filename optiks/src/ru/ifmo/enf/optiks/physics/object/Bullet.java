@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import ru.ifmo.enf.optiks.physics.util.PhysicWorldUpdater;
+import ru.ifmo.enf.optiks.physics.PhysicWorldUpdater;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,7 @@ public class Bullet extends GameObject {
 
         stopBody();
 //        getBody().setActive(false);
-        PhysicWorldUpdater.stopCalculate();
+        PhysicWorldUpdater.stopUpdateTrajectory();
 
 
         addPoint(getWorldCenter());
@@ -57,7 +57,7 @@ public class Bullet extends GameObject {
         getBody().setActive(true);
 
         getBody().setLinearVelocity(calculateShootVector());
-        PhysicWorldUpdater.calculateTrajectory();
+        PhysicWorldUpdater.updateTrajectory();
     }
 
     public void continueShoot() {

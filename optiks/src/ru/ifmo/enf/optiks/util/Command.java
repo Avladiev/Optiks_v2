@@ -1,9 +1,9 @@
-package ru.ifmo.enf.optiks.physics;
+package ru.ifmo.enf.optiks.util;
 
 /**
  * Author: Dudko Alex (dududko@gmail.com)
  */
-public interface PhysicsCommand {
+public interface Command {
 
     public void doCommand();
 }

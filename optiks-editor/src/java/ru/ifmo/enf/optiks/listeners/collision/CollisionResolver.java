@@ -2,8 +2,8 @@ package ru.ifmo.enf.optiks.listeners.collision;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
-import ru.ifmo.enf.optiks.physics.PhysicsCommand;
-import ru.ifmo.enf.optiks.physics.PhysicsStackCommand;
+import ru.ifmo.enf.optiks.util.Command;
+import ru.ifmo.enf.optiks.util.CommandList;
 import ru.ifmo.enf.optiks.physics.object.Attacher;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.Wall;
@@ -28,7 +28,7 @@ public class CollisionResolver {
                 final int wallSide = objectA.getBody().getFixtureList().indexOf(contact.getFixtureA());
                 final float angle = (float) (Math.PI / 2 * (wallSide + 2));
 
-                PhysicsStackCommand.addCommand(new PhysicsCommand() {
+                CommandList.addCommand(new Command() {
                     @Override
                     public void doCommand() {
                         objectB.getBody().setType(BodyDef.BodyType.StaticBody);

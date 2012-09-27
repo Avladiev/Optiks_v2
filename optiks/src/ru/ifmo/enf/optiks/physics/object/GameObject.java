@@ -8,37 +8,44 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
 public abstract class GameObject {
+    private GameObject previous;
+    private GameObject next;
+
+    private Body body;
+
+    /* revolute joint with next */
+    private RevoluteJoint joint;
+
+    /* anchors for Joints */
+    private final Vector2 anchorA;
+    private final Vector2 anchorB;
+
+    /* sometimes matches with center of Body mass */
+    private final Vector2 rotationCenter;
+
+    /*need for revoluteJoint limit*/
+    private final float jointAngle;
+
+    /* can player move this game object*/
+    protected boolean isMovable;
+
+    private final float gravityScale;
+    private final float sizeScale;
+
     public static float density;
     public static float friction;
     public static float restitution;
 
-    protected boolean isMovable;
-
-    // anchors for Joints
-    private final Vector2 anchorA;
-    private final Vector2 anchorB;
-    private final Vector2 rotationCenter;
-    private final float gravityScale;
-    private final float sizeScale;
-    private boolean canTouch;
-
-    private Body body;
-
-    private GameObject previous;
-    private GameObject next;
-
-    private float jointAngle;
-
-    private RevoluteJoint joint;
-
     protected GameObject(final Vector2 anchorA, final Vector2 anchorB, final Vector2 rotationCenter, final float gravityScale, final float sizeScale, final float jointAngle) {
         this.anchorA = anchorA;
         this.anchorB = anchorB;
+
         this.rotationCenter = rotationCenter;
+
+        this.jointAngle = jointAngle;
+
         this.gravityScale = gravityScale;
         this.sizeScale = sizeScale;
-        this.canTouch = true;
-        this.jointAngle = jointAngle;
     }
 
     protected GameObject(final Vector2 anchorA, final Vector2 anchorB, final float gravityScale, final float sizeScale, final float jointAngle) {
@@ -67,13 +74,6 @@ public abstract class GameObject {
             fixture.setDensity(density);
             fixture.setFriction(friction);
             fixture.setRestitution(restitution);
-
-//            fixture.getShape().setRadius(0.1f);
-
-            final Filter filter = new Filter();
-            filter.categoryBits = 1;
-            filter.groupIndex = 1;
-//            fixture.setFilterData(filter);
         }
         body.resetMassData();
     }
@@ -111,14 +111,6 @@ public abstract class GameObject {
         next.gravityOn();
     }
 
-    public boolean isCanTouch() {
-        return canTouch;
-    }
-
-    public void setBodyType(final BodyDef.BodyType type) {
-        body.setType(type);
-    }
-
     public Vector2 getWorldCenter() {
         return body.getWorldCenter();
     }
@@ -153,10 +145,15 @@ public abstract class GameObject {
         return joint;
     }
 
+    /**
+     * @return jointAngle of this object
+     * maximum jointAngle of revoluteJoint is sum of joined bodies jointAngles
+     */
     public float getJointAngle() {
         return jointAngle;
     }
 
+    /* activate & deactivate body in physics world */
     public void setActive(final boolean isActive) {
         body.setActive(isActive);
         if (hasNext()) {

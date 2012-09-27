@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
-import ru.ifmo.enf.optiks.physics.util.Calculate;
+import ru.ifmo.enf.optiks.util.Calculate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class BodyTouchQuery {
     public void addQueryBody(final Body body) {
         if (body.getUserData() instanceof GameObject) {
             final GameObject gameObject = (GameObject) body.getUserData();
-            if (gameObject.isCanTouch() && !query.contains(gameObject)) {
+            if (!query.contains(gameObject)) {
                 query.add(gameObject);
             }
         }

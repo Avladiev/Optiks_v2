@@ -19,8 +19,8 @@ import ru.ifmo.enf.optiks.physics.GameObjectFactory;
 import ru.ifmo.enf.optiks.physics.contact.CollisionListener;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.container.LevelContainer;
-import ru.ifmo.enf.optiks.physics.util.Calculate;
-import ru.ifmo.enf.optiks.physics.util.PhysicWorldUpdater;
+import ru.ifmo.enf.optiks.util.Converter;
+import ru.ifmo.enf.optiks.physics.PhysicWorldUpdater;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -110,10 +110,10 @@ public class GameScreen implements Screen {
                 if (iterator.hasNext()) {
                     vec1 = new Vector2(iterator.next());
                     if (vec1 != null) {
-                        vec1 = Calculate.physicsToCameraVector(vec1.x, vec1.y);
+                        vec1 = Converter.physicsToCameraVector(vec1.x, vec1.y);
                         while (iterator.hasNext()) {
                             Vector2 vec2 = new Vector2(iterator.next());
-                            vec2 = Calculate.physicsToCameraVector(vec2.x, vec2.y);
+                            vec2 = Converter.physicsToCameraVector(vec2.x, vec2.y);
 
                             shapeRenderer.line(vec1.x, vec1.y, vec2.x, vec2.y);
                             vec1 = vec2;

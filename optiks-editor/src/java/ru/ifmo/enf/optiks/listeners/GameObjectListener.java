@@ -14,7 +14,7 @@ import ru.ifmo.enf.optiks.listener.BodyTouchQuery;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.state.State;
 import ru.ifmo.enf.optiks.physics.object.state.StateFactoryPlay;
-import ru.ifmo.enf.optiks.physics.util.Calculate;
+import ru.ifmo.enf.optiks.util.Converter;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
 
 /**
@@ -61,7 +61,7 @@ public class GameObjectListener extends InputAdapter {
     public boolean touchDown(final int x, final int y, final int pointer, final int button) {
         switch (pointer) {
             case 0:
-                final Vector2 vector = Calculate.toPhysicsVector(x, y);
+                final Vector2 vector = Converter.toPhysicsVector(x, y);
                 activeObject = bodyTouchQuery.getQueryBody(vector.x, vector.y, true);
 
                 if (activeObject == null) {
@@ -99,7 +99,7 @@ public class GameObjectListener extends InputAdapter {
     @Override
     public boolean touchDragged(final int x, final int y, final int pointer) {
         if (editorScreen.getMouseJoint() != null) {
-            editorScreen.getMouseJoint().setTarget(Calculate.toPhysicsVector(x, y));
+            editorScreen.getMouseJoint().setTarget(Converter.toPhysicsVector(x, y));
             return true;
         }
         return false;

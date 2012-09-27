@@ -1,4 +1,4 @@
-package ru.ifmo.enf.optiks.phisycs.util;
+package ru.ifmo.enf.optiks.util;
 
 import com.badlogic.gdx.math.Rectangle;
 
