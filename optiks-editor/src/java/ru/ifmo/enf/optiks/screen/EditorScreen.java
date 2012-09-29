@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -20,11 +19,10 @@ import ru.ifmo.enf.optiks.listeners.GameObjectListener;
 import ru.ifmo.enf.optiks.listeners.ObjPanelScrollListener;
 import ru.ifmo.enf.optiks.listeners.collision.EditCollisionListener;
 import ru.ifmo.enf.optiks.panel.ObjectsPanel;
-import ru.ifmo.enf.optiks.util.CommandList;
-import ru.ifmo.enf.optiks.physics.GameObjectFactory;
+import ru.ifmo.enf.optiks.physics.WorldFactory;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.ObjectType;
-import ru.ifmo.enf.optiks.physics.object.container.SimpleObjectСontainer;
+import ru.ifmo.enf.optiks.util.CommandList;
 import ru.ifmo.enf.optiks.util.OverlapTester;
 
 /**
@@ -34,7 +32,7 @@ import ru.ifmo.enf.optiks.util.OverlapTester;
 public class EditorScreen implements Screen {
 
     private final World world;
-    private final GameObjectFactory factory;
+    private final WorldFactory factory;
     private final ObjectsPanel objectsPanel;
     private final Camera camera;
     private final SpriteBatch batch;
@@ -48,7 +46,7 @@ public class EditorScreen implements Screen {
     public EditorScreen(final OptiksEditor optiksEditor) {
 
         /* Box2D debug */
-        render = new Box2DDebugRenderer(true, true, true, true);
+        render = new Box2DDebugRenderer(true, true, false, true);
 
         /* Physics world & graphics */
         this.world = optiksEditor.getWorld();
@@ -59,11 +57,7 @@ public class EditorScreen implements Screen {
         touchPoint = new Vector3();
 
         /* Screen border */
-        wall = factory.createWall(135, 80);
-        final GameObject laser = factory.createGameObject(new SimpleObjectСontainer(new Vector2(0, 0), 90, ObjectType.LASER));
-        laser.setActive(true);
-        laser.getBody().resetMassData();
-        laser.getBody().setGravityScale(1);
+        wall = factory.createWalls(135, 80);
 
         /* Buttons */
         gameObjectsBtn = new Sprite(Assets.inst().get(Assets.EDITOR_GAME_OBJECTS_BTN, Texture.class));
@@ -106,7 +100,7 @@ public class EditorScreen implements Screen {
         objectsPanel.render(batch, delta);
         batch.end();
         update();
-        render.render(world, camera.projection.scale(GameObjectFactory.physicsScale, GameObjectFactory.physicsScale, GameObjectFactory.physicsScale));
+        render.render(world, camera.projection.scale(WorldFactory.PHYSICS_SCALE, WorldFactory.PHYSICS_SCALE, WorldFactory.PHYSICS_SCALE));
         CommandList.doCommand();
     }
 
@@ -139,7 +133,7 @@ public class EditorScreen implements Screen {
         return world;
     }
 
-    public GameObjectFactory getFactory() {
+    public WorldFactory getFactory() {
         return factory;
     }
 

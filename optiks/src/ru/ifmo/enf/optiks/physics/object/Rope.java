@@ -8,13 +8,19 @@ import com.badlogic.gdx.physics.box2d.Fixture;
  */
 public class Rope extends GameObject {
     public Rope() {
-        super(new Vector2(1, 1), new Vector2(1, 1), 0.7f, 16, 90);
+        super(new Vector2(0, 4), new Vector2(0, -4), 0.7f, 20, 60);
     }
 
     @Override
     public void bulletHitReaction(final Bullet bullet, final Fixture fixtureA) {
-        getBody().getWorld().destroyBody(getBody());
         gravityOn();
+
+        getNext().setPrevious(null);
+        getPrevious().setNext(null);
+
+        getBody().getWorld().destroyBody(getBody());
         bullet.continueShoot();
     }
+
+
 }

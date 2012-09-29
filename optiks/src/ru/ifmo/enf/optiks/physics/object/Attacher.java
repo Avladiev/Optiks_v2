@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 public class Attacher extends GameObject {
 
     public Attacher() {
-        super(new Vector2(0, 0), new Vector2(0, 10), new Vector2(0, 0), 1, 20, 60);
+        super(new Vector2(0, 10), new Vector2(0, 10), new Vector2(0, 0), 1, 20, 60);
         density = 1;
         friction = 1;
         restitution = 0;

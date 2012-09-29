@@ -11,6 +11,8 @@ public abstract class GameObject {
     private GameObject previous;
     private GameObject next;
 
+    private GameObject attachZone;
+
     private Body body;
 
     /* revolute joint with next */
@@ -35,6 +37,11 @@ public abstract class GameObject {
     public static float density;
     public static float friction;
     public static float restitution;
+
+    private Vector2 originPosition;
+    private float originAngle;
+
+    private ObjectType objectType;
 
     protected GameObject(final Vector2 anchorA, final Vector2 anchorB, final Vector2 rotationCenter, final float gravityScale, final float sizeScale, final float jointAngle) {
         this.anchorA = anchorA;
@@ -163,6 +170,39 @@ public abstract class GameObject {
 
     public Vector2 getRotationCenter() {
         return rotationCenter;
+    }
+
+    public void setAttachZone(final GameObject attachZone) {
+        this.attachZone = attachZone;
+    }
+
+    public GameObject getAttachZone() {
+        return attachZone;
+    }
+
+    public boolean hasAttachZone() {
+        return attachZone != null;
+    }
+
+    public ObjectType getObjectType() {
+        return objectType;
+    }
+
+    public void setObjectType(final ObjectType objectType) {
+        this.objectType = objectType;
+    }
+
+    public void setOrigins(final Vector2 originPosition, final float originAngle) {
+        this.originPosition = originPosition;
+        this.originAngle = originAngle;
+    }
+
+    public Vector2 getOriginPosition() {
+        return originPosition;
+    }
+
+    public float getOriginAngle() {
+        return originAngle;
     }
 }
 

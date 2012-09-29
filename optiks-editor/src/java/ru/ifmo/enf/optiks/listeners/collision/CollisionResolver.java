@@ -2,6 +2,7 @@ package ru.ifmo.enf.optiks.listeners.collision;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
+import ru.ifmo.enf.optiks.physics.object.AttachZone;
 import ru.ifmo.enf.optiks.util.Command;
 import ru.ifmo.enf.optiks.util.CommandList;
 import ru.ifmo.enf.optiks.physics.object.Attacher;
@@ -37,6 +38,9 @@ public class CollisionResolver {
                     }
                 });
             }
+        }
+        if (objectA instanceof AttachZone) {
+
         }
     }
 }

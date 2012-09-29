@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.panel.ObjPanelItem;
 import ru.ifmo.enf.optiks.panel.ObjectsPanel;
-import ru.ifmo.enf.optiks.physics.GameObjectFactory;
+import ru.ifmo.enf.optiks.physics.WorldFactory;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.ObjectType;
 import ru.ifmo.enf.optiks.physics.object.container.SimpleObjectСontainer;
@@ -31,7 +31,7 @@ public class ObjPanelScrollListener extends GestureDetector.GestureAdapter {
     private final World world;
     private final ObjectsPanel objectsPanel;
     private final Camera camera;
-    private final GameObjectFactory factory;
+    private final WorldFactory factory;
     @SuppressWarnings("FieldCanBeLocal")
     private Vector3 touchPoint;
     @SuppressWarnings("FieldCanBeLocal")
