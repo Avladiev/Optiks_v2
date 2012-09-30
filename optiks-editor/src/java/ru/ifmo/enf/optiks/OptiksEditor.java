@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.graphics.Assets;
-import ru.ifmo.enf.optiks.physics.GameObjectFactory;
+import ru.ifmo.enf.optiks.physics.WorldFactory;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
 
 /**
@@ -19,7 +19,7 @@ import ru.ifmo.enf.optiks.screen.EditorScreen;
 public class OptiksEditor extends Game {
 
     private World world;
-    private GameObjectFactory factory;
+    private WorldFactory factory;
     private OrthographicCamera camera;
     public boolean isLoaded = false;
 
@@ -38,7 +38,7 @@ public class OptiksEditor extends Game {
 
         /* Physics world */
         world = new World(new Vector2(0, -10), true);
-        factory = new GameObjectFactory(world);
+        factory = new WorldFactory(world);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class OptiksEditor extends Game {
         return world;
     }
 
-    public GameObjectFactory getFactory() {
+    public WorldFactory getFactory() {
         return factory;
     }
 

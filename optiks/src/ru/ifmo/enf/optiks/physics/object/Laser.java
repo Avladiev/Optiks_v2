@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class Laser extends GameObject {
+    Bullet bullet;
 
     public Laser() {
         super(new Vector2(0, 0), new Vector2(20, 0), 1, 20, 60);
@@ -20,5 +21,17 @@ public class Laser extends GameObject {
     @Override
     public void bulletHitReaction(final Bullet bullet, final Fixture fixtureA) {
         bullet.stop();
+    }
+
+    public void shoot() {
+        bullet.shoot();
+    }
+
+    public void setBullet(final Bullet bullet) {
+        this.bullet = bullet;
+    }
+
+    public Bullet getBullet() {
+        return bullet;
     }
 }

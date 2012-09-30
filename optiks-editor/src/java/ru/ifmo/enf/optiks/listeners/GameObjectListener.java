@@ -13,7 +13,12 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import ru.ifmo.enf.optiks.joint.EditorMouseJointDef;
 import ru.ifmo.enf.optiks.listener.BodyTouchQuery;
+import ru.ifmo.enf.optiks.physics.joint.RevoluteJointBehavior;
+import ru.ifmo.enf.optiks.physics.object.AttachZone;
+import ru.ifmo.enf.optiks.physics.object.Attacher;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
+import ru.ifmo.enf.optiks.physics.object.ObjectType;
+import ru.ifmo.enf.optiks.physics.object.container.SimpleObjectСontainer;
 import ru.ifmo.enf.optiks.physics.object.state.State;
 import ru.ifmo.enf.optiks.physics.object.state.StateFactoryPlay;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
@@ -53,9 +58,20 @@ public class GameObjectListener extends InputAdapter {
             public boolean longPress(final int x, final int y) {
                 if (activeObject != null) {
                     if (activeObject.hasPrevious()) {
+                        world.destroyJoint(activeObject.getJoint());
+
+                        if (activeObject.hasAttachZone()) {
+                            final GameObject attachZone = activeObject.getAttachZone();
+                            world.destroyJoint(attachZone.getJoint());
+                            attachZone.setPrevious(activeObject.getPrevious());
+
+                            attachZone.setJoint(world.createJoint(RevoluteJointBehavior.createRevoluteJoint(attachZone, attachZone.getPrevious(), false)));
+                            activeObject.setAttachZone(null);
+                        }
+
+                        activeObject.getPrevious().setNext(null);
                         activeObject.setPrevious(null);
                         activeObject.setJoint(null);
-                        world.destroyJoint(activeObject.getJoint());
                         return true;
                     }
                 }
@@ -71,7 +87,7 @@ public class GameObjectListener extends InputAdapter {
                 final Vector2 vector = Converter.toPhysicsVector(x, y);
                 activeObject = bodyTouchQuery.getQueryBody(vector.x, vector.y, true);
 
-                if (activeObject == null) {
+                if (activeObject == null || activeObject instanceof AttachZone) {
                     return false;
                 }
 
@@ -114,17 +130,18 @@ public class GameObjectListener extends InputAdapter {
 
     @Override
     public boolean touchUp(final int x, final int y, final int pointer, final int button) {
-        /*if (activeObject != null) {
-            if (activeObject instanceof Attacher && !activeObject.hasNext()) {
+        if (activeObject != null) {
+            if (activeObject instanceof Attacher && !activeObject.hasNext() && !activeObject.hasAttachZone()) {
                 final Vector2 point = activeObject.getBody().getWorldPoint(activeObject.getAnchorB());
                 final SimpleObjectСontainer container = new SimpleObjectСontainer(point, 0, ObjectType.ATTACH_ZONE);
                 final GameObject circle = editorScreen.getFactory().createGameObject(container);
-                activeObject.setNext(circle);
+                circle.setActive(true);
+                activeObject.setAttachZone(circle);
                 circle.setPrevious(activeObject);
 
-                world.createJoint(RevoluteJointBehavior.createRevoluteJoint(activeObject, circle, false));
+                circle.setJoint(world.createJoint(RevoluteJointBehavior.createRevoluteJoint(circle, activeObject, false)));
             }
-        }*/
+        }
         if (editorScreen.getMouseJoint() != null) {
             touchPoint = new Vector3(x, y, 0);
             editorScreen.getCamera().unproject(touchPoint);

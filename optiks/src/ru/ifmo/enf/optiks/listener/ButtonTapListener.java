@@ -4,15 +4,15 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import ru.ifmo.enf.optiks.physics.object.Bullet;
-import ru.ifmo.enf.optiks.util.OverlapTester;
+import ru.ifmo.enf.optiks.physics.object.Laser;
 import ru.ifmo.enf.optiks.screen.GameScreen;
+import ru.ifmo.enf.optiks.util.OverlapTester;
 
 /**
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class ButtonTapListener extends GestureDetector.GestureAdapter {
-    private Bullet bullet;
+    private Laser laser;
     private GameScreen gameScreen;
     private final Camera camera;
     private Vector3 touchPoint;
@@ -27,14 +27,14 @@ public class ButtonTapListener extends GestureDetector.GestureAdapter {
     public boolean touchDown(final int x, final int y, final int pointer) {
         camera.unproject(touchPoint.set(x, y, 0));
         if (OverlapTester.pointInRectangle(new Rectangle(170, 100, 40, 40), touchPoint.x + camera.viewportWidth / 2, (-touchPoint.y + camera.viewportHeight / 2))) {
-            bullet.shoot();
+            laser.shoot();
             return true;
         } else {
         }
         return false;
     }
 
-    public void setBullet(final Bullet bullet) {
-        this.bullet = bullet;
+    public void setLaser(final Laser laser) {
+        this.laser = laser;
     }
 }
