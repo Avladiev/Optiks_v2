@@ -32,8 +32,9 @@ public class OptiksEditor extends Game {
         /* Loading assets */
         Assets.inst().load(Assets.GAME_OBJECTS_PACK, TextureAtlas.class);
         Assets.inst().load(Assets.EDITOR_BACKGROUND_TEXTURE, Texture.class);
-        Assets.inst().load(Assets.EDITOR_GAME_OBJECTS_BTN, Texture.class);
+        Assets.inst().load(Assets.EDITOR_OBJ_PANEL_BTN, Texture.class);
         Assets.inst().load(Assets.EDITOR_GAME_OBJECTS_BG, Texture.class);
+        Assets.inst().load(Assets.EDITOR_RECYCLE, Texture.class);
 
         /* Physics world */
         world = new World(new Vector2(0, -10), true);

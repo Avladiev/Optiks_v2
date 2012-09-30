@@ -10,8 +10,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import ru.ifmo.enf.optiks.accessors.ObjPanelItemAccessor;
 import ru.ifmo.enf.optiks.accessors.SpriteAccessor;
+import ru.ifmo.enf.optiks.button.ObjPanelBtn;
 import ru.ifmo.enf.optiks.graphics.Assets;
 import ru.ifmo.enf.optiks.physics.object.ObjectType;
+import ru.ifmo.enf.optiks.screen.EditorScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,27 +24,26 @@ import java.util.List;
  */
 public class ObjectsPanel {
 
+    private final EditorScreen editorScreen;
     private final TweenManager tweenManager;
-    private List<ObjPanelItem> items;
-    private Sprite background;
+    private final List<ObjPanelItem> items;
+    private final Sprite background;
     private boolean isVisible = false;
 
     /* Item's size & position values */
-    private final int itemBorderSpace;
-    private final int itemSizeX;
-    private final int itemSizeY;
     private final int panelSizeX;
     private final int panelSizeY;
     private final int panelX;
     private final int panelY;
 
     /* Item's X position (to slide ability) */
-    private int posX;
+    private final int posX;
 
     /* Constants */
     private static final float APPEARING_TIME = 1f;
 
-    public ObjectsPanel() {
+    public ObjectsPanel(final EditorScreen editorScreen) {
+        this.editorScreen = editorScreen;
         items = new ArrayList<ObjPanelItem>();
         tweenManager = new TweenManager();
         Tween.registerAccessor(Sprite.class, new SpriteAccessor());
@@ -50,13 +51,10 @@ public class ObjectsPanel {
 
         // TODO constants or dynamic values
         /* Item's size & position values */
-        itemBorderSpace = 15;
-        itemSizeX = 64;
-        itemSizeY = itemSizeX;
         panelX = 25;
         panelY = 5;
         panelSizeX = Gdx.graphics.getWidth() - panelX - 75 /* Obj Button sizeX */;
-        panelSizeY = itemSizeY;
+        panelSizeY = ITEM_SIZE_Y;
         posX = panelX;
 
         background = new Sprite(Assets.inst().get(Assets.EDITOR_GAME_OBJECTS_BG, Texture.class));
@@ -70,7 +68,7 @@ public class ObjectsPanel {
      */
     public void addItem(final ObjectType type, final int countAvailable) {
         final ObjPanelItem item = new ObjPanelItem(type, countAvailable);
-        item.setX(itemBorderSpace + posX + (itemBorderSpace + itemSizeX) * items.size());
+        item.setX(ITEM_BORDER_SPACE + posX + (ITEM_BORDER_SPACE + ITEM_SIZE_X) * items.size());
         item.setY(background.getY());
         items.add(item);
     }
@@ -87,6 +85,8 @@ public class ObjectsPanel {
         for (final ObjPanelItem item : items) {
             timeline = timeline.push(Tween.to(item, ObjPanelItemAccessor.POS_XY, APPEARING_TIME).target(item.getX(), panelY));
         }
+        editorScreen.getObjPanelBtn().setState(ObjPanelBtn.State.BUTTON, timeline);
+        timeline.end();
         timeline.start(tweenManager);
     }
 
@@ -96,15 +96,16 @@ public class ObjectsPanel {
         timeline = timeline.beginParallel();
         timeline = timeline.push(Tween.to(background, SpriteAccessor.POS_XY, APPEARING_TIME).target(background.getX(), -(panelSizeY + panelY)));
         for (final ObjPanelItem item : items) {
-            timeline = timeline.push(Tween.to(item, ObjPanelItemAccessor.POS_XY, APPEARING_TIME).target(item.getX(), -(itemSizeY + panelY)));
+            timeline = timeline.push(Tween.to(item, ObjPanelItemAccessor.POS_XY, APPEARING_TIME).target(item.getX(), -(ITEM_SIZE_Y + panelY)));
         }
+        editorScreen.getObjPanelBtn().setState(ObjPanelBtn.State.RECYCLE, timeline);
+        timeline.end();
         timeline.start(tweenManager);
     }
 
     public void render(final SpriteBatch batch, final float delta) {
         tweenManager.update(delta);
         this.draw(batch);
-        update();
     }
 
     public boolean isVisible() {
@@ -118,10 +119,10 @@ public class ObjectsPanel {
     private void draw(final SpriteBatch batch) {
         background.draw(batch);
         for (final ObjPanelItem item : items) {
-            if (item.getX() >= panelX && item.getX() + itemSizeX <= panelX + panelSizeX) {
+            if (item.getX() >= panelX && item.getX() + ITEM_SIZE_X <= panelX + panelSizeX) {
                 item.draw(batch);
             } else {
-                final float delta = (item.getX() < panelX) ? panelX - item.getX() : item.getX() + itemSizeX - (panelX + panelSizeX);
+                final float delta = (item.getX() < panelX) ? panelX - item.getX() : item.getX() + ITEM_SIZE_X - (panelX + panelSizeX);
                 if (delta > 15) {
                     item.draw(batch, 0);
                 } else {
@@ -132,10 +133,8 @@ public class ObjectsPanel {
         }
     }
 
-    private void update() {
-        // TODO Check click & drag on obj panel item
-        if (Gdx.input.justTouched()) {
-            //
-        }
-    }
+    /* Constants */
+    private static final int ITEM_BORDER_SPACE = 15;
+    private static final int ITEM_SIZE_X = 64;
+    private static final int ITEM_SIZE_Y = 64;
 }

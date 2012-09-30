@@ -10,22 +10,22 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import ru.ifmo.enf.optiks.OptiksEditor;
+import ru.ifmo.enf.optiks.button.ObjPanelBtn;
 import ru.ifmo.enf.optiks.graphics.Assets;
+import ru.ifmo.enf.optiks.listeners.ButtonListener;
 import ru.ifmo.enf.optiks.listeners.GameObjectListener;
 import ru.ifmo.enf.optiks.listeners.ObjPanelScrollListener;
 import ru.ifmo.enf.optiks.listeners.collision.EditCollisionListener;
 import ru.ifmo.enf.optiks.panel.ObjectsPanel;
-import ru.ifmo.enf.optiks.util.CommandList;
 import ru.ifmo.enf.optiks.physics.GameObjectFactory;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.ObjectType;
 import ru.ifmo.enf.optiks.physics.object.container.SimpleObjectСontainer;
-import ru.ifmo.enf.optiks.util.OverlapTester;
+import ru.ifmo.enf.optiks.util.CommandList;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)
@@ -36,10 +36,9 @@ public class EditorScreen implements Screen {
     private final World world;
     private final GameObjectFactory factory;
     private final ObjectsPanel objectsPanel;
+    private final ObjPanelBtn objPanelBtn;
     private final Camera camera;
     private final SpriteBatch batch;
-    private final Sprite gameObjectsBtn;
-    private final Vector3 touchPoint;
     private final Box2DDebugRenderer render;
     private final GameObject wall;
 
@@ -56,7 +55,6 @@ public class EditorScreen implements Screen {
         this.camera = optiksEditor.getCamera();
         this.batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
-        touchPoint = new Vector3();
 
         /* Screen border */
         wall = factory.createWall(135, 80);
@@ -65,17 +63,33 @@ public class EditorScreen implements Screen {
         laser.getBody().resetMassData();
         laser.getBody().setGravityScale(1);
 
-        /* Buttons */
-        gameObjectsBtn = new Sprite(Assets.inst().get(Assets.EDITOR_GAME_OBJECTS_BTN, Texture.class));
-        gameObjectsBtn.setBounds(Gdx.graphics.getWidth() - 70, 6, 64, 64);
-
         /* Game objects panel*/
-        objectsPanel = new ObjectsPanel();
+        objectsPanel = new ObjectsPanel(this);
         objectsPanel.addItem(ObjectType.LASER, 1);
         //objectsPanel.addItem(ObjectType.AIM, 1);
         objectsPanel.addItem(ObjectType.MIRROR, 10);
         objectsPanel.addItem(ObjectType.LEGO, 1);
         objectsPanel.addItem(ObjectType.ATTACHER, 10);
+
+        /* Buttons */
+        final Sprite button = new Sprite(Assets.inst().get(Assets.EDITOR_OBJ_PANEL_BTN, Texture.class));
+        final Sprite recycle = new Sprite(Assets.inst().get(Assets.EDITOR_RECYCLE, Texture.class));
+
+        objPanelBtn = new ObjPanelBtn(button, recycle) {
+            @Override
+            public void touchDown() {
+                if (objectsPanel.isVisible()) {
+                    objectsPanel.hide();
+                } else {
+                    objectsPanel.show();
+                }
+            }
+        };
+        objPanelBtn.setBounds(Gdx.graphics.getWidth() - 70, 6, 64, 64);
+
+        /* Button listener */
+        final ButtonListener buttonListener = new ButtonListener(this);
+        buttonListener.addButton(objPanelBtn);
 
         /* Gesture Listeners */
         final GestureDetector.GestureListener gestureListener = new ObjPanelScrollListener(this);
@@ -88,10 +102,14 @@ public class EditorScreen implements Screen {
         inputMultiplexer.addProcessor(new GestureDetector(gestureListener));
         inputMultiplexer.addProcessor(gameObjectListener);
         inputMultiplexer.addProcessor(new GestureDetector(gameObjectListener.getGestureListener()));
+        inputMultiplexer.addProcessor(buttonListener);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         /* Collision listener */
         world.setContactListener(new EditCollisionListener());
+
+        /* Show obj panel */
+        objectsPanel.show();
     }
 
     @Override
@@ -102,10 +120,9 @@ public class EditorScreen implements Screen {
         world.clearForces();
         batch.begin();
         batch.draw(Assets.inst().get(Assets.EDITOR_BACKGROUND_TEXTURE, Texture.class), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        gameObjectsBtn.draw(batch);
         objectsPanel.render(batch, delta);
+        objPanelBtn.draw(batch);
         batch.end();
-        update();
         render.render(world, camera.projection.scale(GameObjectFactory.physicsScale, GameObjectFactory.physicsScale, GameObjectFactory.physicsScale));
         CommandList.doCommand();
     }
@@ -151,8 +168,12 @@ public class EditorScreen implements Screen {
         this.mouseJoint = mouseJoint;
     }
 
-    public ObjectsPanel getObjectsPanel() {
+    public ObjectsPanel getObjPanel() {
         return objectsPanel;
+    }
+
+    public ObjPanelBtn getObjPanelBtn() {
+        return objPanelBtn;
     }
 
     public Camera getCamera() {
@@ -161,18 +182,5 @@ public class EditorScreen implements Screen {
 
     public GameObject getWall() {
         return wall;
-    }
-
-    private void update() {
-        if (Gdx.input.justTouched()) {
-            camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-            if (OverlapTester.pointInRectangle(gameObjectsBtn.getBoundingRectangle(), touchPoint.x, touchPoint.y)) {
-                if (objectsPanel.isVisible()) {
-                    objectsPanel.hide();
-                } else {
-                    objectsPanel.show();
-                }
-            }
-        }
     }
 }

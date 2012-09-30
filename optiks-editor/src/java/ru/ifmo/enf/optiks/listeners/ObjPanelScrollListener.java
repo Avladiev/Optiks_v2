@@ -7,15 +7,14 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
 import ru.ifmo.enf.optiks.panel.ObjPanelItem;
 import ru.ifmo.enf.optiks.panel.ObjectsPanel;
 import ru.ifmo.enf.optiks.physics.GameObjectFactory;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.ObjectType;
 import ru.ifmo.enf.optiks.physics.object.container.SimpleObjectСontainer;
-import ru.ifmo.enf.optiks.util.Converter;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
+import ru.ifmo.enf.optiks.util.Converter;
 import ru.ifmo.enf.optiks.util.OverlapTester;
 
 import java.util.List;
@@ -28,7 +27,6 @@ public class ObjPanelScrollListener extends GestureDetector.GestureAdapter {
 
     private final EditorScreen editorScreen;
     @SuppressWarnings("FieldCanBeLocal")
-    private final World world;
     private final ObjectsPanel objectsPanel;
     private final Camera camera;
     private final GameObjectFactory factory;
@@ -39,8 +37,7 @@ public class ObjPanelScrollListener extends GestureDetector.GestureAdapter {
 
     public ObjPanelScrollListener(final EditorScreen editorScreen) {
         this.editorScreen = editorScreen;
-        this.objectsPanel = editorScreen.getObjectsPanel();
-        this.world = editorScreen.getWorld();
+        this.objectsPanel = editorScreen.getObjPanel();
         this.camera = editorScreen.getCamera();
         this.factory = editorScreen.getFactory();
     }

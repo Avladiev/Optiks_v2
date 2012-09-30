@@ -3,6 +3,8 @@ package ru.ifmo.enf.optiks.listeners;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
@@ -14,8 +16,11 @@ import ru.ifmo.enf.optiks.listener.BodyTouchQuery;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.state.State;
 import ru.ifmo.enf.optiks.physics.object.state.StateFactoryPlay;
-import ru.ifmo.enf.optiks.util.Converter;
 import ru.ifmo.enf.optiks.screen.EditorScreen;
+import ru.ifmo.enf.optiks.util.Command;
+import ru.ifmo.enf.optiks.util.CommandList;
+import ru.ifmo.enf.optiks.util.Converter;
+import ru.ifmo.enf.optiks.util.OverlapTester;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)
@@ -33,6 +38,8 @@ public class GameObjectListener extends InputAdapter {
     private GameObject activeObject;
     private State activeObjectState;
     private RevoluteJoint revoluteJoint;
+    @SuppressWarnings("FieldCanBeLocal")
+    private Vector3 touchPoint;
 
     public GameObjectListener(final EditorScreen editorScreen) {
         this.editorScreen = editorScreen;
@@ -91,7 +98,7 @@ public class GameObjectListener extends InputAdapter {
                 editorScreen.setMouseJoint((MouseJoint) world.createJoint(mouseJoint));
 
                 /* Hide objects panel */
-                editorScreen.getObjectsPanel().hide();
+                editorScreen.getObjPanel().hide();
         }
         return false;
     }
@@ -119,18 +126,34 @@ public class GameObjectListener extends InputAdapter {
             }
         }*/
         if (editorScreen.getMouseJoint() != null) {
-            editorScreen.getMouseJoint().getBodyB().setType(BodyDef.BodyType.StaticBody);
+            touchPoint = new Vector3(x, y, 0);
+            editorScreen.getCamera().unproject(touchPoint);
+            if (OverlapTester.pointInRectangle(editorScreen.getObjPanelBtn().getBoundingRectangle(), touchPoint.x, touchPoint.y)) {
+                /* Delete game object */
+                final Body body = editorScreen.getMouseJoint().getBodyB();
+                CommandList.addCommand(new Command() {
+                    @Override
+                    public void doCommand() {
+                        world.destroyBody(body);
+                    }
+                });
+            } else {
+                /* Create game object */
+                editorScreen.getMouseJoint().getBodyB().setType(BodyDef.BodyType.StaticBody);
+            }
 
             /* Destroy joint */
             editorScreen.getWorld().destroyJoint(editorScreen.getMouseJoint());
             editorScreen.setMouseJoint(null);
 
             /* Show objects panel */
-            editorScreen.getObjectsPanel().show();
+            editorScreen.getObjPanel().show();
 
             if (activeObjectState != null) {
                 activeObjectState.setPostState();
             }
+
+            return true;
         }
         if (revoluteJoint != null) {
             world.destroyJoint(revoluteJoint);

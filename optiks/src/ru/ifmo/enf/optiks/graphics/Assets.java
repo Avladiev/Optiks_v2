@@ -19,8 +19,9 @@ public class Assets extends AssetManager {
     public final static String EDITOR_BACKGROUND_TEXTURE = "gfx/editor/background.png";
     /* TODO create one atlas from little textures */
     public final static String EDITOR_BUTTONS_PACK = "gfx/editor/buttons/pack";
-    public final static String EDITOR_GAME_OBJECTS_BTN = "gfx/editor/buttons/game_objects.png";
+    public final static String EDITOR_OBJ_PANEL_BTN = "gfx/editor/buttons/game_objects.png";
     public final static String EDITOR_GAME_OBJECTS_BG = "gfx/editor/buttons/background.png";
+    public final static String EDITOR_RECYCLE = "gfx/editor/buttons/recycle.png";
 
 
     public static Assets inst() {
