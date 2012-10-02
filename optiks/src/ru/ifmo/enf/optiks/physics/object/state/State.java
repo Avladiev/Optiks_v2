@@ -6,6 +6,7 @@ import ru.ifmo.enf.optiks.physics.object.GameObject;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public abstract class State {
+
     protected State previous;
     protected State next;
     protected final GameObject gameObject;

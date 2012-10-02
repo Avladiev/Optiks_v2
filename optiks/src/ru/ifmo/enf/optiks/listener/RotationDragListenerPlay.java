@@ -7,6 +7,7 @@ import ru.ifmo.enf.optiks.physics.object.state.StateFactoryPlay;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class RotationDragListenerPlay extends RotationDragListener {
+
     public RotationDragListenerPlay(final World world) {
         super(world, new StateFactoryPlay());
     }

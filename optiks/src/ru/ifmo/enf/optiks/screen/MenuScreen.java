@@ -9,9 +9,9 @@ import ru.ifmo.enf.optiks.OptiksGame;
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
 public class MenuScreen implements Screen {
+
     public MenuScreen(final OptiksGame optiksGame) {
         //todo
-
     }
 
     @Override

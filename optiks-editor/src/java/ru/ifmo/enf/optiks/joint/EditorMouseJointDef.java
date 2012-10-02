@@ -9,6 +9,7 @@ import ru.ifmo.enf.optiks.physics.object.GameObject;
  * Date: 21.09.12
  */
 public class EditorMouseJointDef extends MouseJointDef {
+
     public EditorMouseJointDef(final GameObject border, final GameObject object, final Vector2 dragPoint) {
         super();
         this.bodyA = border.getBody();

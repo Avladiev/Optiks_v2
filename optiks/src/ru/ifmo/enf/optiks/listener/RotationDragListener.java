@@ -53,7 +53,7 @@ public abstract class RotationDragListener extends InputAdapter {
                 final MouseJointDef mouseJointDef = new MouseJointDef();
 
                 Body body = null;
-                Iterator<Body> bodies = world.getBodies();
+                final Iterator<Body> bodies = world.getBodies();
 
                 // get ground body
                 while (bodies.hasNext()) {
@@ -71,7 +71,6 @@ public abstract class RotationDragListener extends InputAdapter {
                 mouseJointDef.collideConnected = true;
                 mouseJointDef.target.set(vector);
                 mouseJoint = (MouseJoint) world.createJoint(mouseJointDef);
-                //todo
                 return false;
             default:
                 return false;
@@ -92,7 +91,6 @@ public abstract class RotationDragListener extends InputAdapter {
                     activeObject = null;
                     mouseJoint = null;
                 }
-                //todo
                 return false;
             default:
                 return false;
@@ -107,7 +105,6 @@ public abstract class RotationDragListener extends InputAdapter {
                     return true;
                 }
                 mouseJoint.setTarget(Converter.toPhysicsVector(x, y));
-                //todo
                 return false;
             default:
                 return false;

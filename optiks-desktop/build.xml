@@ -1,0 +1,131 @@
+<project name="optiks-desktop" default="build">
+
+    <target name="init">
+
+        <!-- Props file -->
+
+        <property file="build.properties"/>
+
+        <!-- Sources -->
+
+        <property name="src.dir" location="${project.dir}/src"/>
+        <property name="src.java.dir" location="${src.dir}"/>
+
+        <property name="optiks.src.dir" location="${optiks.dir}/src"/>
+        <property name="optiks.src.java.dir" location="${optiks.src.dir}"/>
+
+        <property name="optiks-android.src.dir" location="${optiks-android.dir}/src"/>
+        <property name="optiks-android.src.java.dir" location="${optiks-android.src.dir}"/>
+
+        <property name="optiks-editor.src.dir" location="${optiks-editor.dir}/src"/>
+        <property name="optiks-editor.src.java.dir" location="${optiks-editor.src.dir}/java"/>
+
+        <property name="build.dir" location="${project.dir}/build"/>
+        <property name="build.classes.dir" location="${build.dir}/classes"/>
+        <property name="build.dist.dir" location="${build.dir}/dist"/>
+        <property name="build.lib.dir" location="${build.dir}/lib"/>
+
+        <!-- Libs -->
+
+        <fileset id="optiks-libs" dir="${optiks.dir}/libs">
+            <include name="**/*.jar"/>
+        </fileset>
+
+        <fileset id="optiks-android-libs" dir="${optiks-android.dir}/libs">
+            <include name="**/*.jar"/>
+        </fileset>
+
+        <fileset id="optiks-desktop-libs" dir="libs">
+            <include name="**/*.jar"/>
+        </fileset>
+
+        <fileset id="optiks-editor-libs" dir="${optiks-editor.dir}/libs">
+            <include name="**/*.jar"/>
+        </fileset>
+
+        <!-- Project classpath -->
+
+        <path id="project.classpath">
+            <fileset refid="optiks-libs"/>
+            <fileset refid="optiks-android-libs"/>
+            <fileset refid="optiks-desktop-libs"/>
+            <fileset refid="optiks-editor-libs"/>
+        </path>
+
+        <!-- Javac debug set -->
+
+        <property name="javac.debug" value="on"/>
+        <property name="javac.debuglevel" value="lines"/>
+
+    </target>
+
+    <target name="build" depends="init, compile, copy-libs">
+
+        <mkdir dir="${build.dist.dir}"/>
+
+        <property name="version.num" value="2.00"/>
+        <buildnumber file="build.num"/>
+
+        <jar destfile="${build.dist.dir}/optiks-desktop-${version.num}-b${build.number}.jar">
+
+            <fileset dir="${build.classes.dir}" includes="**/*.class"/>
+
+            <!-- Manifest -->
+            <manifest>
+                <attribute name="Main-Class" value="ru.ifmo.enf.micelius.StarterFrontend"/>
+                <attribute name="Class-Path" value="log4j-1.2.16.jar gson-2.0.jar "/>
+            </manifest>
+        </jar>
+
+    </target>
+
+    <target name="compile" depends="init">
+
+        <mkdir dir="${build.classes.dir}"/>
+
+        <!-- Compile Optiks -->
+
+        <javac srcdir="${optiks.src.java.dir}"
+               destdir="${build.classes.dir}"
+               classpathref="project.classpath"
+               debug="${javac.debug}"
+               debuglevel="${javac.debuglevel}"/>
+
+        <!-- Optiks-Editor classpath -->
+
+        <fileset id="classes" dir="${build.classes.dir}">
+            <include name="**/*.class"/>
+        </fileset>
+
+        <path id="build.classpath">
+            <path refid="project.classpath"/>
+            <fileset refid="classes"/>
+        </path>
+
+        <!-- Compile Optiks-Editor -->
+
+        <javac srcdir="${optiks-editor.src.java.dir}"
+               destdir="${build.classes.dir}"
+               classpathref="build.classpath"
+               debug="${javac.debug}"
+               debuglevel="${javac.debuglevel}"/>
+
+    </target>
+
+    <target name="copy-libs">
+        <mkdir dir="${build.lib.dir}"/>
+        <copy todir="${build.lib.dir}" flatten="true">
+            <fileset refid="optiks-libs"/>
+            <fileset refid="optiks-android-libs"/>
+            <fileset refid="optiks-desktop-libs"/>
+            <fileset refid="optiks-editor-libs"/>
+        </copy>
+    </target>
+
+    <target name="clean" depends="init">
+        <delete dir="${build.dir}" failonerror="false"/>
+    </target>
+
+    <target name="rebuild" depends="clean, build"/>
+
+</project>

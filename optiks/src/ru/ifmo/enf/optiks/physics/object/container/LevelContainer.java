@@ -1,20 +1,19 @@
 package ru.ifmo.enf.optiks.physics.object.container;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.List;
 
 /**
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
 public class LevelContainer {
+
     private List<SimpleObjectСontainer> simpleObjectСontainers;
     private List<ObjectContainer> objectContainers;
 
     public LevelContainer() {
     }
 
-    public LevelContainer(@NotNull final List<SimpleObjectСontainer> simpleObjectСontainers, @NotNull final List<ObjectContainer> objectContainers) {
+    public LevelContainer(final List<SimpleObjectСontainer> simpleObjectСontainers, final List<ObjectContainer> objectContainers) {
         this.simpleObjectСontainers = simpleObjectСontainers;
         this.objectContainers = objectContainers;
     }
@@ -27,7 +26,6 @@ public class LevelContainer {
         return objectContainers;
     }
 
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -37,6 +35,7 @@ public class LevelContainer {
 
         if (objectContainers != null ? !objectContainers.equals(that.objectContainers) : that.objectContainers != null)
             return false;
+
         if (simpleObjectСontainers != null ? !simpleObjectСontainers.equals(that.simpleObjectСontainers) : that.simpleObjectСontainers != null)
             return false;
 
@@ -58,6 +57,4 @@ public class LevelContainer {
     public void setObjectContainers(final List<ObjectContainer> objectContainers) {
         this.objectContainers = objectContainers;
     }
-
-
 }

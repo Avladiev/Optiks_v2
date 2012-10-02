@@ -7,6 +7,7 @@ import ru.ifmo.enf.optiks.physics.object.GameObject;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class StaticState extends State {
+
     BodyDef.BodyType type;
 
     public StaticState(final GameObject gameObject) {

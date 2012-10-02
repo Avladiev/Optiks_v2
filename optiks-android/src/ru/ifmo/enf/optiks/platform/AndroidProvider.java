@@ -11,6 +11,7 @@ import ru.ifmo.enf.optiks.physics.object.container.LevelContainer;
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
 public class AndroidProvider implements Provider {
+
     private static final String TAG = "AndroidProviderTAG";
     
     private final DBHelper dbHelper;

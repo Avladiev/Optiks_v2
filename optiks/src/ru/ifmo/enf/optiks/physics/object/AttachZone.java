@@ -13,7 +13,7 @@ public class AttachZone extends GameObject {
     }
 
     @Override
-    public void bulletHitReaction(Bullet bullet, Fixture fixtureA) {
+    public void bulletHitReaction(final Bullet bullet, final Fixture fixtureA) {
 
     }
 }

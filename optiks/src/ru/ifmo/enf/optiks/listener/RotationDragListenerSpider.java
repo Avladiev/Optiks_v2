@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
-import com.sun.istack.internal.NotNull;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.Wall;
 
@@ -17,6 +16,7 @@ import java.util.Iterator;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class RotationDragListenerSpider implements GestureDetector.GestureListener {
+
     final World world;
     BodyTouchQuery bodyTouchQuery;
     private MouseJoint mouseJoint;
@@ -30,7 +30,7 @@ public class RotationDragListenerSpider implements GestureDetector.GestureListen
     public boolean touchDown(final int x, final int y, final int pointer) {
 
         final Vector2 vector = toPhysicsVector(x, y);
-        @NotNull final GameObject object = bodyTouchQuery.getQueryBody(vector.x, vector.y, false);
+        final GameObject object = bodyTouchQuery.getQueryBody(vector.x, vector.y, false);
 
         if (object == null) {
             return true;
@@ -44,7 +44,7 @@ public class RotationDragListenerSpider implements GestureDetector.GestureListen
         final MouseJointDef mouseJointDef = new MouseJointDef();
 
         Body body = null;
-        Iterator<Body> bodies = world.getBodies();
+        final Iterator<Body> bodies = world.getBodies();
         while (bodies.hasNext()) {
             body = bodies.next();
             System.out.println(body.getUserData().toString());
@@ -54,7 +54,8 @@ public class RotationDragListenerSpider implements GestureDetector.GestureListen
             }
         }
 
-        System.out.println(((GameObject) body.getUserData()).toString());
+        assert body != null;
+        System.out.println(body.getUserData().toString());
         mouseJointDef.bodyA = body;
         mouseJointDef.bodyB = object.getBody();
         mouseJointDef.dampingRatio = 90f;

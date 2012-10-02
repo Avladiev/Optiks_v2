@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class Laser extends GameObject {
+
     Bullet bullet;
 
     public Laser() {

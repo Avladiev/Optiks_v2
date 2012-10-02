@@ -18,10 +18,10 @@ public class TestActivity extends Activity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AndroidProvider androidProvider = new AndroidProvider(this);
+        final AndroidProvider androidProvider = new AndroidProvider(this);
         Log.d(TAG, " getlastseason =" + androidProvider.getLastSeason());
         Log.d(TAG, " getlastLevel =" + androidProvider.getLastLevel(androidProvider.getLastSeason()));
-        LevelContainer levelContainer = androidProvider.getLevel((byte) 0, (byte) 0);
+        final LevelContainer levelContainer = androidProvider.getLevel((byte) 0, (byte) 0);
         for(final ObjectContainer container: levelContainer.getObjectContainers()){
             Log.d(TAG,"ObjectContainer "  + container + container.getMainGameObject());
             container.getMainGameObject() ;

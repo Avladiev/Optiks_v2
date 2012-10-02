@@ -19,7 +19,6 @@ public class DesktopProvider implements Provider {
 
     // private LevelContainer[][] levels;
 
-
     public DesktopProvider(final File file) throws FileNotFoundException {
         this.file = file;
         /*   сontainers = json.fromJson(LevelContainer[][].class,fileHandle) ;
@@ -51,7 +50,6 @@ public class DesktopProvider implements Provider {
                 }
             }
         }
-
     }
 
     @Override
@@ -62,19 +60,17 @@ public class DesktopProvider implements Provider {
     @Override
     public void saveLevel(final LevelContainer levelContainer, final byte season, final byte level) {
         if (season < levels.size()) {
-            List<LevelContainer> levelContainerList = levels.get(season);
+            final List<LevelContainer> levelContainerList = levels.get(season);
             levelContainerList.add(level, levelContainer);
         } else {
-            List<LevelContainer> levelContainerList = new ArrayList<LevelContainer>();
+            final List<LevelContainer> levelContainerList = new ArrayList<LevelContainer>();
             levelContainerList.add(level, levelContainer);
             levels.add(season, levelContainerList);
         }
-
     }
 
     @Override
     public byte getLastSeason() {
-
         return (byte) (levels.size() - 1);
     }
 
@@ -85,7 +81,7 @@ public class DesktopProvider implements Provider {
 
     @Override
     public void save() {
-        LevelContainer[][] levelContainers = new LevelContainer[levels.size()][];
+        final LevelContainer[][] levelContainers = new LevelContainer[levels.size()][];
         for (int i = 0; i < levels.size(); i++) {
             for (int j = 0; j < levels.get(i).size(); j++) {
                 if (levelContainers[i] == null) {
@@ -95,7 +91,6 @@ public class DesktopProvider implements Provider {
             }
         }
 
-
         try {
             final Writer writer = new FileWriter(file);
             System.out.println(gson.toJson(levelContainers));
@@ -104,7 +99,6 @@ public class DesktopProvider implements Provider {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override

@@ -70,15 +70,15 @@ public class Bullet extends GameObject {
 
     public Vector2 calculateShootPosition(final float velocity) {
         final float rotateAngle = MathUtils.radiansToDegrees * laser.getBody().getAngle() - 90;
-        Vector2 point1 = new Vector2(laser.getWorldCenter());
-        Vector2 point2 = new Vector2(laser.getAnchorB());
+        final Vector2 point1 = new Vector2(laser.getWorldCenter());
+        final Vector2 point2 = new Vector2(laser.getAnchorB());
 
         return point1.add(point2.rotate(rotateAngle).mul(velocity));
     }
 
     public Vector2 calculateShootVector() {
         final float rotateAngle = MathUtils.radiansToDegrees * laser.getBody().getAngle() - 90;
-        Vector2 point2 = new Vector2(laser.getAnchorB());
+        final Vector2 point2 = new Vector2(laser.getAnchorB());
 
         return point2.rotate(rotateAngle);
     }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class Rope extends GameObject {
+
     public Rope() {
         super(new Vector2(0, 4), new Vector2(0, -4), 0.7f, 20, 60);
     }
@@ -21,6 +22,4 @@ public class Rope extends GameObject {
         getBody().getWorld().destroyBody(getBody());
         bullet.continueShoot();
     }
-
-
 }

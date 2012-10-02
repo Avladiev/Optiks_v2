@@ -8,6 +8,7 @@ import ru.ifmo.enf.optiks.physics.object.GameObject;
  */
 public class JointDefFactory {
     public static JointDef createJointDef(final GameObject objectA, final GameObject objectB) {
+
         JointDef jointDef = null;
         // todo implement me !
         jointDef = RevoluteJointBehavior.createRevoluteJoint(objectA, objectB, false);

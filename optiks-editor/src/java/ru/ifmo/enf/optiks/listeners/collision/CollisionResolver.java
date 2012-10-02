@@ -3,11 +3,11 @@ package ru.ifmo.enf.optiks.listeners.collision;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import ru.ifmo.enf.optiks.physics.object.AttachZone;
-import ru.ifmo.enf.optiks.util.Command;
-import ru.ifmo.enf.optiks.util.CommandList;
 import ru.ifmo.enf.optiks.physics.object.Attacher;
 import ru.ifmo.enf.optiks.physics.object.GameObject;
 import ru.ifmo.enf.optiks.physics.object.Wall;
+import ru.ifmo.enf.optiks.util.Command;
+import ru.ifmo.enf.optiks.util.CommandList;
 
 /**
  * Author: Sergey Fedorov (serezhka@xakep.ru)

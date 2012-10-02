@@ -72,6 +72,7 @@ public class GameObjectListener extends InputAdapter {
                         activeObject.getPrevious().setNext(null);
                         activeObject.setPrevious(null);
                         activeObject.setJoint(null);
+
                         return true;
                     }
                 }
@@ -115,6 +116,8 @@ public class GameObjectListener extends InputAdapter {
 
                 /* Hide objects panel */
                 editorScreen.getObjPanel().hide();
+
+                return true;
         }
         return false;
     }
@@ -170,11 +173,12 @@ public class GameObjectListener extends InputAdapter {
                 activeObjectState.setPostState();
             }
 
+            if (revoluteJoint != null) {
+                world.destroyJoint(revoluteJoint);
+                revoluteJoint = null;
+            }
+
             return true;
-        }
-        if (revoluteJoint != null) {
-            world.destroyJoint(revoluteJoint);
-            revoluteJoint = null;
         }
         return false;
     }

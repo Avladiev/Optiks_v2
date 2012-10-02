@@ -25,6 +25,7 @@ public class OptiksEditor extends Game {
 
     @Override
     public void create() {
+
         /* Camera settings */
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

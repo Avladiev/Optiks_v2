@@ -15,11 +15,13 @@ import java.util.List;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class BodyTouchQuery {
+
     private final World world;
     private BodyQueryAABBCallback bodyQueryCallback;
     private final List<GameObject> query;
 
     private class BodyQueryAABBCallback implements QueryCallback {
+
         private final BodyTouchQuery bodyTouchQuery;
 
         public BodyQueryAABBCallback(final BodyTouchQuery bodyTouchQuery) {

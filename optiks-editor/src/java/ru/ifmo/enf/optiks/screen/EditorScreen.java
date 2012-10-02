@@ -37,7 +37,7 @@ public class EditorScreen implements Screen {
     private final ObjPanelBtn objPanelBtn;
     private final Camera camera;
     private final SpriteBatch batch;
-    private final Box2DDebugRenderer render;
+    private final Box2DDebugRenderer box2DDebugRenderer;
     private final GameObject wall;
 
     private MouseJoint mouseJoint = null;
@@ -45,7 +45,7 @@ public class EditorScreen implements Screen {
     public EditorScreen(final OptiksEditor optiksEditor) {
 
         /* Box2D debug */
-        render = new Box2DDebugRenderer(true, true, false, true);
+        box2DDebugRenderer = new Box2DDebugRenderer(true, true, false, true);
 
         /* Physics world & graphics */
         this.world = optiksEditor.getWorld();
@@ -82,7 +82,7 @@ public class EditorScreen implements Screen {
         objPanelBtn.setBounds(Gdx.graphics.getWidth() - 70, 6, 64, 64);
 
         /* Button listener */
-        final ButtonListener buttonListener = new ButtonListener(this);
+        final ButtonListener buttonListener = new ButtonListener(camera);
         buttonListener.addButton(objPanelBtn);
 
         /* Gesture Listeners */
@@ -117,7 +117,7 @@ public class EditorScreen implements Screen {
         objectsPanel.render(batch, delta);
         objPanelBtn.draw(batch);
         batch.end();
-        render.render(world, camera.projection.scale(WorldFactory.PHYSICS_SCALE, WorldFactory.PHYSICS_SCALE, WorldFactory.PHYSICS_SCALE));
+        box2DDebugRenderer.render(world, camera.projection.scale(WorldFactory.PHYSICS_SCALE, WorldFactory.PHYSICS_SCALE, WorldFactory.PHYSICS_SCALE));
         CommandList.doCommand();
     }
 
@@ -143,6 +143,7 @@ public class EditorScreen implements Screen {
 
     @Override
     public void dispose() {
+        world.dispose();
         batch.dispose();
     }
 

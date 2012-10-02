@@ -13,8 +13,8 @@ import java.io.FileNotFoundException;
  * Date: 20.07.12
  */
 public class EditorDesktop {
-    public static void main(final String[] args) throws FileNotFoundException {
 
+    public static void main(final String[] args) throws FileNotFoundException {
         final LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Optiks-Editor";
         cfg.useGL20 = true;

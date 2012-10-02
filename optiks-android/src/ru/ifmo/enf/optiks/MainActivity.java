@@ -11,6 +11,7 @@ import ru.ifmo.enf.optiks.platform.AndroidProvider;
 import ru.ifmo.enf.optiks.platform.Provider;
 
 public class MainActivity extends AndroidApplication {
+
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +23,6 @@ public class MainActivity extends AndroidApplication {
         cfg.useGL20 = true;
         cfg.numSamples = 2;
         cfg.resolutionStrategy = new FixedResolutionStrategy(800, 480);
-
-
-
 
         final Display display = getWindowManager().getDefaultDisplay();
         Log.d("xxxxxxxxxxxxxxx", "h = " + display.getHeight() + " w =" + display.getWidth());

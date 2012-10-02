@@ -1,7 +1,6 @@
 package ru.ifmo.enf.optiks.physics.object.container;
 
 import com.badlogic.gdx.math.Vector2;
-import com.sun.istack.internal.NotNull;
 import ru.ifmo.enf.optiks.physics.object.ObjectType;
 
 /**
@@ -16,7 +15,7 @@ public class SimpleObjectСontainer {
     public SimpleObjectСontainer() {
     }
 
-    public void setPos(final @NotNull Vector2 pos) {
+    public void setPos(final Vector2 pos) {
         this.pos = pos;
     }
 
@@ -24,11 +23,11 @@ public class SimpleObjectСontainer {
         this.angle = angle;
     }
 
-    public void setObjectType(@NotNull final ObjectType objectType) {
+    public void setObjectType(final ObjectType objectType) {
         this.objectType = objectType;
     }
 
-    public SimpleObjectСontainer(@NotNull final Vector2 pos, float angle, @NotNull ObjectType objectType) {
+    public SimpleObjectСontainer(final Vector2 pos, final float angle, final ObjectType objectType) {
         this.pos = pos;
         this.angle = angle;
         this.objectType = objectType;
@@ -68,6 +67,4 @@ public class SimpleObjectСontainer {
         result = 31 * result + (objectType != null ? objectType.hashCode() : 0);
         return result;
     }
-
-
 }

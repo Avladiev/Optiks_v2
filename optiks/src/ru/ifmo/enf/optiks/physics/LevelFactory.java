@@ -13,6 +13,7 @@ import java.util.List;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class LevelFactory {
+
     public static List<GameObject> createLevel(final LevelContainer levelContainer) {
         final List<GameObject> gameObjects = new ArrayList<GameObject>();
         for (final ObjectContainer objectContainer : levelContainer.getObjectContainers()) {

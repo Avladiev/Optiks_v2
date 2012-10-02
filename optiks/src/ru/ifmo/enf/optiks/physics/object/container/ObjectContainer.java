@@ -1,7 +1,5 @@
 package ru.ifmo.enf.optiks.physics.object.container;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,6 +10,7 @@ import java.util.List;
  * attacher + lego + .. + lego + one of game objects
  */
 public class ObjectContainer {
+
     // attacher to display border
     private SimpleObjectСontainer attacher;
     // LEGO detail
@@ -19,7 +18,7 @@ public class ObjectContainer {
     // laser || aim || mirror || null
     private SimpleObjectСontainer mainGameObject;
 
-    public ObjectContainer(@NotNull final SimpleObjectСontainer attacher, @NotNull final List<SimpleObjectСontainer> lego, @NotNull final SimpleObjectСontainer mainGameObject) {
+    public ObjectContainer(final SimpleObjectСontainer attacher, final List<SimpleObjectСontainer> lego, final SimpleObjectСontainer mainGameObject) {
         this.attacher = attacher;
         this.lego = lego;
         this.mainGameObject = mainGameObject;
@@ -79,6 +78,4 @@ public class ObjectContainer {
         result = 31 * result + (mainGameObject != null ? mainGameObject.hashCode() : 0);
         return result;
     }
-
-
 }

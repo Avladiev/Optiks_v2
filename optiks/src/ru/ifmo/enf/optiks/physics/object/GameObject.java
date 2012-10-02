@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
  * Author: Aleksey Vladiev (Avladiev2@gmail.com)
  */
 public abstract class GameObject {
+
     private GameObject previous;
     private GameObject next;
 

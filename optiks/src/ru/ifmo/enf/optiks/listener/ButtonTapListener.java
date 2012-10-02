@@ -12,12 +12,13 @@ import ru.ifmo.enf.optiks.util.OverlapTester;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class ButtonTapListener extends GestureDetector.GestureAdapter {
+
     private Laser laser;
     private GameScreen gameScreen;
     private final Camera camera;
     private Vector3 touchPoint;
 
-    public ButtonTapListener(GameScreen gameScreen) {
+    public ButtonTapListener(final GameScreen gameScreen) {
         this.gameScreen = gameScreen;
         this.camera = gameScreen.getCamera();
         touchPoint = new Vector3();

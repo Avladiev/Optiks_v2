@@ -11,7 +11,6 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.sun.istack.internal.NotNull;
 import ru.ifmo.enf.optiks.OptiksGame;
 import ru.ifmo.enf.optiks.graphics.TrajectoryRenderer;
 import ru.ifmo.enf.optiks.listener.ButtonTapListener;
@@ -75,7 +74,7 @@ public class GameScreen implements Screen {
      * @param level
      */
 
-    public void setLevel(@NotNull final LevelContainer level) {
+    public void setLevel(final LevelContainer level) {
         worldFactory.createWalls(OptiksGame.width / 10 + 2, OptiksGame.height / 10 + 2);
         worldFactory.loadLevel(level);
         buttonTapListener.setLaser(worldFactory.getLaser());

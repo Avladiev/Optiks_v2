@@ -14,11 +14,9 @@ public class RotateWithoutNextState extends State {
 
     @Override
     protected void setPreProperties() {
-
     }
 
     @Override
     protected void setPostProperties() {
-
     }
 }

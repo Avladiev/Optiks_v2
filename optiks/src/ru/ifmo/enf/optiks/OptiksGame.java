@@ -36,16 +36,12 @@ public class OptiksGame extends Game {
 
     @Override
     public void create() {
-
         Assets.inst().load(Assets.GAME_OBJECTS_PACK, TextureAtlas.class);
         world = new World(new Vector2(0, 0), true);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gameScreen = new GameScreen(this);
         menuScreen = new MenuScreen(this);
         setScreen(gameScreen);
-
-
-        //todo
     }
 
     public Screen getGameScreen() {
@@ -71,7 +67,6 @@ public class OptiksGame extends Game {
     @Override
     public void render() {
         Gdx.graphics.getGL20().glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        //todo
         //super.render();
         if (isLoaded) {
             if (!flag) {

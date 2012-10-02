@@ -10,7 +10,9 @@ import ru.ifmo.enf.optiks.physics.object.GameObject;
  * Author: Dudko Alex (dududko@gmail.com)
  */
 public class RevoluteJointBehavior {
+
     public static JointDef createRevoluteJoint(final GameObject objectA, final GameObject objectB, final boolean collideConnected) {
+
         final RevoluteJointDef jointDef = new RevoluteJointDef();
         jointDef.initialize(objectA.getBody(), objectB.getBody(), new Vector2());
         jointDef.localAnchorA.set(objectA.getAnchorA());
