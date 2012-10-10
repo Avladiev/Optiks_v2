@@ -1,7 +1,9 @@
 package ru.ifmo.enf.optiks.physics.object;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 
 /**
@@ -155,7 +157,7 @@ public abstract class GameObject {
 
     /**
      * @return jointAngle of this object
-     * maximum jointAngle of revoluteJoint is sum of joined bodies jointAngles
+     *         maximum jointAngle of revoluteJoint is sum of joined bodies jointAngles
      */
     public float getJointAngle() {
         return jointAngle;

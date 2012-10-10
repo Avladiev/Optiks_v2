@@ -8,7 +8,7 @@
 
         <!-- Sources -->
 
-        <property name="src.dir" location="${project.dir}/src"/>
+        <property name="src.dir" location="${module.dir}/src"/>
         <property name="src.java.dir" location="${src.dir}"/>
 
         <property name="optiks.src.dir" location="${optiks.dir}/src"/>
@@ -20,7 +20,9 @@
         <property name="optiks-editor.src.dir" location="${optiks-editor.dir}/src"/>
         <property name="optiks-editor.src.java.dir" location="${optiks-editor.src.dir}/java"/>
 
-        <property name="build.dir" location="${project.dir}/build"/>
+        <property name="assets.dir" location="${optiks-android.dir}/assets"/>
+
+        <property name="build.dir" location="${module.dir}/build"/>
         <property name="build.classes.dir" location="${build.dir}/classes"/>
         <property name="build.dist.dir" location="${build.dir}/dist"/>
         <property name="build.lib.dir" location="${build.dir}/lib"/>
@@ -59,21 +61,54 @@
 
     </target>
 
-    <target name="build" depends="init, compile, copy-libs">
+    <target name="build" depends="init, compile, copy-libs, copy-assets">
 
         <mkdir dir="${build.dist.dir}"/>
 
-        <property name="version.num" value="2.00"/>
+        <property name="version.num" value="1.00"/>
         <buildnumber file="build.num"/>
 
-        <jar destfile="${build.dist.dir}/optiks-desktop-${version.num}-b${build.number}.jar">
+        <property name="editor.jar.name" value="${module.name}-editor-${version.num}-b${build.number}.jar"/>
+        <property name="optiks.jar.name" value="${module.name}-optiks-${version.num}-b${build.number}.jar"/>
+
+        <property name="editor.jar.destfile" value="${build.dist.dir}/${editor.jar.name}"/>
+        <property name="optiks.jar.destfile" value="${build.dist.dir}/${optiks.jar.name}"/>
+
+        <path id="manifest.classpath">
+            <fileset id="lib.jars" dir="${build.lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+        </path>
+
+        <manifestclasspath property="manifest.class.path" jarfile="${editor.jar.destfile}">
+            <classpath refid="manifest.classpath"/>
+        </manifestclasspath>
+
+        <!-- Build Optiks Editor Desktop -->
+
+        <jar destfile="${editor.jar.destfile}">
 
             <fileset dir="${build.classes.dir}" includes="**/*.class"/>
 
             <!-- Manifest -->
             <manifest>
-                <attribute name="Main-Class" value="ru.ifmo.enf.micelius.StarterFrontend"/>
-                <attribute name="Class-Path" value="log4j-1.2.16.jar gson-2.0.jar "/>
+                <attribute name="Main-Class" value="ru.ifmo.enf.optiks.EditorDesktop"/>
+                <!--suppress AntResolveInspection -->
+                <attribute name="Class-Path" value="${manifest.class.path}"/>
+            </manifest>
+        </jar>
+
+        <!-- Build Optiks Desktop -->
+
+        <jar destfile="${optiks.jar.destfile}">
+
+            <fileset dir="${build.classes.dir}" includes="**/*.class"/>
+
+            <!-- Manifest -->
+            <manifest>
+                <attribute name="Main-Class" value="ru.ifmo.enf.optiks.MainDesktop"/>
+                <!--suppress AntResolveInspection -->
+                <attribute name="Class-Path" value="${manifest.class.path}"/>
             </manifest>
         </jar>
 
@@ -110,6 +145,14 @@
                debug="${javac.debug}"
                debuglevel="${javac.debuglevel}"/>
 
+        <!-- Compile Optiks-Desktop -->
+
+        <javac srcdir="${src.java.dir}"
+               destdir="${build.classes.dir}"
+               classpathref="build.classpath"
+               debug="${javac.debug}"
+               debuglevel="${javac.debuglevel}"/>
+
     </target>
 
     <target name="copy-libs">
@@ -119,6 +162,15 @@
             <fileset refid="optiks-android-libs"/>
             <fileset refid="optiks-desktop-libs"/>
             <fileset refid="optiks-editor-libs"/>
+        </copy>
+    </target>
+
+    <target name="copy-assets">
+        <copy todir="${build.dist.dir}">
+           <fileset dir="${assets.dir}">
+               <exclude name="**/*.log"/>
+               <exclude name="**/*.db"/>
+           </fileset>
         </copy>
     </target>
 

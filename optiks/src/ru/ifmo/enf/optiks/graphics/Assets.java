@@ -34,7 +34,7 @@ public class Assets extends AssetManager {
     }
 
     public static TextureRegion getTextureRegion(final ObjectType type) {
-       return instance.get(GAME_OBJECTS_PACK, TextureAtlas.class).findRegion(type.toString());
+        return instance.get(GAME_OBJECTS_PACK, TextureAtlas.class).findRegion(type.toString());
     }
 
     public Animation getAnimation(final ObjectType type) {

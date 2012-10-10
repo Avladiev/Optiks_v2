@@ -47,7 +47,7 @@ public class BodyTouchQuery {
         double distance = Integer.MAX_VALUE;
         for (final GameObject object : query) {
             if (!ignoreMovable && !object.isMovable()) {
-                    continue;
+                continue;
             }
             final double tempDistance = Calculate.calculateDistance(object.getBody().getWorldPoint(object.getRotationCenter()), x, y);
             if (tempDistance <= distance && tempDistance < 15) {

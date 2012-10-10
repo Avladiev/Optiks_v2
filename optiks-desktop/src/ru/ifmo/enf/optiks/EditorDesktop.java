@@ -2,10 +2,7 @@ package ru.ifmo.enf.optiks;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import ru.ifmo.enf.optiks.platform.DesktopProvider;
-import ru.ifmo.enf.optiks.platform.Provider;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 
 /**

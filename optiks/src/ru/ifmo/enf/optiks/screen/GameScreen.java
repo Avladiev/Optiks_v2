@@ -71,6 +71,7 @@ public class GameScreen implements Screen {
 
     /**
      * method that allows to set current level
+     *
      * @param level
      */
 
